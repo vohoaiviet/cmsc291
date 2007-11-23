@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import com.jachsoft.imagelib.RGBColor;
+import com.jachsoft.imagelib.RGBImage;
+
 /**
  * Objective:
  *   Detect the answers in a scanned image of a questionnaire
@@ -56,11 +59,12 @@ public class Exercise1 {
 	
 	
 	public static void main(String args[]){
-				
+/*				
 		if (args.length < 2){
 			System.out.println("Usage: java -jar exer1.jar <image path> <coordinates file>");
 			return;
 		}
+*/		
 		
 		
 		String dataSrc="/home/jachermocilla/cmsc291/data/exer1/";
@@ -75,45 +79,34 @@ public class Exercise1 {
 		Exercise1.doit("0100");
 */		
 		
-		Exercise1.doit(dataSrc+"0005"); 
+		Exercise1.doit(dataSrc+"0005.jpg"); 
 	}
 		
 		
 	public static void doit(String fname){
 		long startTime,endTime;
-		BufferedImage img = null;
+		RGBImage img = null;
 		try {
 			System.out.print("Processing "+fname+"...");
 			startTime=System.currentTimeMillis();
-		    img = ImageIO.read(new File(fname));
+		    img = new RGBImage(ImageIO.read(new File(fname)));
 		    
 		    /* Binarize the image */
 		    for (int y=0;y < img.getHeight(); y++){
 		    	for (int x=0; x < img.getWidth(); x++){
-		    		int rgb=img.getRGB(x, y);
+		    		RGBColor rgb=img.getRGBColor(x, y);
 		    		
-		    		int b = rgb & 255;
-		    		int g = (rgb >> 8) & 255;
-		    		int r = (rgb >> 16) & 255;
-//		    		int a = (rgb >> 24) & 255;
+		    		int b = rgb.getBlue();
+		    		int g = rgb.getGreen();
+		    		int r = rgb.getRed();
+
 		    		double ave=(b+r+g)/3;
-/*	
-		    		int iave=(int)ave;
-		    		int color = 255 << 8;
-		    		color |= iave;
-		    		color <<= 8;
-		    		color |= iave;
-		    		color <<= 8;
-		    		color |= iave;
-		    		img.setRGB(x, y, color);
-*/		    	
 		    		
 		    		int threshold=127;
-		    		int white = 0xFFFFFFFF;
 		    		if (ave > threshold){
-		    			img.setRGB(x, y, white);
+		    			img.setRGB(x, y, 0xFF,0xFF,0xFF);
 		    		}else{
-		    			img.setRGB(x, y, 0x00000000);
+		    			img.setRGB(x, y, 0x00,0x00,0x00);
 		    		}
 		    		//System.out.println(a+","+r+","+g+","+b);
 		    	}		    	
@@ -131,7 +124,7 @@ public class Exercise1 {
 		    	int x=scanner.nextInt();
 		    	int y=scanner.nextInt();		    	
 		    	//System.out.println("("+x+","+y+")");
-		    	int f=Exercise1.drawRect(x-delta, y-delta, x+delta, y+delta, 0xFF0000FF, img);
+		    	int f=Exercise1.drawRect(x-delta, y-delta, x+delta, y+delta, 0xFF0000FF, img.getBufferedImage());
 		    	//System.out.println(f);
 	    		Option option=new Option();
 	    		option.x=x;
@@ -166,7 +159,7 @@ public class Exercise1 {
 		    			choice=null;
 		    		//he shaded somthing
 		    		if (choice !=null){
-		    			Exercise1.fillRect(choice.x-delta, choice.y-delta, choice.x+delta, choice.y+delta, 0xFFFF0000, img);
+		    			Exercise1.fillRect(choice.x-delta, choice.y-delta, choice.x+delta, choice.y+delta, 0xFFFF0000, img.getBufferedImage());
 		    		}
 		    		options.clear();
 		    		//System.out.println("Q");
@@ -176,7 +169,7 @@ public class Exercise1 {
 		    	
 		    }
 		    File outputfile = new File(fname+"-done.jpg");
-	        ImageIO.write(img, "jpg", outputfile);
+	        ImageIO.write(img.getBufferedImage(), "jpg", outputfile);
 	        endTime=System.currentTimeMillis();
 	        double secs=(endTime-startTime)/1000.0;
 	        System.out.println("done! "+(secs)+ "s");
