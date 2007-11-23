@@ -2,6 +2,7 @@ package com.jachsoft.imagelib;
 
 public class BinaryImage extends RGBImage{
 	public BinaryImage(RGBImage img, int threshold){
+		this.bimg=img.bimg;
 	    for (int y=0;y < img.getHeight(); y++){
 	    	for (int x=0; x < img.getWidth(); x++){
 	    		RGBColor rgb=img.getRGBColor(x, y);
