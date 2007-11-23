@@ -61,16 +61,19 @@ public class Exercise1 {
 	
 	
 	public static void main(String args[]){
+		String dataSrc="/home/jachermocilla/cmsc291/data/exer1/";
+/*		
 		for (int i=1;i<=9;i++){
-			Exercise1.doit("000"+i+"");
+			Exercise1.doit(dataSrc+"000"+i+"");
 		}		
 		
 		for (int i=10;i<=99;i++){
-			Exercise1.doit("00"+i+"");
+			Exercise1.doit(dataSrc+"00"+i+"");
 		}		
 		Exercise1.doit("0100");
+*/		
 		
-//		TestOnly.doit("0001"); 
+		Exercise1.doit(dataSrc+"0005"); 
 	}
 		
 		
@@ -118,7 +121,7 @@ public class Exercise1 {
 		    
 		    /* Detection of choices */
 		    int delta=13;
-		    Scanner scanner=new Scanner(new File("fields39.csv"));
+		    Scanner scanner=new Scanner(new File("/home/jachermocilla/cmsc291/data/exer1/fields39.csv"));
 		    int counter=0;
 		    List options=new ArrayList();
 		    while(scanner.hasNextInt()){
@@ -170,13 +173,13 @@ public class Exercise1 {
 		    	
 		    	
 		    }
-		    File outputfile = new File("done/"+fname+"-done.jpg");
+		    File outputfile = new File(fname+"-done.jpg");
 	        ImageIO.write(img, "jpg", outputfile);
 	        endTime=System.currentTimeMillis();
 	        double secs=(endTime-startTime)/1000.0;
 	        System.out.println("done! "+(secs)+ "s");
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 }
