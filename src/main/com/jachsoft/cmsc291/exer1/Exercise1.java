@@ -95,7 +95,7 @@ public class Exercise1 {
 		    		int b = rgb & 255;
 		    		int g = (rgb >> 8) & 255;
 		    		int r = (rgb >> 16) & 255;
-		    		int a = (rgb >> 24) & 255;
+//		    		int a = (rgb >> 24) & 255;
 		    		double ave=(b+r+g)/3;
 /*	
 		    		int iave=(int)ave;
