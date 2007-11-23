@@ -19,6 +19,10 @@ public class RGBColor {
 	}
 	
 	
+	public int getPixelColor(){
+		return color;
+	}
+	
 	public int getRed(){
 		return r;
 	}
