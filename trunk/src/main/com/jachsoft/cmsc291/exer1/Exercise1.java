@@ -12,7 +12,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 /**
- *  Objective:
+ * Objective:
  *   Detect the answers in a scanned image of a questionnaire
  * 
  * Approach:
