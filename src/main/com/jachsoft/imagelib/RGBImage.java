@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class RGBImage{
 	
-    BufferedImage bimg;
+    protected BufferedImage bimg;
 	
     
     public RGBImage(){
