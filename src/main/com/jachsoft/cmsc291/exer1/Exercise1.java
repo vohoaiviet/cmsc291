@@ -68,7 +68,7 @@ public class Exercise1 {
 */		
 		
 		
-		String dataSrc="/home/jachermocilla/cmsc291/data/exer1/";
+		String dataSrc="/home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/";
 /*		
 		for (int i=1;i<=9;i++){
 			Exercise1.doit(dataSrc+"000"+i+"");
@@ -92,35 +92,12 @@ public class Exercise1 {
 			startTime=System.currentTimeMillis();
 		    img = new RGBImage(ImageIO.read(new File(fname)));
 		    
-		    /* Binarize the image */
-/*		    
-		    for (int y=0;y < img.getHeight(); y++){
-		    	for (int x=0; x < img.getWidth(); x++){
-		    		RGBColor rgb=img.getRGBColor(x, y);
-		    		
-		    		int b = rgb.getBlue();
-		    		int g = rgb.getGreen();
-		    		int r = rgb.getRed();
-
-		    		double ave=(b+r+g)/3;
-		    		
-		    		int threshold=127;
-		    		if (ave > threshold){
-		    			img.setRGB(x, y, 0xFF,0xFF,0xFF);
-		    		}else{
-		    			img.setRGB(x, y, 0x00,0x00,0x00);
-		    		}
-		    		//System.out.println(a+","+r+","+g+","+b);
-		    	}		    	
-		    }
-*/		    
-		    
 		    img=new BinaryImage(img,127);
 	
 		    
 		    /* Detection of choices */
 		    int delta=13;
-		    Scanner scanner=new Scanner(new File("/home/jachermocilla/cmsc291/data/exer1/fields39.csv"));
+		    Scanner scanner=new Scanner(new File("/home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/fields39.csv"));
 		    int counter=0;
 		    List options=new ArrayList();
 		    while(scanner.hasNextInt()){
