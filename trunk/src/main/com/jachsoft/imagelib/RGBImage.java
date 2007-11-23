@@ -1,17 +1,17 @@
 package com.jachsoft.imagelib;
 
-public class RGBImage extends Image{
+import java.awt.image.BufferedImage;
 
-	public RGBImage(){
-		super();
-	}
+public class RGBImage extends BufferedImage{
+
 	
 	public RGBImage(int w,int h){
-		super(w,h);
+		super(w,h,BufferedImage.TYPE_INT_RGB);
 	}
 	
 	public void setPixel(int x, int y, int r, int g, int b){
-		pixels[y][x]=RGBColor.pack(r, g, b);
+		int rgb=RGBColor.pack(r, g, b);
+		this.setRGB(x, y, rgb);
 	}
 	
 	public RGBColor getRGBColor(int x, int y){
