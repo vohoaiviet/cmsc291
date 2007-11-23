@@ -61,6 +61,13 @@ public class Exercise1 {
 	
 	
 	public static void main(String args[]){
+				
+		if (args.length < 2){
+			System.out.println("Usage: java -jar exer1.jar <image path> <coordinates file>");
+			return;
+		}
+		
+		
 		String dataSrc="/home/jachermocilla/cmsc291/data/exer1/";
 /*		
 		for (int i=1;i<=9;i++){
@@ -83,7 +90,7 @@ public class Exercise1 {
 		try {
 			System.out.print("Processing "+fname+"...");
 			startTime=System.currentTimeMillis();
-		    img = ImageIO.read(new File(fname+".jpg"));
+		    img = ImageIO.read(new File(fname));
 		    
 		    /* Binarize the image */
 		    for (int y=0;y < img.getHeight(); y++){
