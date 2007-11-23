@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import com.jachsoft.imagelib.BinaryImage;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
@@ -92,6 +93,7 @@ public class Exercise1 {
 		    img = new RGBImage(ImageIO.read(new File(fname)));
 		    
 		    /* Binarize the image */
+/*		    
 		    for (int y=0;y < img.getHeight(); y++){
 		    	for (int x=0; x < img.getWidth(); x++){
 		    		RGBColor rgb=img.getRGBColor(x, y);
@@ -111,8 +113,10 @@ public class Exercise1 {
 		    		//System.out.println(a+","+r+","+g+","+b);
 		    	}		    	
 		    }
+*/		    
 		    
-		    
+		    img=new BinaryImage(img,127);
+	
 		    
 		    /* Detection of choices */
 		    int delta=13;
