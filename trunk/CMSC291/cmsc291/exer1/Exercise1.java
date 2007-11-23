@@ -11,7 +11,25 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Objective:
+ *   Detect the answers in a scanned image of a questionnaire
+ * 
+ * Approach:
+ *   1. Binarize the image
+ *   2. Mark positions of options uisng a bounding box
+ *   3. Compute the frequency of black in the bounding box
+ *   4. Sort based on the frequency
+ *   5. The one woth the highest frequency is the selected option
+ * 
+ * 
+ * @author Joseph Anthony C. Hermocilla
+ * 
+ */
+
+
 public class Exercise1 {
+
 	
 	
 	public static void fillRect(int x1,int y1,int x2,int y2, int rgb,BufferedImage img){
@@ -30,11 +48,9 @@ public class Exercise1 {
 				if (img.getRGB(x, y)==-16777216){
 					freq_black++;
 				}
-				
 				if (x==x1 || x==x2){
 					img.setRGB(x, y, rgb);
 				}
-				
 				if (y==y1 || y==y2){
 					img.setRGB(x, y, rgb);
 				}
@@ -64,7 +80,9 @@ public class Exercise1 {
 		try {
 			System.out.print("Processing "+fname+"...");
 			startTime=System.currentTimeMillis();
-		    img = ImageIO.read(new File(fname+".jpg"));		    
+		    img = ImageIO.read(new File(fname+".jpg"));
+		    
+		    /* Binarize the image */
 		    for (int y=0;y < img.getHeight(); y++){
 		    	for (int x=0; x < img.getWidth(); x++){
 		    		int rgb=img.getRGB(x, y);
@@ -93,12 +111,12 @@ public class Exercise1 {
 		    			img.setRGB(x, y, 0x00000000);
 		    		}
 		    		//System.out.println(a+","+r+","+g+","+b);
-		    		
-		    		
 		    	}		    	
 		    }
 		    
 		    
+		    
+		    /* Detection of choices */
 		    int delta=13;
 		    Scanner scanner=new Scanner(new File("fields39.csv"));
 		    int counter=0;
@@ -116,22 +134,9 @@ public class Exercise1 {
 	    		option.f=f;
 	    		options.add(option);
 
-		    	if (counter>6){		    		
-		    		
+		    	if (counter>6){
 		    		//Collections.sort(options);
 		    		InsertionSort.sort(options);
-		    		/*
-		    		System.out.println("MMMMMM");
-		    		Iterator iter=options.iterator();
-		    		while (iter.hasNext()){
-		    			Option o=(Option)iter.next();
-		    			System.out.println(o.f);
-		    		}
-		    		System.out.println("OOOOOO");
-		    		*/
-		    		
-		    		
-		    		
 		    		
 		    		int thresh=40;
 		    		Option choice;
@@ -148,7 +153,7 @@ public class Exercise1 {
 		    			choice=choice1;
 		    		}
 		    		
-		    		//disable heuristic!
+		    		//disable heuristic by hardcoding choice to choice1!
 		    		choice=choice1;
 		    		//System.out.println(choice.f);
 		    		
@@ -177,8 +182,7 @@ public class Exercise1 {
 }
 
 
-
-
+/*Options*/
 class Option implements Comparable{
 	int x;
 	int y;
@@ -194,9 +198,9 @@ class Option implements Comparable{
 class InsertionSort {
  	
 	
-	/**
-	 * From wikipedia
-	 * insertionSort(array A)
+	/*
+	  Source: Eikipedia:
+	  insertionSort(array A)
         for i = 1 to length[A]-1 do
         value = A[i] 
         j = i-1
@@ -222,5 +226,4 @@ class InsertionSort {
 			A.set(j+1, value);
 		}
 	}	
-	
 }
