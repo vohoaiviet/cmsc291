@@ -22,7 +22,6 @@ import javax.imageio.ImageIO;
  *   4. Sort based on the frequency
  *   5. The one woth the highest frequency is the selected option
  * 
- * 
  * @author Joseph Anthony C. Hermocilla
  * 
  */
@@ -30,8 +29,6 @@ import javax.imageio.ImageIO;
 
 public class Exercise1 {
 
-	
-	
 	public static void fillRect(int x1,int y1,int x2,int y2, int rgb,BufferedImage img){
 		for (int y=y1; y <= y2; y++)
 			for (int x=x1; x <= x2; x++){
