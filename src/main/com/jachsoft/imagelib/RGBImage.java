@@ -9,13 +9,13 @@ public class RGBImage extends BufferedImage{
 		super(w,h,BufferedImage.TYPE_INT_RGB);
 	}
 	
-	public void setPixel(int x, int y, int r, int g, int b){
+	public void setRGB(int x, int y, int r, int g, int b){
 		int rgb=RGBColor.pack(r, g, b);
 		this.setRGB(x, y, rgb);
 	}
 	
 	public RGBColor getRGBColor(int x, int y){
-		RGBColor rgb = new RGBColor(pixels[y][x]);
+		RGBColor rgb = new RGBColor(this.getRGB(x, y));
 		return rgb;
 	}
 	
