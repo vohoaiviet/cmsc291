@@ -1,9 +1,0 @@
-#summary Exercise 1. SET form processing.
-
-= Introduction =
-In this exercise, our goal is to extract the
-results of the SET form. The SET form is a jpg
-file of the scanned paper-based SET questionnaire.
-We are also given a file which contains the coordinates
-of the options in the form.
-
