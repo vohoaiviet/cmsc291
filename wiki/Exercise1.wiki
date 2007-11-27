@@ -7,7 +7,10 @@ In this exercise, our goal is to extract the results of the SET form. The SET fo
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+The form image was binarized so that only two colors are used by the
+image. Then a bounding box was created to contain the options. A frequency
+count of black pixels wihtin the bounding box was obtained. Sorting based
+on the frequency count was done. The one with the highest frequency count
+was considered the choice of the respondent.
+
+http://cmsc291.googlecode.com/svn/trunk/src/main/com/jachsoft/cmsc291/exer1/Exercise1.java
