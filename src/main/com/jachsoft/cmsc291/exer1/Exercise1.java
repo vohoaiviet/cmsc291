@@ -143,13 +143,21 @@ public class Exercise1 {
 		Scanner scanner=null;	
 		Exercise1 exer1=null;
 		
+		if (args.length < 2){
+			System.out.println("Usage: java -jar exer1.jar <source image> <csv file>");
+			return;
+		}
+		
 		try{
-			img=new RGBImage(ImageIO.read(new File("/home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/0005.jpg")));
-			scanner=new Scanner(new File("/home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/fields39.csv"));
+			//--/home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/0005.jpg /home/jachermocilla/cmsc291-workspace/cmsc291/data/exer1/fields39.csv
+			
+			img=new RGBImage(ImageIO.read(new File(args[0])));
+			scanner=new Scanner(new File(args[1]));
 			
 			exer1=new Exercise1(img,scanner);
 			exer1.process();
 			ImageIO.write(img.getBufferedImage(),"jpg",new File("output.jpg"));
+			System.out.println(exer1.getTime()+"ms");
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
