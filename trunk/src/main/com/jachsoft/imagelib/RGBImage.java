@@ -38,6 +38,10 @@ public class RGBImage{
 		return bimg;
 	}
 	
+	public void setBufferedImage(BufferedImage bimg){
+		this.bimg = bimg;		
+	}
+		
 	public int getWidth(){
 		return bimg.getWidth();
 	}
