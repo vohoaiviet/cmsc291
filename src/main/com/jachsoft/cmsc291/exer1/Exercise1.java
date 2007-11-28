@@ -19,7 +19,7 @@ import com.jachsoft.imagelib.RGBImage;
  * 
  * Approach:
  *   1. Binarize the image
- *   2. Mark positions of options uisng a bounding box
+ *   2. Mark positions of options using a bounding box
  *   3. Compute the frequency of black in the bounding box
  *   4. Sort based on the frequency
  *   5. The one woth the highest frequency is the selected option
@@ -34,7 +34,6 @@ public class Exercise1 {
 	RGBImage img;
 	Scanner scanner;
 	long time;
-	
 	
 	public Exercise1(RGBImage inputRGBImage,Scanner scanner){
 		this.img = inputRGBImage;
@@ -52,7 +51,6 @@ public class Exercise1 {
 		int freq_black=0;
 		for (int y=y1; y <= y2; y++){
 			for (int x=x1; x <= x2; x++){
-				//System.out.println(img.getRGBColor(x, y));
 				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
 					freq_black++;
 				}
@@ -91,9 +89,7 @@ public class Exercise1 {
 	    	counter++;		    	
 	    	int x=scanner.nextInt();
 	    	int y=scanner.nextInt();		    	
-	    	//System.out.println("("+x+","+y+")");
 	    	int f=drawRect(x-delta, y-delta, x+delta, y+delta, 0xFF0000FF);
-	    	//System.out.println(f);
     		Option option=new Option();
     		option.x=x;
     		option.y=y;
@@ -103,13 +99,12 @@ public class Exercise1 {
 	    	if (counter>6){
 	    		//Collections.sort(options);
 	    		InsertionSort.sort(options);
-		    		
+	
 	    		int thresh=40;
 	    		Option choice;
 	    		Option choice1=(Option)options.get(0);
 	    		Option choice2=(Option)options.get(1);
 	    		int dist=(choice1.f-choice2.f);
-	    		//System.out.println(choice1.f-choice2.f);
 		    		
 	    		if ((dist <= thresh) && (dist > 5)){
 	    			choice=choice2;
@@ -119,18 +114,17 @@ public class Exercise1 {
 	    			choice=choice1;
 	    		}
 		    		
+		    		
 	    		//disable heuristic by hardcoding choice to choice1!
 	    		choice=choice1;
-	    		//System.out.println(choice.f);
 		    		
-	    		if (choice.f <= 75)
+	    		if (choice.f <= 80)
 	    			choice=null;
 	    		//he shaded somthing
 	    		if (choice !=null){
 	    			fillRect(choice.x-delta, choice.y-delta, choice.x+delta, choice.y+delta, 0xFFFF0000);
 	    		}
 	    		options.clear();
-	    		//System.out.println("Q");
 	    		counter=0;
 	    	}
 	    }
@@ -175,23 +169,12 @@ class Option implements Comparable{
 	
 	public int compareTo(Object o){		
 		Option a=(Option)o;
-		//System.out.println(this.f+","+a.f);
 		return (a.f-this.f);		
 	}	
 }
 
 class InsertionSort {
-	/*
-	  Source: Wikipedia:
-	  insertionSort(array A)
-        for i = 1 to length[A]-1 do
-        value = A[i] 
-        j = i-1
-        while j >= 0 and A[j] > value do
-            A[j + 1] = A[j]
-            j = j-1
-        A[j+1] = value
-	*/
+	/*Source: Wikipedia: */
 	
 	public static void sort(List A){
 		int lengthA=A.size();
