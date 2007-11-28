@@ -9,8 +9,12 @@ In this exercise, our goal is to extract the results of the SET form. The SET fo
 
 The form image was binarized so that only two colors are used by the
 image. Then a bounding box was created to contain the options. A frequency
-count of black pixels wihtin the bounding box was obtained. Sorting based
+count of black pixels within the bounding box was obtained. Sorting based
 on the frequency count was done. The one with the highest frequency count
-was considered the choice of the respondent.
+was considered the choice of the respondent[1].
 
-http://cmsc291.googlecode.com/svn/trunk/src/main/com/jachsoft/cmsc291/exer1/Exercise1.java
+One drawback of the method used is that it was not able to properly
+detect crossed-out options.
+
+
+[1]http://cmsc291.googlecode.com/svn/trunk/src/main/com/jachsoft/cmsc291/exer1/Exercise1.java
