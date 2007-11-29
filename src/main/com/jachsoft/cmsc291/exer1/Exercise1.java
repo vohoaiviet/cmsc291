@@ -20,9 +20,10 @@ import com.jachsoft.imagelib.RGBImage;
  * Approach:
  *   1. Binarize the image
  *   2. Mark positions of options using a bounding box
- *   3. Compute the frequency of black in the bounding box
- *   4. Sort based on the frequency
- *   5. The one woth the highest frequency is the selected option
+ *   3. Bounding box is adjusted to obtain the minimal box
+ *   4. Compute the frequency of black in the bounding box
+ *   5. Sort based on the frequency
+ *   6. The one with the highest frequency is the selected option
  * 
  * @author Joseph Anthony C. Hermocilla
  * 
@@ -40,24 +41,75 @@ public class Exercise1 {
 		this.scanner=scanner;
 	}
 	
-	private void fillRect(int x1,int y1,int x2,int y2, int rgb){
-		for (int y=y1; y <= y2; y++)
-			for (int x=x1; x <= x2; x++){
+	private void fillRect(Option o, int rgb){
+		for (int y=o.y1; y <= o.y2; y++)
+			for (int x=o.x1; x <= o.x2; x++){
 				img.setRGB(x, y, rgb);
 			}
 	}
 	
-	private int drawRect(int x1,int y1,int x2,int y2, int rgb){
+	private int drawRect(Option o, int rgb){
+		boolean hit=false;
+		//top to bottom scan
+		for (int y=o.y1; !hit; y++){
+			for (int x=o.x1; x <= o.x2; x++){
+				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
+					o.y1=y;
+					hit=true;
+					break;
+				}
+			}
+		}
+
+		hit=false;
+		//bottom to top scan
+		for (int y=o.y2; !hit; y--){
+			for (int x=o.x1; x <= o.x2; x++){
+				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
+					o.y2=y;
+					hit=true;
+					break;
+				}
+			}
+		}
+
+
+		hit=false;
+		//left to right
+		for (int x=o.x1; !hit; x++){
+			for (int y=o.y1; y <= o.y2; y++){
+				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
+					o.x1=x;
+					hit=true;
+					break;
+				}
+			}
+		}
+
+
+		hit=false;
+		//right to left
+		for (int x=o.x2; !hit; x--){
+			for (int y=o.y1; y <= o.y2; y++){
+				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
+					o.x2=x;
+					hit=true;
+					break;
+				}
+			}
+		}
+
+
 		int freq_black=0;
-		for (int y=y1; y <= y2; y++){
-			for (int x=x1; x <= x2; x++){
+		for (int y=o.y1; y <= o.y2; y++){
+			for (int x=o.x1; x <= o.x2; x++){
 				if (img.getRGBColor(x, y).equals(RGBColor.BLACK)){
 					freq_black++;
 				}
-				if (x==x1 || x==x2){
+				if (x==o.x1 || x==o.x2){
 					img.setRGB(x, y, rgb);
 				}
-				if (y==y1 || y==y2){
+				if (y==o.y1 || y==o.y2){
 					img.setRGB(x, y, rgb);
 				}
 			}		
@@ -89,40 +141,32 @@ public class Exercise1 {
 	    	counter++;		    	
 	    	int x=scanner.nextInt();
 	    	int y=scanner.nextInt();		    	
-	    	int f=drawRect(x-delta, y-delta, x+delta, y+delta, 0xFF0000FF);
     		Option option=new Option();
     		option.x=x;
     		option.y=y;
-    		option.f=f;
-    		options.add(option);
+			option.x1=x-delta;
+			option.y1=y-delta;
+			option.x2=x+delta;
+			option.y2=y+delta;
+	    	option.f=drawRect(option, 0xFF0000FF);
+    		
+			options.add(option);
 
 	    	if (counter>6){
 	    		//Collections.sort(options);
 	    		InsertionSort.sort(options);
 	
-	    		int thresh=40;
-	    		Option choice;
-	    		Option choice1=(Option)options.get(0);
+	    		Option choice=(Option)options.get(0);
 	    		Option choice2=(Option)options.get(1);
-	    		int dist=(choice1.f-choice2.f);
-		    		
-	    		if ((dist <= thresh) && (dist > 5)){
-	    			choice=choice2;
-	    		}else if (dist <= 5){
-	    			choice=null;
-	    		}else{
-	    			choice=choice1;
-	    		}
-		    		
-		    		
-	    		//disable heuristic by hardcoding choice to choice1!
-	    		choice=choice1;
+			
+				if ((choice.getPerimeter() - choice2.getPerimeter()) > 10)
+						  choice=choice2;				
 		    		
 	    		if (choice.f <= 80)
 	    			choice=null;
 	    		//he shaded somthing
 	    		if (choice !=null){
-	    			fillRect(choice.x-delta, choice.y-delta, choice.x+delta, choice.y+delta, 0xFFFF0000);
+	    			fillRect(choice, 0xFFFF0000);
 	    		}
 	    		options.clear();
 	    		counter=0;
@@ -151,7 +195,7 @@ public class Exercise1 {
 			exer1=new Exercise1(img,scanner);
 			exer1.process();
 			ImageIO.write(img.getBufferedImage(),"jpg",new File("output.jpg"));
-			System.out.println(exer1.getTime()+"ms");
+			System.out.println("Time: "+exer1.getTime()+" ms");
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
@@ -163,6 +207,7 @@ public class Exercise1 {
 
 /*Options*/
 class Option implements Comparable{
+	int x1,y1,x2,y2;
 	int x;
 	int y;
 	int f;
@@ -170,12 +215,15 @@ class Option implements Comparable{
 	public int compareTo(Object o){		
 		Option a=(Option)o;
 		return (a.f-this.f);		
-	}	
+	}
+
+	public int getPerimeter(){
+		return (2*(x2-x1)+2*(y2-y1));
+	}
+	
 }
 
 class InsertionSort {
-	/*Source: Wikipedia: */
-	
 	public static void sort(List A){
 		int lengthA=A.size();
 		for (int i=1; i<=(lengthA-1);i++){
