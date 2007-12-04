@@ -17,7 +17,7 @@ public class RGBImage{
     
     
 	public RGBImage(int w,int h){
-		bimg=new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
+		bimg=new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
 	}
 	
 	public void setRGB(int x, int y, int r, int g, int b){
@@ -48,6 +48,16 @@ public class RGBImage{
 	
 	public int getHeight(){
 		return bimg.getHeight();
+	}
+	
+	public void clear(){
+		int width=bimg.getWidth();
+		int height=bimg.getHeight();
+		for (int y=0;y < height;y++){
+			for (int x=0;x < width;x++){
+				bimg.setRGB(x, y, 0xFF000000);
+			}
+		}
 	}
 	
 }
