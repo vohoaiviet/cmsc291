@@ -20,13 +20,15 @@ public class TestHistogram extends TestCase {
 			img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
 					
 			GrayScaleImage gray = img.getGrayScaleImage();
-			
+			ImageIO.write(gray.getBufferedImage(),"jpg",new File("gray.jpg"));			
 			hist=new Histogram(gray);
+			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("gray-hist.jpg"));
 			
-			System.out.println(hist.getMax());
-			System.out.println(hist.getMin());
-		
-			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("hist.jpg"));
+			gray=hist.equalize();
+			ImageIO.write(gray.getBufferedImage(),"jpg",new File("equalized.jpg"));
+			hist=new Histogram(gray);
+			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("equalized-hist.jpg"));
+			
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
