@@ -26,8 +26,11 @@ public class TestGrayScaleImage extends TestCase {
 			int h=gray.getHeight();
 			for (int y=0;y<h;y++){
 				for (int x=0;x<w;x++){
-					float color=gray.getColor(x, y);
-					gray.setColor(x, y, 1-color);
+					float r=gray.getColor(x, y);
+					//color = 1-color;
+					double s= 5.0 * Math.log(1+r);
+					
+					gray.setColor(x, y, (float)s);
 				}
 			}
 			
