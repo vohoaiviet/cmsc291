@@ -21,6 +21,14 @@ public class GrayScaleImage {
 		data[y*width+x]=color;
 	}
 	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
 	public BufferedImage getBufferedImage(){
 		RGBImage rgbImage = new RGBImage(width,height);
 		
@@ -32,6 +40,6 @@ public class GrayScaleImage {
 			}
 		}
 		return rgbImage.getBufferedImage();
-	}
+	}	
 	
 }
