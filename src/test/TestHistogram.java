@@ -17,14 +17,14 @@ public class TestHistogram extends TestCase {
 		Histogram hist=null;
 		
 		try{
-			img=new RGBImage(ImageIO.read(new File("data/sample2.jpg")));
+			img=new RGBImage(ImageIO.read(new File("data/father2.jpg")));
 					
 			GrayScaleImage gray = img.getGrayScaleImage();
 			ImageIO.write(gray.getBufferedImage(),"jpg",new File("gray.jpg"));			
 			hist=new Histogram(gray);
 			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("gray-hist.jpg"));
 			
-			//gray=hist.equalize(800,450,100,100);
+			//gray=hist.equalize(200,200,200,200);
 			gray=hist.equalize();
 			ImageIO.write(gray.getBufferedImage(),"jpg",new File("equalized.jpg"));
 			hist=new Histogram(gray);
