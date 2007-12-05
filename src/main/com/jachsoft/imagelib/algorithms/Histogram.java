@@ -1,15 +1,15 @@
 package com.jachsoft.imagelib.algorithms;
 
+import com.jachsoft.imagelib.GrayScaleImage;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class Histogram {
-	RGBImage target;
-	int redHist[]=new int[256];
-	int greenHist[]=new int[256];
-	int blueHist[]=new int[256];
+	GrayScaleImage target;
+	int h[]=new int[256];
+	float p[]=new float[256]; 
 	
-	public Histogram(RGBImage target){
+	public Histogram(GrayScaleImage target){
 		this.target=target;
 		
 		int width=target.getWidth();
@@ -17,94 +17,45 @@ public class Histogram {
 		
 		for (int y=0;y<height;y++){
 			for (int x=0;x<width;x++){
-				RGBColor color=target.getRGBColor(x, y);
-				redHist[color.getRed()]++;
-				greenHist[color.getGreen()]++;
-				blueHist[color.getBlue()]++;
+				float color=target.getColor(x, y);
+				float scaled=color*255;
+				h[(int)scaled]++;
 			}
 		}		
 	}
 	
 	
-	public int getRedMax(){
+	public int getMax(){
 		int max=0;
 		for (int i=1;i<256;i++){
-			if (redHist[i] > redHist[max])
+			if (h[i] > h[max])
 				max=i;
 		}
 		return max;
 	}
 	
-	public int getRedMin(){
+	public int getMin(){
 		int min=0;
 		for (int i=1;i<256;i++){
-			if (redHist[i] < redHist[min])
+			if (h[i] < h[min])
 				min=i;
 		}
 		return min;
 	}
 	
-	public int getBlueMax(){
-		int max=0;
-		for (int i=1;i<256;i++){
-			if (blueHist[i] > blueHist[max])
-				max=i;
-		}
-		return max;
-	}
 	
-	public int getBlueMin(){
-		int min=0;
-		for (int i=1;i<256;i++){
-			if (blueHist[i] < blueHist[min])
-				min=i;
-		}
-		return min;
-	}
-	
-	public int getGreenMax(){
-		int max=0;
-		for (int i=1;i<256;i++){
-			if (greenHist[i] > greenHist[max])
-				max=i;
-		}
-		return max;
-	}
-	
-	public int getGreenMin(){
-		int min=0;
-		for (int i=1;i<256;i++){
-			if (greenHist[i] < greenHist[min])
-				min=i;
-		}
-		return min;
-	}
-	
-	public RGBImage getHistogramAsImage(int channel){
+	public RGBImage getHistogramAsImage(){
 		int max=0;		
 		RGBImage retval=null;
-		int data[]=null;
 		int color=0;
 		
-		if (channel == 0){
-			max=getRedMax();
-			data=redHist;
-			color=0xFFFF0000;
-		}else if (channel == 2){
-			max=getBlueMax();
-			data=blueHist;
-			color=0xFF0000FF;
-		}else if (channel == 1){
-			max=getGreenMax();
-			data=greenHist;
-			color=0xFF00FF00;
-		}
+		max=getMax();
+		color=0xFFFFFFFF;
 		
 		retval=new RGBImage(256,100);
-		//retval.clear();
 		
 		for (int x=0;x<256;x++){
-			int scaled=(int)(data[x]*(100.0/data[max]));
+			int scaled=(int)(h[x]*(100.0/h[max]));
 			for (int y=0;y<scaled;y++){
 				retval.setRGB(x, 100-1-y, color);
 			}

@@ -14,7 +14,6 @@ import junit.framework.TestCase;
 public class TestGrayScaleImage extends TestCase {
 	public void testNow(){
 		RGBImage img=null;
-		Histogram hist=null;
 		
 		try{
 			img=new RGBImage(ImageIO.read(new File("data/father.jpg")));
@@ -27,8 +26,7 @@ public class TestGrayScaleImage extends TestCase {
 			for (int y=0;y<h;y++){
 				for (int x=0;x<w;x++){
 					float r=gray.getColor(x, y);
-					//color = 1-color;
-					double s= 5.0 * Math.log(1+r);
+					double s = 1-r;
 					
 					gray.setColor(x, y, (float)s);
 				}
