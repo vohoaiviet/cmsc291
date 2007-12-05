@@ -24,30 +24,40 @@ public class Histogram {
 		}		
 	}
 	
-	public GrayScaleImage equalize(){
-		GrayScaleImage retval=new GrayScaleImage(target.getWidth(),target.getHeight());
-		
+	public GrayScaleImage equalize(int ulx,int uly,int w,int h){
 		int width=target.getWidth();
 		int height=target.getHeight();
+		GrayScaleImage retval=new GrayScaleImage(width,height);
+
 		
 		for (int y=0;y<height;y++){
 			for (int x=0;x<width;x++){
 				float color=target.getColor(x, y);
-				float scaled=color*255;
-				int grayLevel=(int)scaled;
+				float sk=color;
+				if ((x>=ulx && x<=ulx+w) && (y>=uly && y<=uly+h))
+				{
 				
-				float sk=0;
-				for (int i=0;i<=grayLevel;i++){
-					sk=sk+p[i];
+					float scaled=color*255;
+					int grayLevel=(int)scaled;
+				
+					sk=0;
+					for (int i=0;i<=grayLevel;i++){
+						sk=sk+p[i];
+					}
 				}
 				retval.setColor(x, y, sk);
 			}
 		}
-		
 		return retval;
 		
 	}
 	
+	
+	public GrayScaleImage equalize(){
+		return equalize(0,0,target.getWidth(),target.getHeight());
+		
+	}
+
 	
 	public int getMax(){
 		int max=0;
