@@ -1,16 +1,31 @@
 package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.GrayScaleImage;
-import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class Histogram {
 	GrayScaleImage target;
 	int h[]=new int[256];
-	float p[]=new float[256]; 
+	float p[]=new float[256];
 	
 	public Histogram(GrayScaleImage target){
 		this.target=target;
+		int width=target.getWidth();
+		int height=target.getHeight();
+		
+		for (int y=0;y<height;y++){
+			for (int x=0;x<width;x++){
+				float color=target.getColor(x, y);
+				float scaled=color*255;
+				int grayLevel=(int)scaled;
+				h[grayLevel]++;				
+				p[grayLevel]=(float)h[grayLevel]/(width*height);
+			}
+		}		
+	}
+	
+	public GrayScaleImage equalize(){
+		GrayScaleImage retval=new GrayScaleImage(target.getWidth(),target.getHeight());
 		
 		int width=target.getWidth();
 		int height=target.getHeight();
@@ -19,9 +34,18 @@ public class Histogram {
 			for (int x=0;x<width;x++){
 				float color=target.getColor(x, y);
 				float scaled=color*255;
-				h[(int)scaled]++;
+				int grayLevel=(int)scaled;
+				
+				float sk=0;
+				for (int i=0;i<=grayLevel;i++){
+					sk=sk+p[i];
+				}
+				retval.setColor(x, y, sk);
 			}
-		}		
+		}
+		
+		return retval;
+		
 	}
 	
 	

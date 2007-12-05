@@ -1,6 +1,5 @@
 package com.jachsoft.cmsc291.exer1;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 
 import com.jachsoft.imagelib.GrayScaleImage;
 import com.jachsoft.imagelib.RGBImage;
-import com.jachsoft.imagelib.algorithms.Histogram;
 
 import junit.framework.TestCase;
 

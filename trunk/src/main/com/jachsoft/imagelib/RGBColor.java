@@ -5,7 +5,6 @@ public class RGBColor {
 	private int r;
 	private int g;
 	private int b;
-	private int a;
 	
 	
 	public static RGBColor BLACK = new RGBColor(0x00,0x00,0x00); 
@@ -34,7 +33,6 @@ public class RGBColor {
 		b = color & 255;
 		g = (color >> 8) & 255;
 		r = (color >> 16) & 255;
-		a = (color >> 24) & 255;
 	}
 	
 	
