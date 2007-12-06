@@ -193,6 +193,7 @@ public class Exercise1 {
 			
 			exer1=new Exercise1(img,scanner);
 			exer1.process();
+			
 			ImageIO.write(img.getBufferedImage(),"jpg",new File("output.jpg"));
 			System.out.println("Time: "+exer1.getTime()+" ms");
 		}catch(IOException ioe){
