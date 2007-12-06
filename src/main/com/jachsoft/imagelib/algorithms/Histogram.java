@@ -19,25 +19,20 @@ public class Histogram {
 	
 	public Histogram(RGBImage rgb){
 		this.rgb=rgb;
+		process(this.rgb,0,0,rgb.getWidth(),rgb.getHeight());
 	}
-
 	
-	public RGBImage equalize(int ulx,int uly,int w,int h){
-		int width=rgb.getWidth();
-		int height=rgb.getHeight();
+	public void process(RGBImage rgb,int ulx,int uly,int w,int h){
+		this.rgb=rgb;
 		int n=w*h;
-		RGBImage retval=new RGBImage(width,height);
 		
-		//Do frequency count
+//		Do frequency count
 		for (int y=uly;y<uly+h;y++){
 			for (int x=ulx;x<ulx+w;x++){
-				//if ((x>=ulx && x<=ulx+w) && (y>=uly && y<=uly+h))
-				{
-					RGBColor color=rgb.getRGBColor(x, y);
-					hr[color.getRed()]++;				
-					hg[color.getGreen()]++;				
-					hb[color.getBlue()]++;
-				}
+				RGBColor color=rgb.getRGBColor(x, y);
+				hr[color.getRed()]++;				
+				hg[color.getGreen()]++;				
+				hb[color.getBlue()]++;
 			}
 		}
 		
@@ -47,6 +42,15 @@ public class Histogram {
 			pg[i]=(float)hg[i]/n;
 			pb[i]=(float)hb[i]/n;
 		}
+	}
+
+	
+	public RGBImage equalize(int ulx,int uly,int w,int h){
+		int width=rgb.getWidth();
+		int height=rgb.getHeight();
+		RGBImage retval=new RGBImage(width,height);
+		
+		
 		
 		//compute new sk
 		for (int i=1;i<256;i++){
@@ -118,18 +122,17 @@ public class Histogram {
 	
 	public RGBImage getHistogramAsImage(int channel){
 		int h[]=null;
+		int color=0;
 		switch(channel){
-			case RED:h=hr;break;
-			case GREEN:h=hg;break;
-			case BLUE:h=hb;break;
+			case RED:h=hr;color=0xFFFF0000;break;
+			case GREEN:h=hg;color=0xFF00FF00;break;
+			case BLUE:h=hb;color=0xFF0000FF;break;
 		}
 
 		int max=0;		
 		RGBImage retval=null;
-		int color=0;
 		
 		max=getMax(channel);
-		color=0xFFFFFFFF;
 		
 		retval=new RGBImage(256,100);
 		
