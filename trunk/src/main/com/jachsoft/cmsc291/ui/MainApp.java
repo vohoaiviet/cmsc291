@@ -2,6 +2,7 @@ package com.jachsoft.cmsc291.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -18,9 +19,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 import com.jachsoft.cmsc291.exer1.Exercise1;
 import com.jachsoft.imagelib.RGBImage;
+import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Histogram;
 
 
@@ -37,6 +44,8 @@ public class MainApp implements ActionListener {
 	JMenuItem histogramAction = new JMenuItem("View Image Histogram");
 	JMenuItem equalizeAction = new JMenuItem("Histogram Equalization");
 	JMenuItem negativeAction = new JMenuItem("Negative");
+	JMenuItem thresholdAction = new JMenuItem("Threshold");
+	JMenuItem contrastAction = new JMenuItem("Contrast Stretching");
 	
 	JMenuItem aboutHelp = new JMenuItem("About");
 	
@@ -62,6 +71,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(histogramAction);
 		actionMenu.add(equalizeAction);
 		actionMenu.add(negativeAction);
+		actionMenu.add(contrastAction);
+		actionMenu.add(thresholdAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -77,6 +88,8 @@ public class MainApp implements ActionListener {
 		setAction.addActionListener(this);
 		negativeAction.addActionListener(this);
 		aboutHelp.addActionListener(this);
+		contrastAction.addActionListener(this);
+		thresholdAction.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -91,6 +104,42 @@ public class MainApp implements ActionListener {
 	public void actionPerformed(ActionEvent ae){
 		if (ae.getSource().equals(aboutHelp)){
 			JOptionPane.showMessageDialog(frame, "by Joseph Anthony C. Hermocilla\nfor\nCMSC 291");
+		}
+		if (ae.getSource().equals(thresholdAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			ContrastStretching con= new ContrastStretching(rgb);
+			
+			JSlider slider=new JSlider(0,255,127);
+				
+			JOptionPane.showMessageDialog(frame, slider);
+			int t=slider.getValue();
+			con.setParameters(t, 0, t, 255);
+			imagePanel.setImage(con.apply().getBufferedImage());
+			
+			
+		}
+		if (ae.getSource().equals(contrastAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			ContrastStretching con= new ContrastStretching(rgb);
+			
+			JPanel p=new JPanel();
+
+			JSlider sliderR1=new JSlider(0,255,127);
+			JSlider sliderS1=new JSlider(0,255,127);
+			JSlider sliderR2=new JSlider(0,255,127);
+			JSlider sliderS2=new JSlider(0,255,127);
+				
+			p.setLayout(new GridLayout(4,1));
+			p.add(sliderR1);
+			p.add(sliderS1);
+			p.add(sliderR2);
+			p.add(sliderS2);
+			
+			JOptionPane.showMessageDialog(frame, p);
+			con.setParameters(sliderR1.getValue(), sliderS1.getValue(), sliderR1.getValue(), sliderS2.getValue());
+			imagePanel.setImage(con.apply().getBufferedImage());
+			
+			
 		}
 		if (ae.getSource().equals(negativeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
