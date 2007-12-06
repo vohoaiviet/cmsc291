@@ -4,9 +4,11 @@
     </description>
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
+  <property name="src.test" location="${src}/test"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
   <property name="lib"  location="lib"/>
+  <property name="build.test"  location="${build}/test"/>
   
   <!-- Classpath (without classes fetched from Maven repositories) -->
   <path id="build.classpath">
@@ -22,6 +24,7 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
+    <mkdir dir="${build.test}"/>
   </target>
 
   <target name="compile" depends="init"
@@ -46,5 +49,23 @@
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
+  </target>
+
+
+  <target name="test" depends="compile" 
+        description="runs the tests" >
+
+    <junit printsummary="yes" haltonfailure="yes">
+	    <classpath refid="build.classpath"/>
+
+      <formatter type="plain"/>
+
+      <batchtest fork="yes" todir="${build.test}">
+        <fileset dir="${src.test}">
+          <include name="**/*Test*.java"/>
+          <exclude name="**/AllTests.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
   </target>
 </project>
