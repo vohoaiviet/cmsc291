@@ -1,5 +1,6 @@
 package com.jachsoft.cmsc291.ui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,7 @@ public class ImagePanel extends JPanel {
 		
 	public void setImage(BufferedImage image){
 		this.image = image;
+		this.setPreferredSize(new Dimension(image.getWidth(),image.getHeight()));
 		repaint();
 	}
 

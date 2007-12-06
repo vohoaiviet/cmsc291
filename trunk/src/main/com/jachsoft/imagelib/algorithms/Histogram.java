@@ -19,32 +19,36 @@ public class Histogram {
 	
 	public Histogram(RGBImage rgb){
 		this.rgb=rgb;
-		int width=rgb.getWidth();
-		int height=rgb.getHeight();
-		int n=width*height;
-		
-		for (int y=0;y<height;y++){
-			for (int x=0;x<width;x++){
-				RGBColor color=rgb.getRGBColor(x, y);
-				hr[color.getRed()]++;				
-				hg[color.getGreen()]++;				
-				hb[color.getBlue()]++;				
-			}
-		}
-
-		for (int i=0;i<256;i++){		
-			pr[i]=(float)hr[i]/n;
-			pg[i]=(float)hg[i]/n;
-			pb[i]=(float)hb[i]/n;
-		}
 	}
 
 	
 	public RGBImage equalize(int ulx,int uly,int w,int h){
 		int width=rgb.getWidth();
 		int height=rgb.getHeight();
+		int n=w*h;
 		RGBImage retval=new RGBImage(width,height);
-
+		
+		//Do frequency count
+		for (int y=0;y<height;y++){
+			for (int x=0;x<width;x++){
+				//if ((x>=ulx && x<=ulx+w) && (y>=uly && y<=uly+h))
+				{
+					RGBColor color=rgb.getRGBColor(x, y);
+					hr[color.getRed()]++;				
+					hg[color.getGreen()]++;				
+					hb[color.getBlue()]++;
+				}
+			}
+		}
+		
+		//compute probability
+		for (int i=0;i<256;i++){		
+			pr[i]=(float)hr[i]/n;
+			pg[i]=(float)hg[i]/n;
+			pb[i]=(float)hb[i]/n;
+		}
+		
+		//compute new sk
 		for (int i=1;i<256;i++){
 			pr[i]=pr[i]+pr[i-1];
 			pg[i]=pg[i]+pg[i-1];
@@ -54,6 +58,7 @@ public class Histogram {
 			hb[i]=(int)(pb[i]*255);
 		}
 		
+		//Draw it
 		for (int y=0;y<height;y++){
 			for (int x=0;x<width;x++){
 				RGBColor color=rgb.getRGBColor(x, y);
@@ -63,6 +68,8 @@ public class Histogram {
 					int green=hg[color.getGreen()];
 					int blue=hb[color.getBlue()];
 					retval.setRGB(x, y,red,green,blue);	
+				}else{
+					retval.setRGB(x, y,color.getRed(),color.getGreen(),color.getBlue());
 				}
 			}
 		}
