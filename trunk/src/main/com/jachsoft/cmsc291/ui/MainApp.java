@@ -253,7 +253,7 @@ public class MainApp implements ActionListener {
 		if (ae.getSource().equals(equalizeAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Histogram hist= new Histogram(rgb);
-			imagePanel.setImage(hist.equalize(100,100,100,100).getBufferedImage());
+			imagePanel.setImage(hist.equalize().getBufferedImage());
 		}
 		if (ae.getSource().equals(histogramAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
