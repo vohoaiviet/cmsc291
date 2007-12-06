@@ -1,4 +1,4 @@
-package src.test;
+package com.jachsoft.imagelib.algorithms;
 
 import java.io.File;
 import java.io.IOException;
