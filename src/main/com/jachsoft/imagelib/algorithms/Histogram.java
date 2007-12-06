@@ -29,8 +29,8 @@ public class Histogram {
 		RGBImage retval=new RGBImage(width,height);
 		
 		//Do frequency count
-		for (int y=0;y<height;y++){
-			for (int x=0;x<width;x++){
+		for (int y=uly;y<uly+h;y++){
+			for (int x=ulx;x<ulx+w;x++){
 				//if ((x>=ulx && x<=ulx+w) && (y>=uly && y<=uly+h))
 				{
 					RGBColor color=rgb.getRGBColor(x, y);
@@ -62,7 +62,7 @@ public class Histogram {
 		for (int y=0;y<height;y++){
 			for (int x=0;x<width;x++){
 				RGBColor color=rgb.getRGBColor(x, y);
-				if ((x>=ulx && x<=ulx+w) && (y>=uly && y<=uly+h))
+				if ((x>=ulx && x<ulx+w) && (y>=uly && y<uly+h))
 				{
 					int red=hr[color.getRed()];
 					int green=hg[color.getGreen()];
