@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import com.jachsoft.cmsc291.exer1.Exercise1;
 import com.jachsoft.imagelib.RGBImage;
@@ -28,12 +29,14 @@ public class MainApp implements ActionListener {
 	JMenuBar menubar=new JMenuBar();
 	JMenu fileMenu=new JMenu("File");
 	JMenu actionMenu=new JMenu("Action");
+	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
 	JMenuItem saveFile = new JMenuItem("Save");
 	JMenuItem grayScaleAction = new JMenuItem("Grayscale");	
 	JMenuItem setAction = new JMenuItem("Student Evaluation");
 	JMenuItem histogramAction = new JMenuItem("View Image Histogram");
 	JMenuItem equalizeAction = new JMenuItem("Histogram Equalization");
+	JMenuItem aboutHelp = new JMenuItem("About");
 	
 	ImagePanel imagePanel=new ImagePanel();
 	JFileChooser chooser=new JFileChooser();
@@ -47,6 +50,7 @@ public class MainApp implements ActionListener {
 		frame.getContentPane().add(imagePanel, BorderLayout.CENTER);
 		menubar.add(fileMenu);
 		menubar.add(actionMenu);
+		menubar.add(helpMenu);
 		
 		fileMenu.add(openFile);
 		fileMenu.add(saveFile);
@@ -55,6 +59,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(setAction);
 		actionMenu.add(histogramAction);
 		actionMenu.add(equalizeAction);
+		
+		helpMenu.add(aboutHelp);
 		
 		
 		frame.setJMenuBar(menubar);
@@ -66,6 +72,7 @@ public class MainApp implements ActionListener {
 		equalizeAction.addActionListener(this);
 		histogramAction.addActionListener(this);
 		setAction.addActionListener(this);
+		aboutHelp.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -78,6 +85,9 @@ public class MainApp implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(aboutHelp)){
+			JOptionPane.showMessageDialog(frame, "by Joseph Anthony C. Hermocilla\nfor\nCMSC 291");
+		}
 		if (ae.getSource().equals(openFile)){
 		    int returnVal = chooser.showOpenDialog(frame);
 		    if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -137,5 +147,6 @@ public class MainApp implements ActionListener {
 		    	}
 		    }		    			
 		}
+		
 	}
 }
