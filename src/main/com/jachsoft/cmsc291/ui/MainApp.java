@@ -20,7 +20,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
@@ -28,6 +30,8 @@ import javax.swing.plaf.basic.BasicSliderUI;
 import com.jachsoft.cmsc291.exer1.Exercise1;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
+import com.jachsoft.imagelib.algorithms.DynamicCompression;
+import com.jachsoft.imagelib.algorithms.GraySlicing;
 import com.jachsoft.imagelib.algorithms.Histogram;
 
 
@@ -46,6 +50,8 @@ public class MainApp implements ActionListener {
 	JMenuItem negativeAction = new JMenuItem("Negative");
 	JMenuItem thresholdAction = new JMenuItem("Threshold");
 	JMenuItem contrastAction = new JMenuItem("Contrast Stretching");
+	JMenuItem compressAction = new JMenuItem("Dynamic Range Compression");
+	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	
 	JMenuItem aboutHelp = new JMenuItem("About");
 	
@@ -57,8 +63,8 @@ public class MainApp implements ActionListener {
 	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		imagePanel.setPreferredSize(new Dimension(1024,768));
-		frame.getContentPane().add(imagePanel, BorderLayout.CENTER);
+		imagePanel.setPreferredSize(new Dimension(800,600));
+		frame.getContentPane().add(new JScrollPane(imagePanel), BorderLayout.CENTER);
 		menubar.add(fileMenu);
 		menubar.add(actionMenu);
 		menubar.add(helpMenu);
@@ -73,6 +79,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(negativeAction);
 		actionMenu.add(contrastAction);
 		actionMenu.add(thresholdAction);
+		actionMenu.add(compressAction);
+		actionMenu.add(sliceAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -90,6 +98,8 @@ public class MainApp implements ActionListener {
 		aboutHelp.addActionListener(this);
 		contrastAction.addActionListener(this);
 		thresholdAction.addActionListener(this);
+		sliceAction.addActionListener(this);
+		compressAction.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -104,6 +114,66 @@ public class MainApp implements ActionListener {
 	public void actionPerformed(ActionEvent ae){
 		if (ae.getSource().equals(aboutHelp)){
 			JOptionPane.showMessageDialog(frame, "by Joseph Anthony C. Hermocilla\nfor\nCMSC 291");
+		}
+		if (ae.getSource().equals(sliceAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			GraySlicing con= new GraySlicing(rgb);
+			
+			JPanel p=new JPanel();
+
+			JSlider sliderR0=new JSlider(0,255,0);
+			sliderR0.setPaintLabels(true);
+			sliderR0.setPaintTicks(true);
+			JSlider sliderS0=new JSlider(0,255,60);
+			sliderS0.setPaintLabels(true);
+			sliderS0.setPaintTicks(true);
+			JSlider sliderR1=new JSlider(0,255,63);
+			sliderR1.setPaintLabels(true);
+			sliderR1.setPaintTicks(true);
+			JSlider sliderS1=new JSlider(0,255,60);
+			sliderS1.setPaintLabels(true);
+			sliderS1.setPaintTicks(true);
+			JSlider sliderR2=new JSlider(0,255,126);
+			sliderR2.setPaintLabels(true);
+			sliderR2.setPaintTicks(true);
+			JSlider sliderS2=new JSlider(0,255,60);
+			sliderS2.setPaintLabels(true);
+			sliderS2.setPaintTicks(true);
+			JSlider sliderR3=new JSlider(0,255,255);
+			sliderR2.setPaintLabels(true);
+			sliderR2.setPaintTicks(true);
+			JSlider sliderS3=new JSlider(0,255,60);
+			sliderS2.setPaintLabels(true);
+			sliderS2.setPaintTicks(true);
+			JSlider sliderIntensity=new JSlider(0,255,200);
+			sliderIntensity.setPaintLabels(true);
+			sliderIntensity.setPaintTicks(true);
+				
+			p.setLayout(new GridLayout(9,1));
+			p.add(sliderR0);
+			p.add(sliderS0);
+			p.add(sliderR1);
+			p.add(sliderS1);
+			p.add(sliderR2);
+			p.add(sliderS2);
+			p.add(sliderR3);
+			p.add(sliderS3);
+			p.add(sliderIntensity);
+			
+			JOptionPane.showMessageDialog(frame, p);
+			con.setParameters(sliderR0.getValue(),sliderS0.getValue(),sliderR1.getValue(), sliderS1.getValue(), 
+					sliderR2.getValue(), sliderS2.getValue(),sliderR3.getValue(), sliderS3.getValue(),sliderIntensity.getValue());
+			imagePanel.setImage(con.apply().getBufferedImage());
+		}
+		if (ae.getSource().equals(compressAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			DynamicCompression operator= new DynamicCompression(rgb);
+			JSlider slider=new JSlider(1,255,1);			
+			JOptionPane.showMessageDialog(frame, slider);
+			operator.setParameter(10);
+			imagePanel.setImage(operator.apply().getBufferedImage());
+			
+			
 		}
 		if (ae.getSource().equals(thresholdAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -125,9 +195,17 @@ public class MainApp implements ActionListener {
 			JPanel p=new JPanel();
 
 			JSlider sliderR1=new JSlider(0,255,127);
+			sliderR1.setPaintLabels(true);
+			sliderR1.setPaintTicks(true);
 			JSlider sliderS1=new JSlider(0,255,127);
+			sliderS1.setPaintLabels(true);
+			sliderS1.setPaintTicks(true);
 			JSlider sliderR2=new JSlider(0,255,127);
+			sliderR2.setPaintLabels(true);
+			sliderR2.setPaintTicks(true);
 			JSlider sliderS2=new JSlider(0,255,127);
+			sliderS2.setPaintLabels(true);
+			sliderS2.setPaintTicks(true);
 				
 			p.setLayout(new GridLayout(4,1));
 			p.add(sliderR1);
@@ -175,7 +253,7 @@ public class MainApp implements ActionListener {
 		if (ae.getSource().equals(equalizeAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Histogram hist= new Histogram(rgb);
-			imagePanel.setImage(hist.equalize().getBufferedImage());
+			imagePanel.setImage(hist.equalize(100,100,100,100).getBufferedImage());
 		}
 		if (ae.getSource().equals(histogramAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
