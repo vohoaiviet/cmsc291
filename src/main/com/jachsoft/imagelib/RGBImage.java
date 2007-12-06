@@ -55,6 +55,25 @@ public class RGBImage{
 		return gray;
 	}
 	
+	public RGBImage getNegative(){
+		int w = bimg.getWidth();
+		int h = bimg.getHeight();
+		
+		RGBImage retval = new RGBImage(w,h);
+				
+		for (int y=0; y < h;y++){
+			for (int x=0; x < w; x++){
+				RGBColor col=this.getRGBColor(x, y);
+				int r=255-col.getRed();			
+				int g=255-col.getGreen();
+				int b=255-col.getBlue();
+					
+				retval.setRGB(x, y, r, g, b);
+			}
+		}
+		return retval;
+	}
+	
 	public GrayScaleImage getGrayScaleImage(){
 		return getGrayScaleImage(0.333f,0.333f,0.333f);		
 	}

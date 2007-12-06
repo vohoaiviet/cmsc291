@@ -21,15 +21,17 @@ public class TestHistogram extends TestCase {
 					
 			GrayScaleImage gray = img.getGrayScaleImage();
 			ImageIO.write(gray.getBufferedImage(),"jpg",new File("gray.jpg"));			
-			hist=new Histogram(gray);
-			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("gray-hist.jpg"));
+			hist=new Histogram(img);
+			ImageIO.write(hist.getHistogramAsImage(Histogram.RED).getBufferedImage(),"jpg",new File("orig-red-hist.jpg"));
+			ImageIO.write(hist.getHistogramAsImage(Histogram.GREEN).getBufferedImage(),"jpg",new File("orig-green-hist.jpg"));
+			ImageIO.write(hist.getHistogramAsImage(Histogram.BLUE).getBufferedImage(),"jpg",new File("orig-blue-hist.jpg"));
 			
-			//gray=hist.equalize(200,200,200,200);
-			gray=hist.equalize();
-			ImageIO.write(gray.getBufferedImage(),"jpg",new File("equalized.jpg"));
-			hist=new Histogram(gray);
-			ImageIO.write(hist.getHistogramAsImage().getBufferedImage(),"jpg",new File("equalized-hist.jpg"));
-			
+			img=hist.equalize();
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("equalized.jpg"));
+			hist=new Histogram(img);
+			ImageIO.write(hist.getHistogramAsImage(Histogram.RED).getBufferedImage(),"jpg",new File("equalized-red-hist.jpg"));
+			ImageIO.write(hist.getHistogramAsImage(Histogram.GREEN).getBufferedImage(),"jpg",new File("equalized-green-hist.jpg"));
+			ImageIO.write(hist.getHistogramAsImage(Histogram.BLUE).getBufferedImage(),"jpg",new File("equalized-blue.jpg"));
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}

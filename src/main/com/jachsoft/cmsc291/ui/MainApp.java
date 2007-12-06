@@ -36,6 +36,8 @@ public class MainApp implements ActionListener {
 	JMenuItem setAction = new JMenuItem("Student Evaluation");
 	JMenuItem histogramAction = new JMenuItem("View Image Histogram");
 	JMenuItem equalizeAction = new JMenuItem("Histogram Equalization");
+	JMenuItem negativeAction = new JMenuItem("Negative");
+	
 	JMenuItem aboutHelp = new JMenuItem("About");
 	
 	ImagePanel imagePanel=new ImagePanel();
@@ -59,6 +61,7 @@ public class MainApp implements ActionListener {
 		actionMenu.add(setAction);
 		actionMenu.add(histogramAction);
 		actionMenu.add(equalizeAction);
+		actionMenu.add(negativeAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -72,6 +75,7 @@ public class MainApp implements ActionListener {
 		equalizeAction.addActionListener(this);
 		histogramAction.addActionListener(this);
 		setAction.addActionListener(this);
+		negativeAction.addActionListener(this);
 		aboutHelp.addActionListener(this);
 		
 		//Display the window.
@@ -87,6 +91,10 @@ public class MainApp implements ActionListener {
 	public void actionPerformed(ActionEvent ae){
 		if (ae.getSource().equals(aboutHelp)){
 			JOptionPane.showMessageDialog(frame, "by Joseph Anthony C. Hermocilla\nfor\nCMSC 291");
+		}
+		if (ae.getSource().equals(negativeAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			imagePanel.setImage(rgb.getNegative().getBufferedImage());
 		}
 		if (ae.getSource().equals(openFile)){
 		    int returnVal = chooser.showOpenDialog(frame);
@@ -117,21 +125,39 @@ public class MainApp implements ActionListener {
 		}
 		if (ae.getSource().equals(equalizeAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			Histogram hist= new Histogram(rgb.getGrayScaleImage());
+			Histogram hist= new Histogram(rgb);
 			imagePanel.setImage(hist.equalize().getBufferedImage());
 		}
 		if (ae.getSource().equals(histogramAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			Histogram hist= new Histogram(rgb.getGrayScaleImage());
-			imagePanel.setImage(rgb.getGrayScaleImage().getBufferedImage());
-			JFrame f=new JFrame("Histogram");
-			JLabel l=new JLabel();
-			l.setPreferredSize(new Dimension(hist.getHistogramAsImage().getWidth(),hist.getHistogramAsImage().getHeight()));
-			l.setIcon(new ImageIcon(hist.getHistogramAsImage().getBufferedImage()));
-			f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			f.add(l);
-			f.pack();
-			f.setVisible(true);			
+			Histogram hist= new Histogram(rgb);
+			JFrame fr=new JFrame("Histogram-red");
+			JLabel lr=new JLabel();
+			lr.setPreferredSize(new Dimension(hist.getHistogramAsImage(Histogram.RED).getWidth(),hist.getHistogramAsImage(Histogram.RED).getHeight()));
+			lr.setIcon(new ImageIcon(hist.getHistogramAsImage(Histogram.RED).getBufferedImage()));
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.add(lr);
+			fr.pack();
+			fr.setVisible(true);
+			
+			JFrame fg=new JFrame("Histogram-green");
+			JLabel lg=new JLabel();
+			lg.setPreferredSize(new Dimension(hist.getHistogramAsImage(Histogram.RED).getWidth(),hist.getHistogramAsImage(Histogram.RED).getHeight()));
+			lg.setIcon(new ImageIcon(hist.getHistogramAsImage(Histogram.GREEN).getBufferedImage()));
+			fg.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fg.add(lg);
+			fg.pack();
+			fg.setVisible(true);
+			
+			JFrame fb=new JFrame("Histogram-blue");
+			JLabel lb=new JLabel();
+			lb.setPreferredSize(new Dimension(hist.getHistogramAsImage(Histogram.RED).getWidth(),hist.getHistogramAsImage(Histogram.RED).getHeight()));
+			lb.setIcon(new ImageIcon(hist.getHistogramAsImage(Histogram.BLUE).getBufferedImage()));
+			fb.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fb.add(lb);
+			fb.pack();
+			fb.setVisible(true);
+			
 		}
 		if (ae.getSource().equals(setAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
