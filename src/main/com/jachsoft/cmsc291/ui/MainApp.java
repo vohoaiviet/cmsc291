@@ -17,10 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
 
 import com.jachsoft.cmsc291.exer1.Exercise1;
-import com.jachsoft.imagelib.GrayScaleImage;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.Histogram;
 

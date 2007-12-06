@@ -22,6 +22,8 @@ import components.Rule;
 import components.ScrollablePicture;
 
 public class ImagePanel extends JPanel implements ItemListener {
+	static final long serialVersionUID=0;
+	
 	private Rule columnView;
 	private Rule rowView;
 	private JToggleButton isMetric;
