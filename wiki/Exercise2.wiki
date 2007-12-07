@@ -1,0 +1,14 @@
+#summary Image Enhancement
+= Introduction =
+
+Image enhancement operations were applied on a given image.
+  * Image Negative
+  * Contrast Stretching
+  * Gray Level Slicing
+  * Dynamic Compression
+  * Histogram Equalization
+
+
+= Details =
+
+Check out the download section of the project
