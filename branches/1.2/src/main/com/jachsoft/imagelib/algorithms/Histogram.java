@@ -1,0 +1,148 @@
+package com.jachsoft.imagelib.algorithms;
+
+import com.jachsoft.imagelib.RGBColor;
+import com.jachsoft.imagelib.RGBImage;
+
+public class Histogram {
+	RGBImage rgb;
+
+	int hr[]=new int[256];
+	float pr[]=new float[256];
+	int hg[]=new int[256];
+	float pg[]=new float[256];
+	int hb[]=new int[256];
+	float pb[]=new float[256];
+	
+	public static final int RED=0;
+	public static final int GREEN=1;
+	public static final int BLUE=2;
+	
+	public Histogram(RGBImage rgb){
+		this.rgb=rgb;
+		process(this.rgb,0,0,rgb.getWidth(),rgb.getHeight());
+	}
+	
+	public void process(RGBImage rgb,int ulx,int uly,int w,int h){
+		this.rgb=rgb;
+		int n=w*h;
+		
+//		Do frequency count
+		for (int y=uly;y<uly+h;y++){
+			for (int x=ulx;x<ulx+w;x++){
+				RGBColor color=rgb.getRGBColor(x, y);
+				hr[color.getRed()]++;				
+				hg[color.getGreen()]++;				
+				hb[color.getBlue()]++;
+			}
+		}
+		
+		//compute probability
+		for (int i=0;i<256;i++){		
+			pr[i]=(float)hr[i]/n;
+			pg[i]=(float)hg[i]/n;
+			pb[i]=(float)hb[i]/n;
+		}
+	}
+
+	
+	public RGBImage equalize(int ulx,int uly,int w,int h){
+		int width=rgb.getWidth();
+		int height=rgb.getHeight();
+		RGBImage retval=new RGBImage(width,height);
+		
+		
+		
+		//compute new sk
+		for (int i=1;i<256;i++){
+			pr[i]=pr[i]+pr[i-1];
+			pg[i]=pg[i]+pg[i-1];
+			pb[i]=pb[i]+pb[i-1];
+			hr[i]=(int)(pr[i]*255);
+			hg[i]=(int)(pg[i]*255);
+			hb[i]=(int)(pb[i]*255);
+		}
+		
+		//Draw it
+		for (int y=0;y<height;y++){
+			for (int x=0;x<width;x++){
+				RGBColor color=rgb.getRGBColor(x, y);
+				if ((x>=ulx && x<ulx+w) && (y>=uly && y<uly+h))
+				{
+					int red=hr[color.getRed()];
+					int green=hg[color.getGreen()];
+					int blue=hb[color.getBlue()];
+					retval.setRGB(x, y,red,green,blue);	
+				}else{
+					retval.setRGB(x, y,color.getRed(),color.getGreen(),color.getBlue());
+				}
+			}
+		}
+		return retval;
+		
+	}
+
+	
+	public RGBImage equalize(){
+		return equalize(0,0,rgb.getWidth(),rgb.getHeight());
+		
+	}
+
+	public int getMax(int channel){
+		int h[]=null;
+		switch(channel){
+			case RED:h=hr;break;
+			case GREEN:h=hg;break;
+			case BLUE:h=hb;break;
+		}
+		
+		int max=0;		
+		for (int i=1;i<256;i++){
+			if (h[i] > h[max])
+				max=i;
+		}
+		return max;
+	}
+	
+	public int getMin(int channel){
+		int h[]=null;
+		switch(channel){
+			case RED:h=hr;break;
+			case GREEN:h=hg;break;
+			case BLUE:h=hb;break;
+		}
+
+		int min=0;
+		for (int i=1;i<256;i++){
+			if (h[i] < h[min])
+				min=i;
+		}
+		return min;
+	}
+	
+	
+	public RGBImage getHistogramAsImage(int channel){
+		int h[]=null;
+		int color=0;
+		switch(channel){
+			case RED:h=hr;color=0xFFFF0000;break;
+			case GREEN:h=hg;color=0xFF00FF00;break;
+			case BLUE:h=hb;color=0xFF0000FF;break;
+		}
+
+		int max=0;		
+		RGBImage retval=null;
+		
+		max=getMax(channel);
+		
+		retval=new RGBImage(256,100);
+		
+		for (int x=0;x<256;x++){
+			int scaled=(int)(h[x]*(100.0/h[max]));
+			for (int y=0;y<scaled;y++){
+				retval.setRGB(x, 100-1-y, color);
+			}
+		}
+		return retval;
+	}
+	
+}
