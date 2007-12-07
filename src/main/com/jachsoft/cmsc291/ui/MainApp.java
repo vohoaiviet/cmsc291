@@ -149,15 +149,24 @@ public class MainApp implements ActionListener {
 			sliderIntensity.setPaintLabels(true);
 			sliderIntensity.setPaintTicks(true);
 				
-			p.setLayout(new GridLayout(9,1));
+			p.setLayout(new GridLayout(9,2));
+			p.add(new JLabel("R0"));
 			p.add(sliderR0);
+			p.add(new JLabel("S0"));
 			p.add(sliderS0);
+			p.add(new JLabel("R1"));
 			p.add(sliderR1);
+			p.add(new JLabel("S1"));
 			p.add(sliderS1);
+			p.add(new JLabel("R2"));
 			p.add(sliderR2);
+			p.add(new JLabel("S2"));
 			p.add(sliderS2);
+			p.add(new JLabel("R3"));
 			p.add(sliderR3);
+			p.add(new JLabel("S3"));
 			p.add(sliderS3);
+			p.add(new JLabel("Intensity"));			
 			p.add(sliderIntensity);
 			
 			JOptionPane.showMessageDialog(frame, p);
@@ -179,9 +188,12 @@ public class MainApp implements ActionListener {
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			ContrastStretching con= new ContrastStretching(rgb);
 			
+			JPanel p=new JPanel(new GridLayout(1,2));
 			JSlider slider=new JSlider(0,255,127);
+			p.add(new JLabel("Intensity"));
+			p.add(slider);
 				
-			JOptionPane.showMessageDialog(frame, slider);
+			JOptionPane.showMessageDialog(frame, p);
 			int t=slider.getValue();
 			con.setParameters(t, 0, t, 255);
 			imagePanel.setImage(con.apply().getBufferedImage());
@@ -207,10 +219,14 @@ public class MainApp implements ActionListener {
 			sliderS2.setPaintLabels(true);
 			sliderS2.setPaintTicks(true);
 				
-			p.setLayout(new GridLayout(4,1));
+			p.setLayout(new GridLayout(4,2));
+			p.add(new JLabel("R1"));
 			p.add(sliderR1);
+			p.add(new JLabel("S1"));
 			p.add(sliderS1);
+			p.add(new JLabel("R2"));
 			p.add(sliderR2);
+			p.add(new JLabel("S2"));
 			p.add(sliderS2);
 			
 			JOptionPane.showMessageDialog(frame, p);
