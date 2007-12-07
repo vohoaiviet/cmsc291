@@ -15,4 +15,4 @@ Check out the download section of the project
 
 = References =
 
-Digital Image Processing by Gonzalez and Woods
+  * Digital Image Processing by Gonzalez and Woods
