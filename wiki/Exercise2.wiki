@@ -1,4 +1,4 @@
-#summary Image Enhancement
+#summary Exercise 2: Image Enhancement
 = Introduction =
 
 Image enhancement operations were applied on a given image.
@@ -12,3 +12,7 @@ Image enhancement operations were applied on a given image.
 = Details =
 
 Check out the download section of the project
+
+= References =
+
+Digital Image Processing by Gonzalez and Woods
