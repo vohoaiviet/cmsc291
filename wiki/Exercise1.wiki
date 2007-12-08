@@ -17,4 +17,11 @@ was considered the choice of the respondent.
 To detect crossed out options, the perimeter of the bounding boxes were compared.
 
 
+Source image:
+http://cmsc291.googlecode.com/svn/trunk/data/exer1/0035.jpg
+Result image:
+http://cmsc291.googlecode.com/svn/trunk/data/exer1/0035-result.jpg
+
+
+Souce code:
 http://cmsc291.googlecode.com/svn/trunk/src/main/com/jachsoft/cmsc291/exer1/Exercise1.java
