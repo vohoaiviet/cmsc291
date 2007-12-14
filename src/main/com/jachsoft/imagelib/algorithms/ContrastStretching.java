@@ -13,9 +13,13 @@ public class ContrastStretching implements IImageOperator{
 	float m1,m2,m3;
 	float b1,b2,b3;
 	
+	int ulx,uly,w,h;
+	
 	
 	public ContrastStretching(RGBImage source){
 		this.source = source;
+		w=this.source.getWidth();
+		h=this.source.getHeight();
 	}
 	
 	public void setParameters(int r1,int s1,int r2, int s2){
@@ -25,9 +29,17 @@ public class ContrastStretching implements IImageOperator{
 		this.s2=s2;
 	}
 	
+	public void setRegion(ImageRegion r){
+		this.ulx=r.getUlx();
+		this.uly=r.getUly();
+		this.w=r.getW();
+		this.h=r.getH();
+	}
+	
 	public RGBImage apply(){
 		RGBImage retval;
-		retval = new RGBImage(source.getWidth(),source.getHeight());
+		//retval = new RGBImage(source.getWidth(),source.getHeight());
+		retval=source;
 	
 		m1=(float)s1/r1;
 		m2=(float)(s2-s1)/(r2-r1);
@@ -37,12 +49,11 @@ public class ContrastStretching implements IImageOperator{
 		b2=s2-m2*r2;
 		b3=255-m3*255;
 		
-		int width=source.getWidth();
-		int height=source.getHeight();
-		int n=width*height;
+		int width=ulx+w;
+		int height=uly+h;
 		
-		for (int y=0;y<height;y++){
-			for (int x=0;x<width;x++){
+		for (int y=uly;y<height;y++){
+			for (int x=ulx;x<width;x++){
 				RGBColor color=source.getRGBColor(x, y);
 				int red=color.getRed();
 				int green=color.getGreen();

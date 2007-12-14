@@ -26,6 +26,19 @@ public class RGBColor {
 		color <<= 8;
 		color |= b;	
 	}
+	
+	public RGBColor(float r, float g, float b){
+		this.r=(int)(r*255);
+		this.g=(int)(g*255);
+		this.b=(int)(b*255);
+		
+		color = 255 << 8;
+		color |= this.r;
+		color <<= 8;
+		color |= this.g;
+		color <<= 8;
+		color |= this.b;	
+	}
 		
 	
 	public RGBColor(int color){
@@ -44,13 +57,27 @@ public class RGBColor {
 		return r;
 	}
 	
+	public float getRedN(){
+		return (r/255.0f);
+	}
+
+	
 	public int getGreen(){
 		return g;
+	}
+	
+	public float getGreenN(){
+		return (g/255.0f);
 	}
 	
 	public int getBlue(){
 		return b;
 	}
+	
+	public float getBlueN(){
+		return (b/255.0f);
+	}
+	
 	
 	public static int pack(int r, int g, int b){
 		int color = 255 << 8;

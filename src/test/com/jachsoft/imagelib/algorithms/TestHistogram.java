@@ -26,9 +26,10 @@ public class TestHistogram extends TestCase {
 			ImageIO.write(hist.getHistogramAsImage(Histogram.GREEN).getBufferedImage(),"jpg",new File("orig-green-hist.jpg"));
 			ImageIO.write(hist.getHistogramAsImage(Histogram.BLUE).getBufferedImage(),"jpg",new File("orig-blue-hist.jpg"));
 			
-			img=hist.equalize();
+			/*img=hist.apply();
 			ImageIO.write(img.getBufferedImage(),"jpg",new File("equalized.jpg"));
 			hist=new Histogram(img);
+			*/
 			ImageIO.write(hist.getHistogramAsImage(Histogram.RED).getBufferedImage(),"jpg",new File("equalized-red-hist.jpg"));
 			ImageIO.write(hist.getHistogramAsImage(Histogram.GREEN).getBufferedImage(),"jpg",new File("equalized-green-hist.jpg"));
 			ImageIO.write(hist.getHistogramAsImage(Histogram.BLUE).getBufferedImage(),"jpg",new File("equalized-blue.jpg"));
