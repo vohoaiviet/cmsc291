@@ -39,7 +39,8 @@ import com.jachsoft.imagelib.algorithms.PowerLawTransformation;
 
 
 public class MainApp implements ActionListener {
-	JFrame frame=new JFrame("CMSC 291-Digital Image Processing Workbench");
+	String title="CMSC 291-Digital Image Processing Workbench";
+	JFrame frame=new JFrame(title);
 	JMenuBar menubar=new JMenuBar();
 	JMenu fileMenu=new JMenu("File");
 	JMenu selectionMenu=new JMenu("Selection");
@@ -374,6 +375,7 @@ public class MainApp implements ActionListener {
 		    int returnVal = chooser.showOpenDialog(frame);
 		    if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    	File file = chooser.getSelectedFile();
+		    	frame.setTitle(title+" ("+file.getName()+")");
 		    	try{
 		    		BufferedImage bimg=ImageIO.read(file);
 		    		selection=new ImageRegion(0,0,bimg.getWidth(),bimg.getHeight());
