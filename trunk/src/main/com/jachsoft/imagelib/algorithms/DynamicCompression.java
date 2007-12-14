@@ -8,27 +8,38 @@ public class DynamicCompression implements IImageOperator{
 	RGBImage img;
 	int c;
 	
+	int ulx,uly,w,h;
+	
 	public DynamicCompression(RGBImage img){
 		this.img=img;
+		this.w=this.img.getWidth();
+		this.h=this.img.getHeight();
 	}
 	
 	public void setParameter(int c){
 		this.c=c;
 	}
 	
+	public void setRegion(ImageRegion r){
+		this.ulx=r.getUlx();
+		this.uly=r.getUly();
+		this.w=r.getW();
+		this.h=r.getH();
+	}
+	
 	public RGBImage apply(){
-		int w = img.getWidth();
-		int h = img.getHeight();
+		int w = ulx+this.w;
+		int h = uly+this.h;
 		
-		RGBImage retval = new RGBImage(w,h);
+		RGBImage retval;// = new RGBImage(w,h);
+		retval=img;
 				
-		for (int y=0; y < h;y++){
-			for (int x=0; x < w; x++){
+		for (int y=uly; y < h;y++){
+			for (int x=ulx; x < w; x++){
 				RGBColor col=img.getRGBColor(x, y);
-				int r=(int)(c*Math.log(1+col.getRed()));			
-				int g=(int)(c*Math.log(1+col.getGreen()));
-				int b=(int)(c*Math.log(1+col.getBlue()));
-					
+				float r=(float)(c*Math.log(1+col.getRedN()));			
+				float g=(float)(c*Math.log(1+col.getGreenN()));
+				float b=(float)(c*Math.log(1+col.getBlueN()));
 				retval.setRGB(x, y, r, g, b);
 			}
 		}

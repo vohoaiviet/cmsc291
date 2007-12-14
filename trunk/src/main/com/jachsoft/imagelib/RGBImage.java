@@ -24,10 +24,17 @@ public class RGBImage{
 		int rgb=RGBColor.pack(r, g, b);
 		bimg.setRGB(x, y, rgb);
 	}
+
+	public void setRGB(int x, int y, float r, float g, float b){
+		int rgb=RGBColor.pack((int)(r*255), (int)(g*255),(int) (b*255));
+		bimg.setRGB(x, y, rgb);
+	}
+
 	
 	public void setRGB(int x, int y, int rgb){
 		bimg.setRGB(x, y, rgb);
 	}
+	
 	
 	public RGBColor getRGBColor(int x, int y){
 		RGBColor rgb = new RGBColor(bimg.getRGB(x, y));
@@ -59,7 +66,7 @@ public class RGBImage{
 		int w = bimg.getWidth();
 		int h = bimg.getHeight();
 		
-		RGBImage retval = new RGBImage(w,h);
+		RGBImage retval = this;//new RGBImage(w,h);
 				
 		for (int y=0; y < h;y++){
 			for (int x=0; x < w; x++){

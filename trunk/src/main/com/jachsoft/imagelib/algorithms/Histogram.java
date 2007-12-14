@@ -3,30 +3,39 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class Histogram {
+public class Histogram{
 	RGBImage rgb;
 
-	int hr[]=new int[256];
-	float pr[]=new float[256];
-	int hg[]=new int[256];
-	float pg[]=new float[256];
+	int hr[]=new int[256];	
+	int hg[]=new int[256];	
 	int hb[]=new int[256];
-	float pb[]=new float[256];
-	
+
 	public static final int RED=0;
 	public static final int GREEN=1;
 	public static final int BLUE=2;
 	
+	int ulx,uly,w,h;
+	
 	public Histogram(RGBImage rgb){
 		this.rgb=rgb;
-		process(this.rgb,0,0,rgb.getWidth(),rgb.getHeight());
+		int width=rgb.getWidth();
+		int height=rgb.getHeight();
+
+		setParameters(0,0,width,height);
 	}
 	
-	public void process(RGBImage rgb,int ulx,int uly,int w,int h){
+	public Histogram(RGBImage rgb,int ulx, int uly, int w, int h){
 		this.rgb=rgb;
-		int n=w*h;
+		setParameters(ulx,uly,w,h);
+	}
+	
+	public void setParameters(int ulx, int uly, int w, int h){
+		this.ulx=ulx;
+		this.uly=uly;
+		this.w=w;
+		this.h=h;
 		
-//		Do frequency count
+		//Count frequency 
 		for (int y=uly;y<uly+h;y++){
 			for (int x=ulx;x<ulx+w;x++){
 				RGBColor color=rgb.getRGBColor(x, y);
@@ -35,58 +44,42 @@ public class Histogram {
 				hb[color.getBlue()]++;
 			}
 		}
-		
-		//compute probability
-		for (int i=0;i<256;i++){		
-			pr[i]=(float)hr[i]/n;
-			pg[i]=(float)hg[i]/n;
-			pb[i]=(float)hb[i]/n;
-		}
 	}
-
 	
-	public RGBImage equalize(int ulx,int uly,int w,int h){
-		int width=rgb.getWidth();
-		int height=rgb.getHeight();
-		RGBImage retval=new RGBImage(width,height);
-		
-		
-		
-		//compute new sk
-		for (int i=1;i<256;i++){
-			pr[i]=pr[i]+pr[i-1];
-			pg[i]=pg[i]+pg[i-1];
-			pb[i]=pb[i]+pb[i-1];
-			hr[i]=(int)(pr[i]*255);
-			hg[i]=(int)(pg[i]*255);
-			hb[i]=(int)(pb[i]*255);
-		}
-		
-		//Draw it
-		for (int y=0;y<height;y++){
-			for (int x=0;x<width;x++){
-				RGBColor color=rgb.getRGBColor(x, y);
-				if ((x>=ulx && x<ulx+w) && (y>=uly && y<uly+h))
-				{
-					int red=hr[color.getRed()];
-					int green=hg[color.getGreen()];
-					int blue=hb[color.getBlue()];
-					retval.setRGB(x, y,red,green,blue);	
-				}else{
-					retval.setRGB(x, y,color.getRed(),color.getGreen(),color.getBlue());
-				}
-			}
-		}
-		return retval;
-		
+	public int[] getRed(){
+		return hr;
 	}
-
 	
-	public RGBImage equalize(){
-		return equalize(0,0,rgb.getWidth(),rgb.getHeight());
-		
+	public int[] getGreen(){
+		return hg;
 	}
-
+	
+	public int[] getBlue(){
+		return hb;
+	
+	}
+	
+	public RGBImage getImage(){
+		return rgb;
+	}
+		
+	public int getUlx(){
+		return ulx;
+	}
+	
+	public int getUly(){
+		return uly;	
+	}
+	
+	public int getW(){
+		return w;
+	}
+	
+	
+	public int getH(){
+		return h;
+	}
+	
 	public int getMax(int channel){
 		int h[]=null;
 		switch(channel){
