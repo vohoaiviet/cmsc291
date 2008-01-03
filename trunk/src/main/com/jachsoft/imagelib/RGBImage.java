@@ -108,4 +108,44 @@ public class RGBImage{
 		}
 	}
 	
+	public Neighbor getNeighbor(int x, int y, int channel, int type) 
+		throws ImageOperationException{
+		Neighbor nbor=new Neighbor(type);
+		int startX=0;
+		int startY=0;
+		int endX=bimg.getWidth();
+		int endY=bimg.getHeight();
+		int offset=0;
+		
+		if (type == Neighbor.THREE){
+			offset = 1;
+		}else if (type == Neighbor.FIVE){
+			offset = 2;
+		}else if (type == Neighbor.EIGHT){
+			offset = 3;
+		}
+		
+		startX=startX+offset;
+		startY=startY+offset;
+		endX=endX-offset;
+		endY=endY-offset;
+		
+		if ((x < startX) || (x > endY) || (y < startY) || (y > endY)){
+			throw new ImageOperationException("Cannot obtain neighbor!");
+		}
+		
+		int ulx = x-offset;
+		int uly = y-offset;
+		
+		for (int i=(y-offset); i <= y+offset; i++){
+			for (int j=(x-offset); j <= x+offset;j++){
+				RGBColor rgb = this.getRGBColor(j, i);
+				nbor.setValue(i-ulx, j-uly, rgb.getChannel(RGBColor.BLUE_CHANNEL));
+			}			
+		}
+		
+		
+		return nbor;
+	}
+	
 }

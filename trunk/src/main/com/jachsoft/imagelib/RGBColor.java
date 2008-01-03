@@ -10,6 +10,11 @@ public class RGBColor {
 	public static RGBColor BLACK = new RGBColor(0x00,0x00,0x00); 
 	public static RGBColor WHITE = new RGBColor(0xFF,0xFF,0xFF);
 	
+	public static final int ALL_CHANNELS=0;
+	public static final int RED_CHANNEL=1;
+	public static final int GREEN_CHANNEL=2;
+	public static final int BLUE_CHANNEL=3;
+	
 	
 	public RGBColor(){
 	}
@@ -89,6 +94,25 @@ public class RGBColor {
 		return color;
 	}	
 	
+	public int getChannel(int channel){
+		switch (channel){
+		case ALL_CHANNELS: return getPixelColor();
+		case RED_CHANNEL: return getRed(); 
+		case GREEN_CHANNEL: return getGreen();
+		case BLUE_CHANNEL: return getBlue();
+		}
+		return 0;
+	}
+	
+	public float getChannelN(int channel){
+		switch (channel){
+		case RED_CHANNEL: return getRedN(); 
+		case GREEN_CHANNEL: return getGreenN();
+		case BLUE_CHANNEL: return getBlueN();
+		}
+		return 0;
+	}
+	
 	
 	public String toString(){
 		String result="("+r+","+g+","+b+")";
@@ -104,7 +128,6 @@ public class RGBColor {
 			return true;
 		}else{
 			return false;
-		}
-			
+		}			
 	}
 }	
