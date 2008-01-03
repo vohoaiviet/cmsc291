@@ -1,6 +1,7 @@
 package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.ImageOperationException;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
@@ -36,44 +37,47 @@ public class Convolution implements IImageOperator{
 		endX=endX-offset;
 		endY=endY-offset;
 		
-		try{
-			for (int y=startY; y<=endY;y++){
-				for (int x=startX; x<=endX;x++){
-					System.out.println(x+","+y);
-					Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, Neighbor.THREE);
-					float newval=0;
-					for (int i=0;i<kernel.getHeight();i++){
-						for (int j=0;j<kernel.getWidth();j++){
-							newval +=(int)redNbor.getValue(i, j) * kernel.getValue(i, j);
-						}						
-					}
-					int red = (int)newval;
-										
-					Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, Neighbor.THREE);
-					newval=0;
-					for (int i=0;i<kernel.getHeight();i++){
-						for (int j=0;j<kernel.getWidth();j++){
-							newval +=(int)greenNbor.getValue(i, j) * kernel.getValue(i, j);
-						}						
-					}
-					int green = (int)newval;
-										
-					Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, Neighbor.THREE);
-					newval=0;
-					for (int i=0;i<kernel.getHeight();i++){
-						for (int j=0;j<kernel.getWidth();j++){
-							newval +=(int)blueNbor.getValue(i, j) * kernel.getValue(i, j);
-						}						
-					}
-					int blue = (int)newval;
-					
-					retval.setRGB(x, y, red, green, blue);					
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 		
+		
+		
+		for (int y=startY; y<endY;y++){
+			for (int x=startX; x<endX;x++){
+				//if ((x < startX) || (x > endY) || (y < startY) || (y > endY)){
+				//	throw new ImageOperationException("Cannot obtain neighbor!");
+				//}				
+				
+				
+				//System.out.println(x+","+y);
+				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, Neighbor.THREE);
+				float newval=0;
+				for (int i=0;i<kernel.getHeight();i++){
+					for (int j=0;j<kernel.getWidth();j++){
+						newval +=(int)redNbor.getValue(i, j) * kernel.getValue(i, j);
+					}						
+				}
+				int red = (int)newval;
+									
+				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, Neighbor.THREE);
+				newval=0;
+				for (int i=0;i<kernel.getHeight();i++){
+					for (int j=0;j<kernel.getWidth();j++){
+						newval +=(int)greenNbor.getValue(i, j) * kernel.getValue(i, j);
+					}						
+				}
+				int green = (int)newval;
+									
+				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, Neighbor.THREE);
+				newval=0;
+				for (int i=0;i<kernel.getHeight();i++){
+					for (int j=0;j<kernel.getWidth();j++){
+						newval +=(int)blueNbor.getValue(i, j) * kernel.getValue(i, j);
+					}						
+				}
+				int blue = (int)newval;
+					retval.setRGB(x, y, red, green, blue);					
+			}
+		}
+
 		
 		return retval;
 		
