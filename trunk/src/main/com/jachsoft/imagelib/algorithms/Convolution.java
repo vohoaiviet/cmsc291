@@ -10,13 +10,15 @@ public class Convolution implements IImageOperator{
 	RGBImage source;
 	ImageRegion region;
 	ConvolutionKernel kernel;
+	int type;
 	
 	public Convolution(RGBImage source){
 		this.source = source;
 	}
 	
-	public void setParameters(ConvolutionKernel kernel){
+	public void setParameters(ConvolutionKernel kernel,int type){
 		this.kernel = kernel;
+		this.type=type;
 	}
 	
 	public void setRegion(ImageRegion region){
@@ -25,7 +27,7 @@ public class Convolution implements IImageOperator{
 	
 	public RGBImage apply(){
 		RGBImage retval = source;
-		Neighbor nbor=new Neighbor(Neighbor.THREE);
+		Neighbor nbor=new Neighbor(type);
 		int startX=0;
 		int startY=0;
 		int endX=source.getWidth();
@@ -48,7 +50,7 @@ public class Convolution implements IImageOperator{
 				
 				
 				//System.out.println(x+","+y);
-				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, Neighbor.THREE);
+				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, type);
 				float newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){
@@ -57,7 +59,7 @@ public class Convolution implements IImageOperator{
 				}
 				int red = (int)newval;
 									
-				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, Neighbor.THREE);
+				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, type);
 				newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){
@@ -66,7 +68,7 @@ public class Convolution implements IImageOperator{
 				}
 				int green = (int)newval;
 									
-				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, Neighbor.THREE);
+				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, type);
 				newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){
