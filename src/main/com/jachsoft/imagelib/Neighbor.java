@@ -19,4 +19,12 @@ public class Neighbor extends DataArray {
 		return type;
 	}
 	
+	public int getOffset(){
+		switch(type){
+		case THREE: return 1;
+		case FIVE: return 2;
+		case EIGHT: return 3;
+		}
+		return 0;
+	}
 }
