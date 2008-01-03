@@ -27,9 +27,12 @@ import javax.swing.JSlider;
 import javax.swing.JToolBar;
 
 import com.jachsoft.cmsc291.exer1.Exercise1;
+import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
+import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
 import com.jachsoft.imagelib.algorithms.Equalization;
 import com.jachsoft.imagelib.algorithms.GraySlicing;
@@ -44,7 +47,8 @@ public class MainApp implements ActionListener {
 	JMenuBar menubar=new JMenuBar();
 	JMenu fileMenu=new JMenu("File");
 	JMenu selectionMenu=new JMenu("Selection");
-	JMenu actionMenu=new JMenu("Action");
+	JMenu actionMenu=new JMenu("Enhancements");
+	JMenu filterMenu=new JMenu("Filters");
 	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
 	JMenuItem saveFile = new JMenuItem("Save");
@@ -58,6 +62,7 @@ public class MainApp implements ActionListener {
 	JMenuItem compressAction = new JMenuItem("Dynamic Range Compression");
 	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
+	JMenuItem meanFilter = new JMenuItem("Mean Filter (5x5)");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -88,6 +93,7 @@ public class MainApp implements ActionListener {
 		menubar.add(fileMenu);
 		menubar.add(selectionMenu);
 		menubar.add(actionMenu);
+		menubar.add(filterMenu);
 		menubar.add(helpMenu);
 		
 		fileMenu.add(openFile);
@@ -106,6 +112,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(compressAction);
 		actionMenu.add(sliceAction);
 		actionMenu.add(powerLawAction);
+		
+		filterMenu.add(meanFilter);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -130,6 +138,7 @@ public class MainApp implements ActionListener {
 		sliceAction.addActionListener(this);
 		compressAction.addActionListener(this);
 		powerLawAction.addActionListener(this);
+		meanFilter.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -166,6 +175,14 @@ public class MainApp implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(meanFilter)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Convolution operator=new Convolution(rgb);			
+			ConvolutionKernel kernel=ConvolutionKernel.meanFilter(Neighbor.FIVE);
+			operator.setParameters(kernel,Neighbor.FIVE);
+			operator.setRegion(selection);
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
 		if (ae.getSource().equals(selectAllSelection)){
 			selection.setUlx(0);
 			selection.setUly(0);
