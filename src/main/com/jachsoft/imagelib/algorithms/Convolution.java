@@ -1,5 +1,6 @@
 package com.jachsoft.imagelib.algorithms;
 
+import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.RGBImage;
 
 public class Convolution implements IImageOperator{
