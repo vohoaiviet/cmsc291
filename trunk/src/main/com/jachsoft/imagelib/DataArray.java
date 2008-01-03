@@ -20,11 +20,11 @@ public class DataArray {
 		return data[y][x];
 	}
 	
-	public int getM(){
+	public int getWidth(){
 		return m;
 	}
 	
-	public int getN(){
+	public int getHeight(){
 		return n;
 	}
 	

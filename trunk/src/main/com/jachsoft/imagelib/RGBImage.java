@@ -115,15 +115,7 @@ public class RGBImage{
 		int startY=0;
 		int endX=bimg.getWidth();
 		int endY=bimg.getHeight();
-		int offset=0;
-		
-		if (type == Neighbor.THREE){
-			offset = 1;
-		}else if (type == Neighbor.FIVE){
-			offset = 2;
-		}else if (type == Neighbor.EIGHT){
-			offset = 3;
-		}
+		int offset=nbor.getOffset();
 		
 		startX=startX+offset;
 		startY=startY+offset;
@@ -139,12 +131,11 @@ public class RGBImage{
 		
 		for (int i=(y-offset); i <= y+offset; i++){
 			for (int j=(x-offset); j <= x+offset;j++){
+				System.out.println(j+","+i+","+offset);
 				RGBColor rgb = this.getRGBColor(j, i);
-				nbor.setValue(i-ulx, j-uly, rgb.getChannel(RGBColor.BLUE_CHANNEL));
+				nbor.setValue(j-ulx, i-uly, rgb.getChannel(channel));
 			}			
 		}
-		
-		
 		return nbor;
 	}
 	
