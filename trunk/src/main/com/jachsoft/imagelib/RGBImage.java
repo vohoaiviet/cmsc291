@@ -124,4 +124,35 @@ public class RGBImage{
 		return nbor;
 	}
 	
+	public RGBImage copy(){
+		int width=bimg.getWidth();
+		int height=bimg.getHeight();
+		RGBImage dup=new RGBImage(width,height);
+		for(int i=0; i<height;i++)
+			for (int j=0;j<width;j++){
+				RGBColor color=this.getRGBColor(i, j);
+				dup.setRGB(i, j, color.getRed(), color.getGreen(), color.getBlue());
+			}
+		return dup;		
+	}
+	
+	public DataArray getDataArray(int channel){
+		int width=bimg.getWidth();
+		int height=bimg.getHeight();
+		
+		DataArray retval = new DataArray(width,height);
+		
+		for (int y = 0; y < height; y++){
+			for (int x = 0;x < width; x++){
+				RGBColor c = this.getRGBColor(x, y);
+				switch(channel){
+				case RGBColor.RED_CHANNEL: retval.setValue(x, y, c.getRed());break;
+				case RGBColor.GREEN_CHANNEL: retval.setValue(x, y, c.getGreen());break;
+				case RGBColor.BLUE_CHANNEL: retval.setValue(x, y, c.getBlue());break;
+				}
+			}
+		}
+		return retval;
+	}
+	
 }
