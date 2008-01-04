@@ -62,7 +62,7 @@ public class MainApp implements ActionListener {
 	JMenuItem compressAction = new JMenuItem("Dynamic Range Compression");
 	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
-	JMenuItem meanFilter = new JMenuItem("Mean Filter (5x5)");
+	JMenuItem meanFilter = new JMenuItem("Mean Filter (3x3)");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -144,9 +144,6 @@ public class MainApp implements ActionListener {
 		frame.pack();
 		frame.setVisible(true);
 		
-		
-		
-		
 		imagePanel.addMouseMotionListener(new MouseMotionAdapter(){
 			public void mouseMoved(MouseEvent me){
 				int x=me.getX();
@@ -178,8 +175,8 @@ public class MainApp implements ActionListener {
 		if (ae.getSource().equals(meanFilter)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Convolution operator=new Convolution(rgb);			
-			ConvolutionKernel kernel=ConvolutionKernel.meanFilter(Neighbor.FIVE);
-			operator.setParameters(kernel,Neighbor.FIVE);
+			ConvolutionKernel kernel=ConvolutionKernel.meanFilter(Neighbor.THREE);
+			operator.setParameters(kernel,Neighbor.THREE);
 			operator.setRegion(selection);
 			imagePanel.setImage(operator.apply().getBufferedImage());
 		}

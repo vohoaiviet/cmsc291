@@ -38,18 +38,9 @@ public class Convolution implements IImageOperator{
 		startY=startY+offset;
 		endX=endX-offset;
 		endY=endY-offset;
-		
-		
-		
-		
+
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
-				//if ((x < startX) || (x > endY) || (y < startY) || (y > endY)){
-				//	throw new ImageOperationException("Cannot obtain neighbor!");
-				//}				
-				
-				
-				//System.out.println(x+","+y);
 				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, type);
 				float newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
