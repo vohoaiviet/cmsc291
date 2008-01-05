@@ -1,2 +1,2 @@
+#summary Exercise 3: Plate number localization
 #labels Platenumberlocalization
-Plate number localization
