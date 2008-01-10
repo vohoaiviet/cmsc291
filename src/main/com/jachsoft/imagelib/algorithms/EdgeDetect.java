@@ -6,7 +6,7 @@ import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class EdgeDetect implements IImageOperator {
+public class EdgeDetect extends ImageOperator {
 	RGBImage source;
 	
 	public EdgeDetect(RGBImage source){

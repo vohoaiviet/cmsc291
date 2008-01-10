@@ -3,7 +3,7 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class DynamicCompression implements IImageOperator{
+public class DynamicCompression extends ImageOperator{
 
 	RGBImage img;
 	int c;

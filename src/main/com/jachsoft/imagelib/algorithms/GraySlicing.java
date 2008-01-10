@@ -3,7 +3,7 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class GraySlicing implements IImageOperator {
+public class GraySlicing extends ImageOperator {
 	RGBImage source;
 	int r0;
 	int s0;

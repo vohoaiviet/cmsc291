@@ -3,7 +3,7 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class Equalization implements IImageOperator {	
+public class Equalization extends ImageOperator {	
 	float pr[]=new float[256];
 	float pg[]=new float[256];
 	float pb[]=new float[256];
