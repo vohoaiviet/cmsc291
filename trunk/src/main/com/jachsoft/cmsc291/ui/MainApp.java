@@ -255,7 +255,10 @@ public class MainApp implements ActionListener {
 			
 		}		
 		if (ae.getSource().equals(aboutHelp)){
-			JOptionPane.showMessageDialog(frame, "by Joseph Anthony C. Hermocilla\nfor\nCMSC 291");
+			JOptionPane.showMessageDialog(frame,title+"\nCopyright 2007-2008 by" +
+					"Joseph Anthony C. Hermocilla\n" +
+					"(jachermocilla@gmail.com)\n" +
+					"All Rights Reserved");
 		}
 		if (ae.getSource().equals(powerLawAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
