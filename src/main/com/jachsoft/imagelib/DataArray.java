@@ -37,6 +37,10 @@ public class DataArray {
 		return height;
 	}
 	
+	public float[] getData(){
+		return data;
+	}
+	
 	public String toString(){
 		String retval="";
 		for (int y = 0; y < height; y++){
