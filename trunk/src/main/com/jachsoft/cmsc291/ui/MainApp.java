@@ -34,6 +34,7 @@ import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
+import com.jachsoft.imagelib.algorithms.EdgeDetect;
 import com.jachsoft.imagelib.algorithms.Equalization;
 import com.jachsoft.imagelib.algorithms.GraySlicing;
 import com.jachsoft.imagelib.algorithms.Histogram;
@@ -49,6 +50,7 @@ public class MainApp implements ActionListener {
 	JMenu selectionMenu=new JMenu("Selection");
 	JMenu actionMenu=new JMenu("Enhancements");
 	JMenu filterMenu=new JMenu("Filters");
+	JMenu edgeMenu=new JMenu("Edge Detection");
 	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
 	JMenuItem saveFile = new JMenuItem("Save");
@@ -63,6 +65,7 @@ public class MainApp implements ActionListener {
 	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
 	JMenuItem meanFilter = new JMenuItem("Mean Filter (3x3)");
+	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -94,6 +97,7 @@ public class MainApp implements ActionListener {
 		menubar.add(selectionMenu);
 		menubar.add(actionMenu);
 		menubar.add(filterMenu);
+		menubar.add(edgeMenu);
 		menubar.add(helpMenu);
 		
 		fileMenu.add(openFile);
@@ -114,6 +118,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(powerLawAction);
 		
 		filterMenu.add(meanFilter);
+	
+		edgeMenu.add(sobelEdgeAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -139,6 +145,7 @@ public class MainApp implements ActionListener {
 		compressAction.addActionListener(this);
 		powerLawAction.addActionListener(this);
 		meanFilter.addActionListener(this);
+		sobelEdgeAction.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -172,6 +179,11 @@ public class MainApp implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(sobelEdgeAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			EdgeDetect operator=new EdgeDetect(rgb);			
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
 		if (ae.getSource().equals(meanFilter)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Convolution operator=new Convolution(rgb);			
