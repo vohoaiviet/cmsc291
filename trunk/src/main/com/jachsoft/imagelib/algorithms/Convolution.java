@@ -6,7 +6,7 @@ import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class Convolution implements IImageOperator{
+public class Convolution extends ImageOperator{
 	RGBImage source;
 	ImageRegion region;
 	ConvolutionKernel kernel;

@@ -3,7 +3,7 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class PowerLawTransformation implements IImageOperator {
+public class PowerLawTransformation extends ImageOperator {
 	RGBImage source;
 	int c;
 	float gamma;
