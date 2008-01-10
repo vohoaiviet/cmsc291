@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.jachsoft.imagelib.algorithms.ImageRegion;
+import com.jachsoft.imagelib.ImageRegion;
 
 
 public class ImagePanel extends JPanel{

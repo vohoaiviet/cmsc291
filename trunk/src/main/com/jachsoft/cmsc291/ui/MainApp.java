@@ -28,6 +28,7 @@ import javax.swing.JToolBar;
 
 import com.jachsoft.cmsc291.exer1.Exercise1;
 import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
@@ -38,7 +39,7 @@ import com.jachsoft.imagelib.algorithms.EdgeDetect;
 import com.jachsoft.imagelib.algorithms.Equalization;
 import com.jachsoft.imagelib.algorithms.GraySlicing;
 import com.jachsoft.imagelib.algorithms.Histogram;
-import com.jachsoft.imagelib.algorithms.ImageRegion;
+import com.jachsoft.imagelib.algorithms.MedianFilter;
 import com.jachsoft.imagelib.algorithms.PowerLawTransformation;
 
 
@@ -64,7 +65,9 @@ public class MainApp implements ActionListener {
 	JMenuItem compressAction = new JMenuItem("Dynamic Range Compression");
 	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
-	JMenuItem meanFilter = new JMenuItem("Mean Filter (3x3)");
+	JMenuItem meanFilterAction = new JMenuItem("Mean Filter");
+	JMenuItem medianFilterAction = new JMenuItem("Median Filter");
+	
 	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
@@ -117,7 +120,8 @@ public class MainApp implements ActionListener {
 		actionMenu.add(sliceAction);
 		actionMenu.add(powerLawAction);
 		
-		filterMenu.add(meanFilter);
+		filterMenu.add(meanFilterAction);
+		filterMenu.add(medianFilterAction);
 	
 		edgeMenu.add(sobelEdgeAction);
 		
@@ -144,7 +148,8 @@ public class MainApp implements ActionListener {
 		sliceAction.addActionListener(this);
 		compressAction.addActionListener(this);
 		powerLawAction.addActionListener(this);
-		meanFilter.addActionListener(this);
+		meanFilterAction.addActionListener(this);
+		medianFilterAction.addActionListener(this);
 		sobelEdgeAction.addActionListener(this);
 		
 		//Display the window.
@@ -179,16 +184,24 @@ public class MainApp implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(medianFilterAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			MedianFilter operator=new MedianFilter(rgb);
+			String s=JOptionPane.showInputDialog("Enter filter size:","3");			
+			operator.setSize(Integer.parseInt(s));
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
 		if (ae.getSource().equals(sobelEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			EdgeDetect operator=new EdgeDetect(rgb);			
 			imagePanel.setImage(operator.apply().getBufferedImage());
 		}
-		if (ae.getSource().equals(meanFilter)){
+		if (ae.getSource().equals(meanFilterAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Convolution operator=new Convolution(rgb);			
-			ConvolutionKernel kernel=ConvolutionKernel.meanFilter(Neighbor.THREE);
-			operator.setParameters(kernel,Neighbor.THREE);
+			String s=JOptionPane.showInputDialog("Enter filter size:","3");
+			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));
+			operator.setParameters(kernel.meanFilter());
 			operator.setRegion(selection);
 			imagePanel.setImage(operator.apply().getBufferedImage());
 		}

@@ -1,4 +1,4 @@
-package com.jachsoft.imagelib.algorithms;
+package com.jachsoft.imagelib;
 
 public class ImageRegion {
 	int ulx,uly,w,h;

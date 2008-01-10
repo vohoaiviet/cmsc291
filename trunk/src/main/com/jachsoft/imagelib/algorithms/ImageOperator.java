@@ -1,5 +1,6 @@
 package com.jachsoft.imagelib.algorithms;
 
+import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBImage;
 
 public class ImageOperator implements IImageOperator {
@@ -18,6 +19,10 @@ public class ImageOperator implements IImageOperator {
 
 	public void setRegion(ImageRegion region) {
 		this.region = region;
+	}
+	
+	public void setSource(RGBImage source){
+		this.source=source;
 	}
 
 }

@@ -1,17 +1,22 @@
 package com.jachsoft.imagelib;
 
 public class ConvolutionKernel extends DataArray {
-	int type;
+	int size;
 	
-	public ConvolutionKernel(int m, int n){
-		super(m,n);
+	public ConvolutionKernel(int size){
+		super(size,size);
+		this.size=size;
 	}
 	
-	public static ConvolutionKernel meanFilter(int type){
-		ConvolutionKernel kernel=new ConvolutionKernel(type,type);
-		for (int y=0;y<type;y++){
-			for (int x=0;x < type;x++){
-				kernel.setValue(x, y,(float)1/(type*type));
+	public int getSize(){
+		return size;
+	}
+	
+	public ConvolutionKernel meanFilter(){
+		ConvolutionKernel kernel=new ConvolutionKernel(size);
+		for (int y=0;y<size;y++){
+			for (int x=0;x < size;x++){
+				kernel.setValue(x, y,(float)1/(size*size));
 			}
 		}
 		return kernel;

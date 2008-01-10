@@ -2,6 +2,7 @@ package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.DataArray;
+import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
@@ -16,9 +17,7 @@ public class EdgeDetect extends ImageOperator {
 	
 
 	public RGBImage apply() {
-		RGBImage retval=null;
-		
-		
+				
 		RGBImage gray=source.getGrayScaleImage();		
 		
 		Neighbor nbor=new Neighbor(3);

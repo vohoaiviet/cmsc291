@@ -2,6 +2,7 @@ package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.ImageOperationException;
+import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
@@ -10,15 +11,13 @@ public class Convolution extends ImageOperator{
 	RGBImage source;
 	ImageRegion region;
 	ConvolutionKernel kernel;
-	int type;
 	
 	public Convolution(RGBImage source){
 		this.source = source;
 	}
 	
-	public void setParameters(ConvolutionKernel kernel,int type){
+	public void setParameters(ConvolutionKernel kernel){
 		this.kernel = kernel;
-		this.type=type;
 	}
 	
 	public void setRegion(ImageRegion region){
@@ -27,7 +26,9 @@ public class Convolution extends ImageOperator{
 	
 	public RGBImage apply(){
 		RGBImage retval = source;
-		Neighbor nbor=new Neighbor(type);
+		int size=kernel.getSize();
+		Neighbor nbor=new Neighbor(size);
+		
 		int startX=0;
 		int startY=0;
 		int endX=source.getWidth();
@@ -41,7 +42,7 @@ public class Convolution extends ImageOperator{
 
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
-				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, type);
+				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL,size);
 				float newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){
@@ -50,7 +51,7 @@ public class Convolution extends ImageOperator{
 				}
 				int red = (int)newval;
 									
-				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, type);
+				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, size);
 				newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){
@@ -59,7 +60,7 @@ public class Convolution extends ImageOperator{
 				}
 				int green = (int)newval;
 									
-				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, type);
+				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, size);
 				newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
 					for (int j=0;j<kernel.getWidth();j++){

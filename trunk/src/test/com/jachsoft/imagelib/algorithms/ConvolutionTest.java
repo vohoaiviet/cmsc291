@@ -16,10 +16,10 @@ public class ConvolutionTest extends TestCase {
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample1.jpg")));
 			Convolution convo = new Convolution(img);
-			ConvolutionKernel kernel=ConvolutionKernel.meanFilter(Neighbor.FIFTEEN);
+			ConvolutionKernel kernel=new ConvolutionKernel(3);
 			
 			
-			convo.setParameters(kernel,Neighbor.FIFTEEN);
+			convo.setParameters(kernel.meanFilter());
 			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/meanfilter.jpg"));
 		}catch(Exception e){
 			e.printStackTrace();
