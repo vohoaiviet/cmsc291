@@ -46,17 +46,17 @@ public class RGBImage{
 	}
 	
 	
-	public GrayScaleImage getGrayScaleImage(float wr,float wg,float wb){
+	public RGBImage getGrayScaleImage(float wr,float wg,float wb){
 		int w = bimg.getWidth();
 		int h = bimg.getHeight();
 		
-		GrayScaleImage gray = new GrayScaleImage(w,h);
+		RGBImage gray = new RGBImage(w,h);
 				
 		for (int y=0; y < h;y++){
 			for (int x=0; x < w; x++){
 				RGBColor col=this.getRGBColor(x, y);
 				float color=((col.getBlue()*wb + col.getGreen()*wg + col.getRed()*wr)/255f);				
-				gray.setColor(x, y, color);
+				gray.setRGB(x, y, color, color, color);
 			}
 		}
 		return gray;
@@ -81,7 +81,7 @@ public class RGBImage{
 		return retval;
 	}
 	
-	public GrayScaleImage getGrayScaleImage(){
+	public RGBImage getGrayScaleImage(){
 		return getGrayScaleImage(0.333f,0.333f,0.333f);		
 	}
 	
