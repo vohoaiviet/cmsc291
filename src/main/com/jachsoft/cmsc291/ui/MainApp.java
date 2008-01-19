@@ -66,6 +66,8 @@ public class MainApp implements ActionListener {
 	JMenuItem sliceAction = new JMenuItem("Gray Level Slicing");
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
 	JMenuItem meanFilterAction = new JMenuItem("Mean Filter");
+	JMenuItem gaussianFilterAction = new JMenuItem("Gaussian Filter");
+	JMenuItem laplacianFilterAction = new JMenuItem("Laplacian Filter");
 	JMenuItem medianFilterAction = new JMenuItem("Median Filter");
 	
 	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
@@ -122,6 +124,8 @@ public class MainApp implements ActionListener {
 		
 		filterMenu.add(meanFilterAction);
 		filterMenu.add(medianFilterAction);
+		filterMenu.add(gaussianFilterAction);
+		filterMenu.add(laplacianFilterAction);
 	
 		edgeMenu.add(sobelEdgeAction);
 		
@@ -150,6 +154,8 @@ public class MainApp implements ActionListener {
 		powerLawAction.addActionListener(this);
 		meanFilterAction.addActionListener(this);
 		medianFilterAction.addActionListener(this);
+		gaussianFilterAction.addActionListener(this);
+		laplacianFilterAction.addActionListener(this);
 		sobelEdgeAction.addActionListener(this);
 		
 		//Display the window.
@@ -184,6 +190,26 @@ public class MainApp implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(laplacianFilterAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Convolution operator=new Convolution(rgb);			
+			String s=JOptionPane.showInputDialog("Enter filter size:","3");
+			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));
+			operator.setRegion(selection);
+			s=JOptionPane.showInputDialog("Enter standard deviation:","1.0");
+			operator.setParameters(kernel.laplacianFilter(Float.parseFloat(s)));
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
+		if (ae.getSource().equals(gaussianFilterAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Convolution operator=new Convolution(rgb);			
+			String s=JOptionPane.showInputDialog("Enter filter size:","3");
+			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));
+			operator.setRegion(selection);
+			s=JOptionPane.showInputDialog("Enter standard deviation:","1.0");
+			operator.setParameters(kernel.gaussianFilter(Float.parseFloat(s)));
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
 		if (ae.getSource().equals(medianFilterAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			MedianFilter operator=new MedianFilter(rgb);

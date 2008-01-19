@@ -17,13 +17,19 @@ public class ConvolutionTest extends TestCase {
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample1.jpg")));
 			Convolution convo = new Convolution(img);
 			ConvolutionKernel kernel=new ConvolutionKernel(3);
+			
 			/*
 			convo.setParameters(kernel.meanFilter());
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/meanfilter.jpg"));
-			 */
-			kernel = new ConvolutionKernel(11);
+			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/mean.jpg"));
+			 
+			
+			kernel = new ConvolutionKernel(5);
 			convo.setParameters(kernel.gaussianFilter(1.0f));
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/gaussianfilter.jpg"));
+			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/gaussian.jpg"));
+			*/			
+			kernel = new ConvolutionKernel(5);
+			convo.setParameters(kernel.laplacianFilter(1.4f));
+			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/laplacian.jpg"));
 			
 		}catch(Exception e){
 			e.printStackTrace();
