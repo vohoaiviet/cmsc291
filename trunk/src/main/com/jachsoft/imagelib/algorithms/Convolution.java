@@ -68,7 +68,8 @@ public class Convolution extends ImageOperator{
 					}						
 				}
 				int blue = (int)newval;
-					retval.setRGB(x, y, red, green, blue);					
+				
+				retval.setRGB(x, y, red, green, blue);					
 			}
 		}
 
