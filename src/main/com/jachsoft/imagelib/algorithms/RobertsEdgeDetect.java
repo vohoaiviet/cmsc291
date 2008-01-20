@@ -10,9 +10,6 @@ public class RobertsEdgeDetect extends ImageOperator {
 		// TODO Auto-generated constructor stub
 	}
 
-
-	RGBImage source;
-	
 	
 	public RobertsEdgeDetect(RGBImage source){
 		this.source = source;

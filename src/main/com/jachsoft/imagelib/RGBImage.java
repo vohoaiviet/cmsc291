@@ -11,6 +11,19 @@ public class RGBImage{
     	
     }
     
+    //copy constructor
+    public RGBImage(RGBImage img){
+    	int w=img.getWidth();
+    	int h=img.getHeight();
+    	this.bimg=new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
+    	
+    	for (int y=0;y<h;y++){
+    		for (int x=0;x<w;x++){
+    			this.bimg.setRGB(x, y, img.getBufferedImage().getRGB(x, y));
+    		}    		
+    	}
+    }
+    
     public RGBImage (BufferedImage bimg){
     	this.bimg=bimg;
     }

@@ -10,12 +10,8 @@ public class SobelEdgeDetect extends ImageOperator {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	RGBImage source;
-	
 	public SobelEdgeDetect(RGBImage source){
-		this.source = source;
+		super(source);
 	}
 	
 	

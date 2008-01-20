@@ -10,7 +10,6 @@ public class PowerLawTransformation extends ImageOperator {
 		// TODO Auto-generated constructor stub
 	}
 
-	RGBImage source;
 	int c;
 	float gamma;
 	

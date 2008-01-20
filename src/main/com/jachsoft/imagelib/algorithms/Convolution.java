@@ -12,8 +12,7 @@ public class Convolution extends ImageOperator{
 		// TODO Auto-generated constructor stub
 	}
 
-	RGBImage source;
-	ImageRegion region;
+
 	ConvolutionKernel kernel;
 	
 	public Convolution(RGBImage source){

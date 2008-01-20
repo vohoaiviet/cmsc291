@@ -10,7 +10,6 @@ public class GraySlicing extends ImageOperator {
 		// TODO Auto-generated constructor stub
 	}
 
-	RGBImage source;
 	int r0;
 	int s0;
 	int r1;
