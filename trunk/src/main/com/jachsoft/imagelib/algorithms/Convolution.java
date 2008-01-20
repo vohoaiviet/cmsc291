@@ -1,7 +1,6 @@
 package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
-import com.jachsoft.imagelib.ImageOperationException;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;

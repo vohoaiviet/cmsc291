@@ -1,7 +1,5 @@
 package com.jachsoft.imagelib.algorithms;
 
-import com.jachsoft.imagelib.ConvolutionKernel;
-import com.jachsoft.imagelib.DataArray;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
@@ -35,14 +33,12 @@ public class SobelEdgeDetect extends ImageOperator {
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
 				nbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, 3);
-				float newval=0;
 				for (int i=0;i<nbor.getHeight();i++){
 					for (int j=0;j<nbor.getWidth();j++){
 						int p1=(int)nbor.getValue(0, 0);
 						int p2=(int)nbor.getValue(1,0);
 						int p3=(int)nbor.getValue(2,0);
 						int p4=(int)nbor.getValue(0,1);
-						int p5=(int)nbor.getValue(1,1);
 						int p6=(int)nbor.getValue(2,1);
 						int p7=(int)nbor.getValue(0,2);
 						int p8=(int)nbor.getValue(1,2);
@@ -63,12 +59,4 @@ public class SobelEdgeDetect extends ImageOperator {
 		
 		return gray;
 	}
-
-	public void setRegion(ImageRegion region) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	
-
 }
