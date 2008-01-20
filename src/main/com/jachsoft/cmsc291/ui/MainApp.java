@@ -29,7 +29,6 @@ import javax.swing.JToolBar;
 import com.jachsoft.cmsc291.exer1.Exercise1;
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.ImageRegion;
-import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;

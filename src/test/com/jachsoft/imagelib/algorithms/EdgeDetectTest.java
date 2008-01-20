@@ -4,8 +4,6 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import com.jachsoft.imagelib.ConvolutionKernel;
-import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBImage;
 
 import junit.framework.TestCase;

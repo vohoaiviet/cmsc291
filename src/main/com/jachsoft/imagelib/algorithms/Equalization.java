@@ -37,7 +37,6 @@ public class Equalization extends ImageOperator {
 
 		int ulx=hist.getUlx();
 		int uly=hist.getUly();
-		 
 		
 		int[] hr=hist.getRed();
 		int[] hg=hist.getGreen();
