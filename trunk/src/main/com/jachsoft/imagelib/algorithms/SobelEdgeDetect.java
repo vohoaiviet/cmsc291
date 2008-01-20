@@ -7,10 +7,10 @@ import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class EdgeDetect extends ImageOperator {
+public class SobelEdgeDetect extends ImageOperator {
 	RGBImage source;
 	
-	public EdgeDetect(RGBImage source){
+	public SobelEdgeDetect(RGBImage source){
 		this.source = source;
 	}
 	
@@ -50,7 +50,11 @@ public class EdgeDetect extends ImageOperator {
 						
 						int gc=Math.abs((p1+2*p2+p3)-(p7+2*p8+p9));
 						gc=gc+Math.abs((p3+2*p6+p9)-(p1+2*p4+p7));
-						if (gc>255) gc=255; 
+						
+						gc=(int)scale(gc);
+						
+						if (gc > 255) gc =255;
+						if (gc < 0) gc = 0;
 						gray.setRGB(x, y, gc, gc, gc);
 					}						
 				}

@@ -35,7 +35,8 @@ import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
-import com.jachsoft.imagelib.algorithms.EdgeDetect;
+import com.jachsoft.imagelib.algorithms.RobertsEdgeDetect;
+import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 import com.jachsoft.imagelib.algorithms.Equalization;
 import com.jachsoft.imagelib.algorithms.GraySlicing;
 import com.jachsoft.imagelib.algorithms.Histogram;
@@ -67,10 +68,11 @@ public class MainApp implements ActionListener {
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
 	JMenuItem meanFilterAction = new JMenuItem("Mean Filter");
 	JMenuItem gaussianFilterAction = new JMenuItem("Gaussian Filter");
-	JMenuItem laplacianFilterAction = new JMenuItem("Laplacian Filter");
+	JMenuItem laplacianFilterAction = new JMenuItem("Laplacian Detector");
 	JMenuItem medianFilterAction = new JMenuItem("Median Filter");
 	
 	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
+	JMenuItem robertsEdgeAction = new JMenuItem("Roberts");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -125,9 +127,11 @@ public class MainApp implements ActionListener {
 		filterMenu.add(meanFilterAction);
 		filterMenu.add(medianFilterAction);
 		filterMenu.add(gaussianFilterAction);
-		filterMenu.add(laplacianFilterAction);
+		
 	
 		edgeMenu.add(sobelEdgeAction);
+		edgeMenu.add(robertsEdgeAction);
+		edgeMenu.add(laplacianFilterAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -157,6 +161,7 @@ public class MainApp implements ActionListener {
 		gaussianFilterAction.addActionListener(this);
 		laplacianFilterAction.addActionListener(this);
 		sobelEdgeAction.addActionListener(this);
+		robertsEdgeAction.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -217,9 +222,14 @@ public class MainApp implements ActionListener {
 			operator.setSize(Integer.parseInt(s));
 			imagePanel.setImage(operator.apply().getBufferedImage());
 		}
+		if (ae.getSource().equals(robertsEdgeAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			RobertsEdgeDetect operator=new RobertsEdgeDetect(rgb);			
+			imagePanel.setImage(operator.apply().getBufferedImage());
+		}
 		if (ae.getSource().equals(sobelEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			EdgeDetect operator=new EdgeDetect(rgb);			
+			SobelEdgeDetect operator=new SobelEdgeDetect(rgb);			
 			imagePanel.setImage(operator.apply().getBufferedImage());
 		}
 		if (ae.getSource().equals(meanFilterAction)){

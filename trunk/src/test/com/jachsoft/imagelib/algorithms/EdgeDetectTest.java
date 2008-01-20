@@ -15,7 +15,7 @@ public class EdgeDetectTest extends TestCase {
 	public void testApply() {
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/wdg2.gif")));
-			EdgeDetect edge = new EdgeDetect(img);			
+			SobelEdgeDetect edge = new SobelEdgeDetect(img);			
 			
 			ImageIO.write(edge.apply().getBufferedImage(),"jpg",new File("data/edges.jpg"));
 		}catch(Exception e){
