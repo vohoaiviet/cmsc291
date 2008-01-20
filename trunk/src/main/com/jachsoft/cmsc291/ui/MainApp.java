@@ -1,6 +1,7 @@
 package com.jachsoft.cmsc291.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
+import com.jachsoft.imagelib.algorithms.IImageOperator;
 import com.jachsoft.imagelib.algorithms.RobertsEdgeDetect;
 import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 import com.jachsoft.imagelib.algorithms.Equalization;
@@ -193,16 +195,26 @@ public class MainApp implements ActionListener {
 	}
 	
 	
+	private void applyOperator(IImageOperator operator){
+		frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		operator.setRegion(selection);
+		long startTime = System.currentTimeMillis();
+		imagePanel.setImage(operator.apply().getBufferedImage());
+		long endTime = System.currentTimeMillis();
+		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		curr.setText(curr.getText()+" Last operation took " + (endTime - startTime) +" ms");
+	}
+	
 	public void actionPerformed(ActionEvent ae){
 		if (ae.getSource().equals(laplacianFilterAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Convolution operator=new Convolution(rgb);			
 			String s=JOptionPane.showInputDialog("Enter filter size:","3");
-			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));
-			operator.setRegion(selection);
+			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));			
 			s=JOptionPane.showInputDialog("Enter standard deviation:","1.0");
 			operator.setParameters(kernel.laplacianFilter(Float.parseFloat(s)));
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(gaussianFilterAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -212,24 +224,29 @@ public class MainApp implements ActionListener {
 			operator.setRegion(selection);
 			s=JOptionPane.showInputDialog("Enter standard deviation:","1.0");
 			operator.setParameters(kernel.gaussianFilter(Float.parseFloat(s)));
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
-		if (ae.getSource().equals(medianFilterAction)){
+		if (ae.getSource().equals(medianFilterAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			MedianFilter operator=new MedianFilter(rgb);
 			String s=JOptionPane.showInputDialog("Enter filter size:","3");			
-			operator.setSize(Integer.parseInt(s));
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			operator.setSize(Integer.parseInt(s));			
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
+			
 		}
 		if (ae.getSource().equals(robertsEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			RobertsEdgeDetect operator=new RobertsEdgeDetect(rgb);			
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(sobelEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			SobelEdgeDetect operator=new SobelEdgeDetect(rgb);			
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(meanFilterAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -238,7 +255,8 @@ public class MainApp implements ActionListener {
 			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));
 			operator.setParameters(kernel.meanFilter());
 			operator.setRegion(selection);
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(selectAllSelection)){
 			selection.setUlx(0);
@@ -303,8 +321,9 @@ public class MainApp implements ActionListener {
 			slider.setPaintLabels(true);
 			JOptionPane.showMessageDialog(frame, slider);
 			operator.setParameters(1,slider.getValue()/100f);
-			operator.setRegion(selection);
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//operator.setRegion(selection);
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 
 		if (ae.getSource().equals(sliceAction)){
@@ -372,7 +391,8 @@ public class MainApp implements ActionListener {
 			JOptionPane.showMessageDialog(frame, p);
 			operator.setParameters(sliderR0.getValue(),sliderS0.getValue(),sliderR1.getValue(), sliderS1.getValue(), 
 					sliderR2.getValue(), sliderS2.getValue(),sliderR3.getValue(), sliderS3.getValue(),sliderIntensity.getValue());
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(compressAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -383,7 +403,8 @@ public class MainApp implements ActionListener {
 			slider.setPaintLabels(true);
 			JOptionPane.showMessageDialog(frame, slider);
 			operator.setParameter(slider.getValue());
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(thresholdAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -400,9 +421,8 @@ public class MainApp implements ActionListener {
 			JOptionPane.showMessageDialog(frame, p);
 			int t=slider.getValue();
 			operator.setParameters(t, 0, t, 255);
-			imagePanel.setImage(operator.apply().getBufferedImage());
-			
-			
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);			
 		}
 		if (ae.getSource().equals(contrastAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -440,7 +460,8 @@ public class MainApp implements ActionListener {
 			
 			JOptionPane.showMessageDialog(frame, p);
 			operator.setParameters(sliderR1.getValue(), sliderS1.getValue(), sliderR1.getValue(), sliderS2.getValue());
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 			
 			
 		}
@@ -483,7 +504,8 @@ public class MainApp implements ActionListener {
 			Histogram hist=new Histogram(rgb,selection.getUlx(),selection.getUly(),selection.getW(),selection.getH());
 			//Histogram hist=new Histogram(rgb);
 			Equalization operator=new Equalization(hist);
-			imagePanel.setImage(operator.apply().getBufferedImage());
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(histogramAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -529,7 +551,6 @@ public class MainApp implements ActionListener {
 		    	}catch(IOException ioe){ioe.printStackTrace();
 		    	}
 		    }		    			
-		}
-		
+		}		
 	}
 }
