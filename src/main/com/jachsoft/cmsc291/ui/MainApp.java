@@ -198,12 +198,14 @@ public class MainApp implements ActionListener {
 	
 	
 	private void applyOperator(IImageOperator operator){
+		imagePanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		operator.setRegion(selection);
 		long startTime = System.currentTimeMillis();
 		imagePanel.setImage(operator.apply().getBufferedImage());
 		long endTime = System.currentTimeMillis();
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		imagePanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		time.setText(",Last operation took " + (endTime - startTime) +" ms");
 	}
 	
