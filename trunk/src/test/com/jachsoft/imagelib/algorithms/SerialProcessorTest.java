@@ -20,6 +20,7 @@ public class SerialProcessorTest extends TestCase {
 			SobelEdgeDetect sobel = new SobelEdgeDetect();
 			Convolution mean = new Convolution();
 			Convolution gaussian = new Convolution();
+			Equalization equalization = new Equalization();
 			
 			//setup median filter
 			median.setSize(9);
@@ -31,13 +32,19 @@ public class SerialProcessorTest extends TestCase {
 			//setup convolution for gaussian filter
 			kernel=new ConvolutionKernel(9);
 			gaussian.setParameters(kernel.gaussianFilter(1.0f));
+	
+			//Setup thresholding
+			ContrastStretching thresh = new ContrastStretching();
+			thresh.threshold(127);
 			
 			p.setSource(img);
 			p.setStoreIntermmediate(true);
-			p.addOperator(mean);
-			p.addOperator(median);
+			//p.addOperator(mean);
+			//p.addOperator(median);
+			p.addOperator(equalization);
 			p.addOperator(gaussian);
 			p.addOperator(sobel);
+			p.addOperator(thresh);
 			ImageIO.write(p.apply().getBufferedImage(),"jpg",new File("data/serial.jpg"));
 			
 			Iterator<RGBImage> ite = p.getIntermmediate().iterator();

@@ -28,6 +28,7 @@ public class ImageOperator implements IImageOperator {
 	
 	public ImageOperator(RGBImage image){
 		this.source = image;
+		this.region = new ImageRegion(0,0,source.getWidth(),source.getHeight());
 	}
 
 	public RGBImage apply() {
@@ -40,6 +41,7 @@ public class ImageOperator implements IImageOperator {
 	
 	public void setSource(RGBImage source){
 		this.source=source;
+		this.region = new ImageRegion(0,0,source.getWidth(),source.getHeight());
 	}
 
 	public float getOffset() {
