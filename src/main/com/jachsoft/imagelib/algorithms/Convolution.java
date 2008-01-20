@@ -7,6 +7,11 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class Convolution extends ImageOperator{
+	public Convolution() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	RGBImage source;
 	ImageRegion region;
 	ConvolutionKernel kernel;

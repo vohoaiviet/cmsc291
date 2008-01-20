@@ -5,6 +5,11 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class GraySlicing extends ImageOperator {
+	public GraySlicing() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	RGBImage source;
 	int r0;
 	int s0;

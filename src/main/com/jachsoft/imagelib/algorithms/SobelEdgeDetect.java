@@ -5,6 +5,13 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class SobelEdgeDetect extends ImageOperator {
+	public SobelEdgeDetect() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	RGBImage source;
 	
 	public SobelEdgeDetect(RGBImage source){

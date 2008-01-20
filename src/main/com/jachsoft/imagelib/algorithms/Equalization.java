@@ -13,6 +13,18 @@ public class Equalization extends ImageOperator {
 	
 	int ulx,uly,w,h;
 	
+	public Equalization() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Equalization(RGBImage image) {
+		super(image);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Equalization(Histogram hist){
 		this.hist=hist;
 		this.rgb=hist.getImage();

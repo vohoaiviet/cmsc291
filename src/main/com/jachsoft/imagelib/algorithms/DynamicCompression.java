@@ -6,6 +6,11 @@ import com.jachsoft.imagelib.RGBImage;
 
 public class DynamicCompression extends ImageOperator{
 
+	public DynamicCompression() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	RGBImage img;
 	int c;
 	
