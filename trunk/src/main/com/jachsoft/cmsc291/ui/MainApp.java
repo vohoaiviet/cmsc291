@@ -79,7 +79,8 @@ public class MainApp implements ActionListener {
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
 	
 	JToolBar statusBar=new JToolBar();
-	JLabel curr=new JLabel("Pixel at (x,y)");
+	JLabel curr=new JLabel("");
+	JLabel time=new JLabel("");
 	
 	
 	JMenuItem aboutHelp = new JMenuItem("About");
@@ -95,6 +96,7 @@ public class MainApp implements ActionListener {
 	public MainApp(){
 	
 		statusBar.add(curr);
+		statusBar.add(time);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -182,7 +184,7 @@ public class MainApp implements ActionListener {
 				
 						RGBImage rgb=new RGBImage(imagePanel.getImage());
 						RGBColor col=rgb.getRGBColor(x, y);
-						currentPixel="("+x+","+y+"):("+col.getRed()+","+col.getGreen()+","+col.getBlue()+")";
+						currentPixel="X:"+x+",Y:"+y+",R:"+col.getRed()+",G:"+col.getGreen()+",B:"+col.getBlue();
 						curr.setText(currentPixel);
 					}
 				}
@@ -202,7 +204,7 @@ public class MainApp implements ActionListener {
 		imagePanel.setImage(operator.apply().getBufferedImage());
 		long endTime = System.currentTimeMillis();
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		curr.setText(curr.getText()+" Last operation took " + (endTime - startTime) +" ms");
+		time.setText(",Last operation took " + (endTime - startTime) +" ms");
 	}
 	
 	public void actionPerformed(ActionEvent ae){

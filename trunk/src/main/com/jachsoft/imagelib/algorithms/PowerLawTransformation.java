@@ -5,6 +5,11 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class PowerLawTransformation extends ImageOperator {
+	public PowerLawTransformation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	RGBImage source;
 	int c;
 	float gamma;

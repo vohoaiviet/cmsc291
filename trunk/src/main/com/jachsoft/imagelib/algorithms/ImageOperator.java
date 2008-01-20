@@ -62,5 +62,5 @@ public class ImageOperator implements IImageOperator {
 		return scale * value + offset;
 	}
 	
-
+	
 }

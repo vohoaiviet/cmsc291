@@ -17,6 +17,11 @@ public class ContrastStretching extends ImageOperator{
 	int ulx,uly,w,h;
 	
 	
+	public ContrastStretching() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public ContrastStretching(RGBImage source){
 		this.source = source;
 		w=this.source.getWidth();

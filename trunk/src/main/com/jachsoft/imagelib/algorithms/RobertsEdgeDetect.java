@@ -5,6 +5,12 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class RobertsEdgeDetect extends ImageOperator {
+	public RobertsEdgeDetect() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	RGBImage source;
 	
 	
