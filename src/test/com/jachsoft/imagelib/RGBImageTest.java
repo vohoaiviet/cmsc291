@@ -2,7 +2,7 @@ package com.jachsoft.imagelib;
 
 import junit.framework.TestCase;
 
-public class TestRGBImage extends TestCase {
+public class RGBImageTest extends TestCase {
 	public void testGetNeighbor() {
 		RGBImage img=new RGBImage(3,3);
 		img.setRGB(0, 0, 1,1,1);
