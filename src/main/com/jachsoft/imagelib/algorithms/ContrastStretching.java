@@ -13,18 +13,13 @@ public class ContrastStretching extends ImageOperator{
 	float m1,m2,m3;
 	float b1,b2,b3;
 	
-	int ulx,uly,w,h;
-	
-	
 	public ContrastStretching() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public ContrastStretching(RGBImage source){
-		this.source = source;
-		w=this.source.getWidth();
-		h=this.source.getHeight();
+		super(source);
 	}
 	
 	public void setParameters(int r1,int s1,int r2, int s2){
@@ -34,11 +29,8 @@ public class ContrastStretching extends ImageOperator{
 		this.s2=s2;
 	}
 	
-	public void setRegion(ImageRegion r){
-		this.ulx=r.getUlx();
-		this.uly=r.getUly();
-		this.w=r.getW();
-		this.h=r.getH();
+	public void threshold(int t){
+		this.setParameters(t, 0, t, 255);
 	}
 	
 	public RGBImage apply(){
@@ -46,6 +38,12 @@ public class ContrastStretching extends ImageOperator{
 		//retval = new RGBImage(source.getWidth(),source.getHeight());
 		retval=source;
 	
+		int ulx=region.getUlx();
+		int uly=region.getUly();
+		int w=region.getW();
+		int h=region.getH();
+		
+		
 		m1=(float)s1/r1;
 		m2=(float)(s2-s1)/(r2-r1);
 		m3=(float)(255-s2)/(255-r2);

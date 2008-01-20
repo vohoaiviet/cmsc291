@@ -1,10 +1,8 @@
 package com.jachsoft.imagelib.algorithms;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import com.jachsoft.imagelib.RGBImage;
 
@@ -39,6 +37,7 @@ public class SerialProcessor extends ImageOperator {
 		while (ite.hasNext()){
 			ImageOperator operator = ite.next();
 			operator.setSource(retval);
+			System.out.println("Applying operator...");
 			retval = operator.apply();
 			if (storeIntermmediate){
 				RGBImage result = new RGBImage(retval);

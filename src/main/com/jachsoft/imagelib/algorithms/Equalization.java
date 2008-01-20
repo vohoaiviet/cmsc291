@@ -9,37 +9,27 @@ public class Equalization extends ImageOperator {
 	float pg[]=new float[256];
 	float pb[]=new float[256];
 	Histogram hist;
-	RGBImage rgb;
-	
-	int ulx,uly,w,h;
 	
 	public Equalization() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
-	public Equalization(RGBImage image) {
-		super(image);
-		// TODO Auto-generated constructor stub
+	public Equalization(RGBImage source) {
+		super(source);
+		hist = new Histogram(source);
 	}
 
-
+	public void setSource(RGBImage source){
+		super.setSource(source);
+		this.hist = new Histogram(source);
+	}
+	
 	public Equalization(Histogram hist){
 		this.hist=hist;
-		this.rgb=hist.getImage();
-		this.h=this.rgb.getHeight();
-		this.w=this.rgb.getWidth();
-		
+		this.source=hist.getImage();
 	}
 	
-	
-	public void setRegion(ImageRegion r){
-		this.ulx=r.getUlx();
-		this.uly=r.getUly();
-		this.w=r.getW();
-		this.h=r.getH();
-	}
 	
 	public RGBImage apply(){
 
@@ -74,13 +64,14 @@ public class Equalization extends ImageOperator {
 		//Draw it
 		for (int y=uly;y<uly+h;y++){
 			for (int x=ulx;x<ulx+w;x++){
-				RGBColor color=rgb.getRGBColor(x,y);
+				//System.out.println(x+""+y);
+				RGBColor color=source.getRGBColor(x,y);
 				int red=hr[color.getRed()];
 					int green=hg[color.getGreen()];
 					int blue=hb[color.getBlue()];
-					rgb.setRGB(x, y,red,green,blue);	
+					source.setRGB(x, y,red,green,blue);	
 				}
 			}
-		return rgb;
+		return source;
 	}
 }

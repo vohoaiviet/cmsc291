@@ -20,7 +20,6 @@ public class Histogram{
 		this.rgb=rgb;
 		int width=rgb.getWidth();
 		int height=rgb.getHeight();
-
 		setParameters(0,0,width,height);
 	}
 	

@@ -11,15 +11,10 @@ public class DynamicCompression extends ImageOperator{
 		// TODO Auto-generated constructor stub
 	}
 
-	RGBImage img;
 	int c;
 	
-	int ulx,uly,w,h;
-	
-	public DynamicCompression(RGBImage img){
-		this.img=img;
-		this.w=this.img.getWidth();
-		this.h=this.img.getHeight();
+	public DynamicCompression(RGBImage source){
+		super(source);
 	}
 	
 	public void setParameter(int c){
@@ -27,22 +22,24 @@ public class DynamicCompression extends ImageOperator{
 	}
 	
 	public void setRegion(ImageRegion r){
-		this.ulx=r.getUlx();
-		this.uly=r.getUly();
-		this.w=r.getW();
-		this.h=r.getH();
 	}
 	
 	public RGBImage apply(){
-		int w = ulx+this.w;
-		int h = uly+this.h;
+		int ulx=region.getUlx();
+		int uly=region.getUly();
+		int w=region.getW();
+		int h=region.getH();
+
 		
-		RGBImage retval;// = new RGBImage(w,h);
-		retval=img;
+		w = ulx+w;
+		h = uly+h;
+		
+		RGBImage retval;
+		retval=source;
 				
 		for (int y=uly; y < h;y++){
 			for (int x=ulx; x < w; x++){
-				RGBColor col=img.getRGBColor(x, y);
+				RGBColor col=source.getRGBColor(x, y);
 				float r=(float)(c*Math.log(1+col.getRedN()));			
 				float g=(float)(c*Math.log(1+col.getGreenN()));
 				float b=(float)(c*Math.log(1+col.getBlueN()));
