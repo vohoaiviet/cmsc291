@@ -135,7 +135,7 @@ public class Exercise1 {
 	    /* Detection of choices */
 	    int delta=13;
 	    int counter=0;
-	    List options=new ArrayList();	    
+	    List<Option> options=new ArrayList<Option>();	    
 	    while(scanner.hasNextInt()){
 	    	counter++;		    	
 	    	int x=scanner.nextInt();
@@ -224,12 +224,12 @@ class Option implements Comparable{
 }
 
 class InsertionSort {
-	public static void sort(List A){
+	public static void sort(List<Option> A){
 		int lengthA=A.size();
 		for (int i=1; i<=(lengthA-1);i++){
-			Comparable value=(Comparable)A.get(i);
+			Option value=(Option)A.get(i);
 			int j=i-1;
-			Comparable Aj=(Comparable)A.get(j);
+			Option Aj=(Option)A.get(j);
 			while (j >= 0 && (Aj.compareTo(value) > 0)){				
 				A.set(j+1, Aj);				
 				j=j-1;			
