@@ -1,8 +1,10 @@
 package com.jachsoft.imagelib.algorithms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.jachsoft.imagelib.RGBImage;
 
@@ -17,13 +19,14 @@ import com.jachsoft.imagelib.RGBImage;
  */
 
 public class SerialProcessor extends ImageOperator {
-	RGBImage source;
 	List<ImageOperator> operators = new ArrayList<ImageOperator>();
+	List<RGBImage> intermmediate = new ArrayList<RGBImage>();
+	boolean storeIntermmediate=false;
 	
 	public SerialProcessor(){}
 	
 	public SerialProcessor(RGBImage source){
-		this.source = source;
+		super(source);
 	}
 	
 	public void addOperator(ImageOperator operator){
@@ -33,12 +36,27 @@ public class SerialProcessor extends ImageOperator {
 	public RGBImage apply(){
 		RGBImage retval = source;
 		Iterator<ImageOperator> ite = operators.iterator();
-		
 		while (ite.hasNext()){
 			ImageOperator operator = ite.next();
 			operator.setSource(retval);
 			retval = operator.apply();
+			if (storeIntermmediate){
+				RGBImage result = new RGBImage(retval);
+				intermmediate.add(result);
+			}			
 		}
 		return retval;
+	}
+	
+	public void setStoreIntermmediate(boolean b){
+		this.storeIntermmediate = b;		
+	}
+	
+	public boolean setStoreIntermmediate(){
+		return storeIntermmediate;
+	}
+	
+	public List<RGBImage> getIntermmediate(){
+		return intermmediate;
 	}
 }

@@ -5,7 +5,6 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class ContrastStretching extends ImageOperator{
-	RGBImage source;
 	int r1;	
 	int r2; 
 	int s1; 
