@@ -1,6 +1,7 @@
 package com.jachsoft.cmsc291.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -36,6 +37,8 @@ import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
 import com.jachsoft.imagelib.algorithms.IImageOperator;
+import com.jachsoft.imagelib.algorithms.LaplacianEdgeDetect;
+import com.jachsoft.imagelib.algorithms.PrewittEdgeDetect;
 import com.jachsoft.imagelib.algorithms.RobertsEdgeDetect;
 import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 import com.jachsoft.imagelib.algorithms.Equalization;
@@ -69,11 +72,12 @@ public class MainApp implements ActionListener {
 	JMenuItem powerLawAction = new JMenuItem("Power Law (Gamma Correction)");
 	JMenuItem meanFilterAction = new JMenuItem("Mean Filter");
 	JMenuItem gaussianFilterAction = new JMenuItem("Gaussian Filter");
-	JMenuItem laplacianFilterAction = new JMenuItem("Laplacian Detector");
+	JMenuItem laplacianEdgeAction = new JMenuItem("Laplacian");
 	JMenuItem medianFilterAction = new JMenuItem("Median Filter");
 	
 	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
 	JMenuItem robertsEdgeAction = new JMenuItem("Roberts");
+	JMenuItem prewittEdgeAction = new JMenuItem("Prewitt");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -132,9 +136,10 @@ public class MainApp implements ActionListener {
 		filterMenu.add(gaussianFilterAction);
 		
 	
-		edgeMenu.add(sobelEdgeAction);
 		edgeMenu.add(robertsEdgeAction);
-		edgeMenu.add(laplacianFilterAction);
+		edgeMenu.add(sobelEdgeAction);		
+		edgeMenu.add(prewittEdgeAction);
+		edgeMenu.add(laplacianEdgeAction);
 		
 		helpMenu.add(aboutHelp);
 		
@@ -162,9 +167,10 @@ public class MainApp implements ActionListener {
 		meanFilterAction.addActionListener(this);
 		medianFilterAction.addActionListener(this);
 		gaussianFilterAction.addActionListener(this);
-		laplacianFilterAction.addActionListener(this);
+		laplacianEdgeAction.addActionListener(this);
 		sobelEdgeAction.addActionListener(this);
 		robertsEdgeAction.addActionListener(this);
+		prewittEdgeAction.addActionListener(this);
 		
 		//Display the window.
 		frame.pack();
@@ -198,26 +204,24 @@ public class MainApp implements ActionListener {
 	
 	
 	private void applyOperator(IImageOperator operator){
+		time.setForeground(Color.RED);
+		time.setText("Performing selected operation...please wait...");
+		operator.setRegion(selection);
 		imagePanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		operator.setRegion(selection);
 		long startTime = System.currentTimeMillis();
 		imagePanel.setImage(operator.apply().getBufferedImage());
 		long endTime = System.currentTimeMillis();
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		imagePanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		time.setForeground(Color.BLUE);
 		time.setText(",Last operation took " + (endTime - startTime) +" ms");
 	}
 	
 	public void actionPerformed(ActionEvent ae){
-		if (ae.getSource().equals(laplacianFilterAction)){
+		if (ae.getSource().equals(laplacianEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			Convolution operator=new Convolution(rgb);			
-			String s=JOptionPane.showInputDialog("Enter filter size:","3");
-			ConvolutionKernel kernel=new ConvolutionKernel(Integer.parseInt(s));			
-			s=JOptionPane.showInputDialog("Enter standard deviation:","1.0");
-			operator.setParameters(kernel.laplacianFilter(Float.parseFloat(s)));
-			//imagePanel.setImage(operator.apply().getBufferedImage());
+			LaplacianEdgeDetect operator=new LaplacianEdgeDetect(rgb);			
 			applyOperator(operator);
 		}
 		if (ae.getSource().equals(gaussianFilterAction)){
@@ -239,6 +243,12 @@ public class MainApp implements ActionListener {
 			//imagePanel.setImage(operator.apply().getBufferedImage());
 			applyOperator(operator);
 			
+		}
+		if (ae.getSource().equals(prewittEdgeAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			PrewittEdgeDetect operator=new PrewittEdgeDetect(rgb);			
+			//imagePanel.setImage(operator.apply().getBufferedImage());
+			applyOperator(operator);
 		}
 		if (ae.getSource().equals(robertsEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());

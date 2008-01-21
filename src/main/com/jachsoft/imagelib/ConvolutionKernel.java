@@ -3,6 +3,8 @@ package com.jachsoft.imagelib;
 public class ConvolutionKernel extends DataArray {
 	int size;
 	
+	public ConvolutionKernel(){}
+	
 	public ConvolutionKernel(int size){
 		super(size,size);
 		this.size=size;
@@ -61,7 +63,7 @@ public class ConvolutionKernel extends DataArray {
 		return kernel;
 	}
 	
-	public ConvolutionKernel laplacianFilter(float sd){
+	public ConvolutionKernel LoGFilter(float sd){
 		ConvolutionKernel kernel=new ConvolutionKernel(size);
 		double value;
 		double min=0;
@@ -97,6 +99,10 @@ public class ConvolutionKernel extends DataArray {
 		*/		
 		return kernel;
 	}
+	
+	public ConvolutionKernel laplacianMask(){
+		return new ConvolutionKernel(3,new float[]{0,1,0,1,-4,1,0,1,0});
+	} 
 	
 		
 }

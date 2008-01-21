@@ -4,20 +4,20 @@ import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
-public class SobelEdgeDetect extends ImageOperator {
-	public SobelEdgeDetect() {
+public class PrewittEdgeDetect extends ImageOperator {
+
+	public PrewittEdgeDetect() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SobelEdgeDetect(RGBImage source){
+	public PrewittEdgeDetect(RGBImage source) {
 		super(source);
+		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 	public RGBImage apply() {
-				
+		
 		RGBImage gray=source.getGrayScaleImage();		
 		
 		Neighbor nbor=new Neighbor(3);
@@ -46,8 +46,8 @@ public class SobelEdgeDetect extends ImageOperator {
 						int p8=(int)nbor.getValue(1,2);
 						int p9=(int)nbor.getValue(2,2);
 
-						int sx = Math.abs((p3+2*p6+p9)-(p1+2*p4+p7));
-						int sy = Math.abs((p1+2*p2+p3)-(p7+2*p8+p9));
+						int sx = Math.abs((p3+1*p6+p9)-(p1+1*p4+p7));
+						int sy = Math.abs((p1+1*p2+p3)-(p7+1*p8+p9));
 						int g = sx + sy;
 						
 						g=(int)scale(g);
@@ -62,4 +62,5 @@ public class SobelEdgeDetect extends ImageOperator {
 		
 		return gray;
 	}
+	
 }

@@ -27,7 +27,7 @@ public class ConvolutionTest extends TestCase {
 			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/gaussian.jpg"));
 			*/			
 			kernel = new ConvolutionKernel(5);
-			convo.setParameters(kernel.laplacianFilter(1.4f));
+			//convo.setParameters(kernel.laplacianFilter(1.4f));
 			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/laplacian.jpg"));
 			
 		}catch(Exception e){
