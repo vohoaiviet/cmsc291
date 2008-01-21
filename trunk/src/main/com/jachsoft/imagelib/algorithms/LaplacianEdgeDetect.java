@@ -19,15 +19,8 @@ public class LaplacianEdgeDetect extends ImageOperator {
 	public RGBImage apply() {
 		
 		RGBImage gray=source.getGrayScaleImage();
-		SobelEdgeDetect sobel = new SobelEdgeDetect(gray);
-		gray = sobel.apply();
-		ContrastStretching contrast = new ContrastStretching(gray);
-		contrast.threshold(200);
-		gray=contrast.apply();
-		
-		//System.out.println(gray.getDataArray(1)+"------------");
+		//System.out.println(gray.getDataArray(2));
 		Convolution convo = new Convolution(gray);
-		//System.out.println((new ConvolutionKernel()).laplacianMask());
 		convo.setParameters((new ConvolutionKernel()).laplacianMask());
 		gray = convo.apply();
 		//System.out.println(gray.getDataArray(1));
