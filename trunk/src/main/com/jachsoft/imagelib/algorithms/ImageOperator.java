@@ -26,8 +26,8 @@ public class ImageOperator implements IImageOperator {
 	
 	public ImageOperator(){}
 	
-	public ImageOperator(RGBImage image){
-		this.source = image;
+	public ImageOperator(RGBImage source){
+		this.source = source;
 		this.region = new ImageRegion(0,0,source.getWidth(),source.getHeight());
 	}
 
