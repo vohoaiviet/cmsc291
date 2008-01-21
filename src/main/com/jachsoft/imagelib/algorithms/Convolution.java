@@ -28,7 +28,7 @@ public class Convolution extends ImageOperator{
 	}
 	
 	public RGBImage apply(){
-		RGBImage retval = source;
+		RGBImage retval = new RGBImage(source.getWidth(),source.getHeight());
 		int size=kernel.getSize();
 		Neighbor nbor=new Neighbor(size);
 		
@@ -53,7 +53,7 @@ public class Convolution extends ImageOperator{
 					}						
 				}
 				int red = (int)newval;
-									
+													
 				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, size);
 				newval=0;
 				for (int i=0;i<kernel.getHeight();i++){
