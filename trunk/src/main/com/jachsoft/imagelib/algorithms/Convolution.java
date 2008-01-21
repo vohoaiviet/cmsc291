@@ -53,6 +53,7 @@ public class Convolution extends ImageOperator{
 					}						
 				}
 				int red = (int)newval;
+				//System.out.println(newval);
 													
 				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, size);
 				newval=0;
