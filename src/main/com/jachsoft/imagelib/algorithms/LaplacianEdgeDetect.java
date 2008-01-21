@@ -40,6 +40,8 @@ public class LaplacianEdgeDetect extends ImageOperator {
 		endY=endY-offset;
 
 		ConvolutionKernel kernel = new ConvolutionKernel().laplacianMask();
+		//ConvolutionKernel kernel = new ConvolutionKernel(5);
+		//kernel = kernel.LoGFilter(5.0f);
 		
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
@@ -63,8 +65,7 @@ public class LaplacianEdgeDetect extends ImageOperator {
 				int min=9999999;
 				int max = -min;
 				int newval=0;
-				int th=0;
-				
+				int th=2;
 				for (int i=(y-offset); i <= y+offset; i++){
 					for (int j=(x-offset); j <= x+offset;j++){
 						newval = (int)retRaw.getValue(j, i);
@@ -72,6 +73,7 @@ public class LaplacianEdgeDetect extends ImageOperator {
 						if (newval > max) max = newval;
 					}			
 				}
+				th=(int)retRaw.getValue(x,y);
 				if (min<-th && max>th) retval.setRGB(x, y, 255, 255, 255);
 				else retval.setRGB(x, y, 0, 0, 0);				
 			}
