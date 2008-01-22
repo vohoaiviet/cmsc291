@@ -25,7 +25,7 @@ public class MedianFilter extends ImageOperator {
 	public RGBImage apply(){
 		RGBImage retval=source;
 		
-		float median;
+		double median;
 		Neighbor nbor=new Neighbor(size);
 		int startX=0;
 		int startY=0;
@@ -42,18 +42,21 @@ public class MedianFilter extends ImageOperator {
 			for (int x=startX; x<endX;x++){
 				
 				nbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, size);
-				Arrays.sort(nbor.getData());
-				median=nbor.getCenterValue();
+				double[] bor=nbor.getData1D();
+				Arrays.sort(bor);
+				median=bor[(size*size)/2];
 				int r=(int)median;
 				
 				nbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, size);
-				Arrays.sort(nbor.getData());
-				median=nbor.getCenterValue();
+				bor=nbor.getData1D();
+				Arrays.sort(bor);
+				median=bor[(size*size)/2];
 				int g=(int)median;
 				
 				nbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, size);
-				Arrays.sort(nbor.getData());
-				median=nbor.getCenterValue();
+				bor=nbor.getData1D();
+				Arrays.sort(bor);
+				median=bor[(size*size)/2];
 				int b=(int)median;		
 				
 				retval.setRGB(x, y, r, g, b);

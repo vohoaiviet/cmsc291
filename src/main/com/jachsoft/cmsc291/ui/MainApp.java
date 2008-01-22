@@ -28,7 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JToolBar;
 
-import com.jachsoft.cmsc291.exer1.Exercise1;
+import com.jachsoft.cmsc291.exercises.PlateLocalization;
+import com.jachsoft.cmsc291.exercises.StudentEvaluation;
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBColor;
@@ -57,6 +58,7 @@ public class MainApp implements ActionListener {
 	JMenu actionMenu=new JMenu("Enhancements");
 	JMenu filterMenu=new JMenu("Filters");
 	JMenu edgeMenu=new JMenu("Edge Detection");
+	JMenu exerMenu=new JMenu("Exercises");
 	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
 	JMenuItem saveFile = new JMenuItem("Save");
@@ -78,6 +80,8 @@ public class MainApp implements ActionListener {
 	JMenuItem sobelEdgeAction = new JMenuItem("Sobel");
 	JMenuItem robertsEdgeAction = new JMenuItem("Roberts");
 	JMenuItem prewittEdgeAction = new JMenuItem("Prewitt");
+	
+	JMenuItem plateExerAction = new JMenuItem("Plate Localization");
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
@@ -112,7 +116,11 @@ public class MainApp implements ActionListener {
 		menubar.add(actionMenu);
 		menubar.add(filterMenu);
 		menubar.add(edgeMenu);
+		menubar.add(exerMenu);
 		menubar.add(helpMenu);
+	
+		exerMenu.add(plateExerAction);
+		
 		
 		fileMenu.add(openFile);
 		fileMenu.add(saveFile);
@@ -172,6 +180,7 @@ public class MainApp implements ActionListener {
 		robertsEdgeAction.addActionListener(this);
 		prewittEdgeAction.addActionListener(this);
 		
+		plateExerAction.addActionListener(this);
 		//Display the window.
 		frame.pack();
 		frame.setVisible(true);
@@ -219,6 +228,11 @@ public class MainApp implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(plateExerAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			PlateLocalization operator=new PlateLocalization(rgb);			
+			applyOperator(operator);
+		}
 		if (ae.getSource().equals(laplacianEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			LaplacianEdgeDetect operator=new LaplacianEdgeDetect(rgb);			
@@ -424,16 +438,20 @@ public class MainApp implements ActionListener {
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			ContrastStretching operator= new ContrastStretching(rgb);
 			operator.setRegion(selection);
-			
+			/*
 			JPanel p=new JPanel(new GridLayout(1,2));
 			JSlider slider=new JSlider(0,255,127);
 			slider.setLabelTable(slider.createStandardLabels(50));
 			slider.setPaintLabels(true);
 			p.add(new JLabel("Intensity"));
 			p.add(slider);
-				
 			JOptionPane.showMessageDialog(frame, p);
 			int t=slider.getValue();
+			
+			*/
+			String val=JOptionPane.showInputDialog("Threshold Value:");
+			
+			int t=Integer.parseInt(val);
 			operator.setParameters(t, 0, t, 255);
 			//imagePanel.setImage(operator.apply().getBufferedImage());
 			applyOperator(operator);			
@@ -559,7 +577,7 @@ public class MainApp implements ActionListener {
 		    	File file = chooser.getSelectedFile();
 		    	try{
 		    		Scanner scanner=new Scanner(file);
-		    		Exercise1 exer1=new Exercise1(rgb,scanner);
+		    		StudentEvaluation exer1=new StudentEvaluation(rgb,scanner);
 		    		exer1.process();
 		    		imagePanel.setImage(rgb.getBufferedImage());
 		    	}catch(IOException ioe){ioe.printStackTrace();

@@ -1,32 +1,41 @@
 package com.jachsoft.imagelib;
 
 public class DataArray {
-	float data[];
-	int width;
-	int height;
+	protected double data[][];
+	protected int width;
+	protected int height;
 	
 	public DataArray(){}
 	
 	public DataArray(int width,int height){
 		this.width=width;
 		this.height=height;
-		data=new float[width * height];
+		//data=new float[width * height];		
+		data=new double[height][width];
 	}
 	
-	public void setValue(int x, int y,float value){
-		data[y*width+x]=value;
+	public void setValue(int x, int y,double value){
+		//data[y*width+x]=value;
+		data[y][x] =value;
 	}
 	
-	public void setValue(int i, float value){
-		data[i] = value;
+	public void setValue(int i, double value){
+		//data[i] = value;
+		int y=(i/height);
+		int x=(i-y*width);		
+		data[y][x]=value;
 	}
 	
-	public float getValue(int x, int y){
-		return data[y*width+x];
+	public double getValue(int x, int y){
+		//return data[y*width+x];
+		return data[y][x];
 	}
 	
-	public float getValue(int i){
-		return data[i];
+	public double getValue(int i){
+		//return data[i];
+		int y=(i/height);
+		int x=(i-y*width);
+		return data[y][x];
 	}
 	
 	public int getWidth(){
@@ -37,8 +46,19 @@ public class DataArray {
 		return height;
 	}
 	
-	public float[] getData(){
+	public double[][] getData(){
 		return data;
+	}
+	
+	public double[] getData1D(){
+		int n=width*height;
+		double[] retval = new double[width*height];
+		for (int i=0; i<n; i++){
+			int y=(i/height);
+			int x=(i-y*width);
+			retval[i]=data[y][x];
+		}		
+		return retval;
 	}
 	
 	public String toString(){
