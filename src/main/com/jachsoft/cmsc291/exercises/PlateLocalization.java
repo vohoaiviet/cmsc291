@@ -34,14 +34,16 @@ public class PlateLocalization extends ImageOperator {
 		
 		p.addOperator(blur);
 		
-		/*
+		
 		SobelEdgeDetect sobel = new SobelEdgeDetect();
 		p.addOperator(sobel);
-		*/
 		
+		
+		/*
 		LaplacianEdgeDetect sobel = new LaplacianEdgeDetect();
 		sobel.setThreshold(6);
 		p.addOperator(sobel);
+		*/
 		
 		ContrastStretching threshold = new ContrastStretching();		
 		threshold.threshold(150);
