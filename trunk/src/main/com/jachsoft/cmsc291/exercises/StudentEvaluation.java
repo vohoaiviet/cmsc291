@@ -1,4 +1,4 @@
-package com.jachsoft.cmsc291.exer1;
+package com.jachsoft.cmsc291.exercises;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,13 +29,13 @@ import com.jachsoft.imagelib.RGBImage;
  */
 
 
-public class Exercise1 {
+public class StudentEvaluation {
 	
 	RGBImage img;
 	Scanner scanner;
 	long time;
 	
-	public Exercise1(RGBImage inputRGBImage,Scanner scanner){
+	public StudentEvaluation(RGBImage inputRGBImage,Scanner scanner){
 		this.img = inputRGBImage;
 		this.scanner=scanner;
 	}
@@ -178,7 +178,7 @@ public class Exercise1 {
 	public static void main(String args[]){
 		RGBImage img=null;
 		Scanner scanner=null;	
-		Exercise1 exer1=null;
+		StudentEvaluation exer1=null;
 		
 		if (args.length < 2){
 			System.out.println("Usage: java -jar exer1.jar <source image> <csv file>");
@@ -191,7 +191,7 @@ public class Exercise1 {
 			img=new RGBImage(ImageIO.read(new File(args[0])));
 			scanner=new Scanner(new File(args[1]));
 			
-			exer1=new Exercise1(img,scanner);
+			exer1=new StudentEvaluation(img,scanner);
 			exer1.process();
 			
 			ImageIO.write(img.getBufferedImage(),"jpg",new File("output.jpg"));

@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.RGBImage;
 
@@ -16,19 +17,8 @@ public class ConvolutionTest extends TestCase {
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample1.jpg")));
 			Convolution convo = new Convolution(img);
 			ConvolutionKernel kernel=new ConvolutionKernel(3);
-			
-			/*
-			convo.setParameters(kernel.meanFilter());
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/mean.jpg"));
-			 
-			
-			kernel = new ConvolutionKernel(5);
-			convo.setParameters(kernel.gaussianFilter(1.0f));
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/gaussian.jpg"));
-			*/			
-			kernel = new ConvolutionKernel(5);
-			//convo.setParameters(kernel.laplacianFilter(1.4f));
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/laplacian.jpg"));
+			convo.setParameters(kernel.meanFilter());			
+			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/mean3x3.jpg"));
 			
 		}catch(Exception e){
 			e.printStackTrace();

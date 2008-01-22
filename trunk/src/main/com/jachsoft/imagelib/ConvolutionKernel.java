@@ -10,12 +10,12 @@ public class ConvolutionKernel extends DataArray {
 		this.size=size;
 	}
 	
-	public ConvolutionKernel(int size, float data[]){
+	public ConvolutionKernel(int size, double data[]){
 		super(size,size);
 		this.size = size;
-		
-		for (int i=0;i<(size*size);i++){
-			this.data[i] = data[i];
+		int count = size * size;
+		for (int i=0;i<count;i++){
+			this.setValue(i, data[i]);
 		}
 	}
 	
@@ -53,13 +53,11 @@ public class ConvolutionKernel extends DataArray {
 				kernel.setValue(x, y,(float) value);
 			}
 		}
-		//System.out.println(kernel);
 		for (int y=0;y<size;y++){
 			for (int x=0;x < size;x++){
 				kernel.setValue(x,y,(float)(kernel.getValue(x,y)/sum));
 			}
 		}		
-		
 		return kernel;
 	}
 	
@@ -89,7 +87,7 @@ public class ConvolutionKernel extends DataArray {
 			}
 		}
 		
-		System.out.println(kernel);
+		//System.out.println(kernel);
 		/*
 		for (int y=0;y<size;y++){
 			for (int x=0;x < size;x++){
@@ -101,8 +99,12 @@ public class ConvolutionKernel extends DataArray {
 	}
 	
 	public ConvolutionKernel laplacianMask(){
-		return new ConvolutionKernel(3,new float[]{0,1,0,1,-4,1,0,1,0});
+		return new ConvolutionKernel(3,new double[]{0,1,0,1,-4,1,0,1,0});
 	} 
+	
+	public int getOffset(){
+		return size/2;
+	}
 	
 		
 }

@@ -7,10 +7,15 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class LaplacianEdgeDetect extends ImageOperator {
+	int thresh=0;
 
 	public LaplacianEdgeDetect() {
 	}
 
+	public void setThreshold(int val){
+		this.thresh=val;
+	}
+	
 	public LaplacianEdgeDetect(RGBImage image) {
 		super(image);
 	}
@@ -42,7 +47,7 @@ public class LaplacianEdgeDetect extends ImageOperator {
 		ConvolutionKernel kernel = new ConvolutionKernel().laplacianMask();
 		//ConvolutionKernel kernel = new ConvolutionKernel(5);
 		//kernel = kernel.LoGFilter(5.0f);
-		
+		/*
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
 				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL,3);
@@ -53,13 +58,19 @@ public class LaplacianEdgeDetect extends ImageOperator {
 					}						
 				}
 				int red = (int)newval;
-				retRaw.setValue(x, y, red);
+				raw.setValue(x, y, red);
 			}
 		}
+		*/
 		
 		//System.out.println(retRaw);
 		
 
+		Convolution convolution = new Convolution(gray);
+		convolution.setParameters(kernel);
+		raw = convolution.convolve();
+		
+		
 		for (int y=startY; y<endY;y++){
 			for (int x=startX; x<endX;x++){
 				int min=9999999;
@@ -68,12 +79,14 @@ public class LaplacianEdgeDetect extends ImageOperator {
 				int th=2;
 				for (int i=(y-offset); i <= y+offset; i++){
 					for (int j=(x-offset); j <= x+offset;j++){
-						newval = (int)retRaw.getValue(j, i);
+						newval = (int)raw.getValue(j, i);
 						if (newval < min) min = newval;
 						if (newval > max) max = newval;
 					}			
 				}
-				th=(int)retRaw.getValue(x,y);
+				th=(int)raw.getValue(x,y);
+				if (thresh !=0 )
+					th=thresh;
 				if (min<-th && max>th) retval.setRGB(x, y, 255, 255, 255);
 				else retval.setRGB(x, y, 0, 0, 0);				
 			}

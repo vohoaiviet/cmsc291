@@ -20,7 +20,7 @@ public class Neighbor extends DataArray {
 		return size / 2;
 	}
 	
-	public float getCenterValue(){
+	public double getCenterValue(){
 		return this.getValue(size/2,size/2);
 	}
 	

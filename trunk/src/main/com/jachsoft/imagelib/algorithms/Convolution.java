@@ -1,17 +1,23 @@
 package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.DataArray;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
+/**
+ * The convolution operator
+ * 
+ * @author jach
+ *
+ */
+
 public class Convolution extends ImageOperator{
 	public Convolution() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
 
 	ConvolutionKernel kernel;
 	
@@ -23,64 +29,62 @@ public class Convolution extends ImageOperator{
 		this.kernel = kernel;
 	}
 	
-	public void setRegion(ImageRegion region){
-		this.region = region;
+	/**
+	 * performs convolution but returns a 
+	 * more lightweight object
+	 * This method is useful when performing intermmediate computations
+	 * say edge detection
+	 * 
+	 * @return
+	 */
+	public DataArray convolve(){
+	    int w=source.getWidth();
+	    int h=source.getHeight();	
+		DataArray retval=new DataArray(w,h);			
+		int offset=kernel.getOffset();		
+		for (int y=offset; y<(h-offset);y++){
+			for (int x=offset; x<(w-offset);x++){
+				double value=0;
+				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
+						RGBColor rgb = source.getRGBColor(j, i);
+						//value+=rgb.getBlue()*kernel.getValue(j-x+offset, i-y+offset);						
+						value+=rgb.getBlue()*kernel.getValue(l, k);
+					}			
+				}
+				retval.setValue(x, y, value);
+			}
+		}		
+		return retval;		
 	}
 	
 	public RGBImage apply(){
-		RGBImage retval = new RGBImage(source.getWidth(),source.getHeight());
-		int size=kernel.getSize();
-		Neighbor nbor=new Neighbor(size);
-		
-		int startX=0;
-		int startY=0;
-		int endX=source.getWidth();
-		int endY=source.getHeight();
-		int offset=nbor.getOffset();
-		
-		startX=startX+offset;
-		startY=startY+offset;
-		endX=endX-offset;
-		endY=endY-offset;
+	    int w=source.getWidth();
+	    int h=source.getHeight();
+		RGBImage retval = new RGBImage(w,h);
+		int offset=kernel.getOffset();
 
-		for (int y=startY; y<endY;y++){
-			for (int x=startX; x<endX;x++){
-				Neighbor redNbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL,size);
-				float newval=0;
-				for (int i=0;i<kernel.getHeight();i++){
-					for (int j=0;j<kernel.getWidth();j++){
-						newval +=(int)redNbor.getValue(i, j) * kernel.getValue(i, j);
-					}						
-				}
-				int red = (int)newval;
-				//System.out.println(newval);
-													
-				Neighbor greenNbor=source.getNeighbor(x, y, RGBColor.GREEN_CHANNEL, size);
-				newval=0;
-				for (int i=0;i<kernel.getHeight();i++){
-					for (int j=0;j<kernel.getWidth();j++){
-						newval +=(int)greenNbor.getValue(i, j) * kernel.getValue(i, j);
-					}						
-				}
-				int green = (int)newval;
-									
-				Neighbor blueNbor=source.getNeighbor(x, y, RGBColor.BLUE_CHANNEL, size);
-				newval=0;
-				for (int i=0;i<kernel.getHeight();i++){
-					for (int j=0;j<kernel.getWidth();j++){
-						newval +=(int)blueNbor.getValue(i, j) * kernel.getValue(i, j);
-					}						
-				}
-				int blue = (int)newval;
+		for (int y=offset; y<(h-offset);y++){
+			for (int x=offset; x<(w-offset);x++){
+				int rvalue=0;
+				int gvalue=0;
+				int bvalue=0;
+				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
+						RGBColor rgb = source.getRGBColor(j, i);
+						double weight=kernel.getValue(l,k);
+						rvalue+=rgb.getRed()*weight;
+						gvalue+=rgb.getGreen()*weight;
+						bvalue+=rgb.getBlue()*weight;						
+					}			
+				}				
+				int red=(int)rvalue;
+				int green=(int)gvalue;
+				int blue=(int)bvalue;				
 				
 				retval.setRGB(x, y, red, green, blue);					
 			}
-		}
-
-		
-		return retval;
-		
-	}
-	
-	
+		}		
+		return retval;		
+	}	
 }
