@@ -6,13 +6,13 @@ import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class LaplacianEdgeDetect extends ImageOperator {
-	int thresh=0;
+	int threshold=3;
 
 	public LaplacianEdgeDetect() {
 	}
 
-	public void setThreshold(int val){
-		this.thresh=val;
+	public void setParameters(int threshold){
+		this.threshold=threshold;
 	}
 	
 	public LaplacianEdgeDetect(RGBImage image) {
@@ -41,7 +41,6 @@ public class LaplacianEdgeDetect extends ImageOperator {
 				int min=9999999;
 				int max=-min;
 				int newval=0;
-				int th=0;
 				for (int i=(y-offset); i<=(y+offset); i++){
 					for (int j=(x-offset);j<=(x+offset);j++){
 						newval = (int)raw.getValue(j, i);
@@ -49,13 +48,10 @@ public class LaplacianEdgeDetect extends ImageOperator {
 						if (newval > max) max = newval;
 					}			
 				}
-				th=(int)raw.getValue(x,y);
-				if (thresh !=0 )
-					th=thresh;
-				if (min<-th && max>th){
-					retval.setRGB(x, y, 0, 0, 0);
-				}else {
+				if (min<-threshold && max>threshold){
 					retval.setRGB(x, y, 255, 255, 255);
+				}else {
+					retval.setRGB(x, y, 0, 0, 0);
 				}
 				
 			}
