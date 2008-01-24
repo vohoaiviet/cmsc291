@@ -18,8 +18,7 @@ public class ConvolutionTest extends TestCase {
 			Convolution convo = new Convolution(img);
 			ConvolutionKernel kernel=new ConvolutionKernel(3);
 			convo.setParameters(kernel.meanFilter());			
-			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("data/mean3x3.jpg"));
-			
+			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("test/mean3x3.jpg"));			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
