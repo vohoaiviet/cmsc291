@@ -18,6 +18,7 @@ public class MeanFilterTest extends TestCase {
 			convo.setParameters(kernel.meanFilter());			
 			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("tests/mean_filter_3x3.jpg"));			
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
 		}
 	}

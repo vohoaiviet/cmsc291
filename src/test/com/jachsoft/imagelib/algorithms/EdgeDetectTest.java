@@ -16,7 +16,9 @@ public class EdgeDetectTest extends TestCase {
 			SobelEdgeDetect edge = new SobelEdgeDetect(img);			
 			ImageIO.write(edge.apply().getBufferedImage(),"jpg",new File("tests/sobel.jpg"));
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
+			
 		}
 	}
 

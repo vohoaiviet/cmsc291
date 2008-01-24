@@ -12,8 +12,8 @@ public class ImageArithmeticTest extends TestCase {
 
 	public void testAdd() {
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("../scr1.gif")));
-			RGBImage img2=new RGBImage(ImageIO.read(new File("../scr2.gif")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
+			RGBImage img2=new RGBImage(ImageIO.read(new File("data/scr2.gif")));
 			
 			
 			ImageArithmetic arith = new ImageArithmetic(img,img2);
@@ -35,6 +35,7 @@ public class ImageArithmeticTest extends TestCase {
 			ImageIO.write(arith.apply().getBufferedImage(),"jpg",new File("../blend.jpg"));
 			
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
 		}
 	}

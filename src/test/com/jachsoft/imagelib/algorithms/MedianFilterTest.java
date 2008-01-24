@@ -17,6 +17,7 @@ public class MedianFilterTest extends TestCase {
 			filter.setSize(3);			
 			ImageIO.write(filter.apply().getBufferedImage(),"jpg",new File("tests/median_filter_3x3.jpg"));
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
 		}
 	}

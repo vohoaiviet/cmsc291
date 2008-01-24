@@ -20,7 +20,9 @@ public class ConvolutionTest extends TestCase {
 			convo.setParameters(kernel.meanFilter());			
 			ImageIO.write(convo.apply().getBufferedImage(),"jpg",new File("tests/mean3x3.jpg"));			
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
+			
 		}
 	}
 
