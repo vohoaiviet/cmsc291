@@ -45,17 +45,17 @@ public class SerialProcessorTest extends TestCase {
 			p.addOperator(gaussian);
 			p.addOperator(sobel);
 			p.addOperator(thresh);
-			ImageIO.write(p.apply().getBufferedImage(),"jpg",new File("data/serial.jpg"));
+			ImageIO.write(p.apply().getBufferedImage(),"jpg",new File("tests/serial.jpg"));
 			
 			Iterator<RGBImage> ite = p.getIntermmediate().iterator();
 			int c=0;
 			while(ite.hasNext()){
 				RGBImage im = ite.next();
-				ImageIO.write(im.getBufferedImage(),"jpg",new File("data/serial"+c+".jpg"));
+				ImageIO.write(im.getBufferedImage(),"jpg",new File("tests/serial"+c+".jpg"));
 				c++;
-			}
-			
+			}			
 		}catch(Exception e){
+			fail("Caught an exception");
 			e.printStackTrace();
 		}
 		

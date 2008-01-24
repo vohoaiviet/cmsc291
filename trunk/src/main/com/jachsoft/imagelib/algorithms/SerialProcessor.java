@@ -37,7 +37,7 @@ public class SerialProcessor extends ImageOperator {
 		while (ite.hasNext()){
 			ImageOperator operator = ite.next();
 			operator.setSource(retval);
-			System.out.println("Applying operator...");
+			//System.out.println("Applying operator...");
 			retval = operator.apply();
 			if (storeIntermmediate){
 				RGBImage result = new RGBImage(retval);
