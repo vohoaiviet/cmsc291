@@ -8,12 +8,10 @@ public class PrewittEdgeDetect extends ImageOperator {
 
 	public PrewittEdgeDetect() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public PrewittEdgeDetect(RGBImage source) {
 		super(source);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public RGBImage apply() {
