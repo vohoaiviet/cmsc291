@@ -21,15 +21,11 @@ public class DynamicCompression extends ImageOperator{
 		this.c=c;
 	}
 	
-	public void setRegion(ImageRegion r){
-	}
-	
 	public RGBImage apply(){
 		int ulx=region.getUlx();
 		int uly=region.getUly();
 		int w=region.getW();
 		int h=region.getH();
-
 		
 		w = ulx+w;
 		h = uly+h;
@@ -47,7 +43,5 @@ public class DynamicCompression extends ImageOperator{
 			}
 		}
 		return retval;
-	}
-	
-	
+	}	
 }
