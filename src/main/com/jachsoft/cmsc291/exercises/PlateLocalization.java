@@ -9,6 +9,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
@@ -19,6 +20,8 @@ import com.jachsoft.imagelib.algorithms.SerialProcessor;
 import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 
 public class PlateLocalization extends ImageOperator {
+	double horizontal[];
+	double vertical[];
 	
 	public PlateLocalization() {
 		super();
@@ -30,6 +33,11 @@ public class PlateLocalization extends ImageOperator {
 
 	public RGBImage apply() {
 		RGBImage retval=null;
+		
+		int w=source.getWidth();
+		int h=source.getHeight();
+		
+		
 		SerialProcessor p = new SerialProcessor(source);
 		
 		//Store intermmediate results
@@ -54,6 +62,18 @@ public class PlateLocalization extends ImageOperator {
 		
 		//Apply the operators
 		retval=p.apply();
+		
+		//Step 4. Derive the vertical and horizontal projections
+		horizontal = new double[w];
+		vertical = new double[h];
+		
+		for (int y=0;y<h;y++){
+			for (int x=0;x<w;x++){
+				RGBColor rgb = retval.getRGBColor(x, y);
+				vertical[y]=vertical[y]+rgb.getBlue();
+				horizontal[x]=horizontal[x]+rgb.getBlue();
+			}
+		}
 		
 		//Save Intermediate results
 		try{
