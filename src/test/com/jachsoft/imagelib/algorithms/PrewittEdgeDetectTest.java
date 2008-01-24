@@ -12,7 +12,7 @@ public class PrewittEdgeDetectTest extends TestCase {
 
 	public void testApply(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample3.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/cln1.gif")));
 			ImageOperator operator = new PrewittEdgeDetect(img);		
 			ImageIO.write(operator.apply().getBufferedImage(),"jpg",new File("tests/prewitt.jpg"));			
 		}catch(Exception e){

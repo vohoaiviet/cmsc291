@@ -6,6 +6,7 @@ import com.jachsoft.imagelib.RGBImage;
 
 public class PrewittEdgeDetect extends ImageOperator {
 
+
 	public PrewittEdgeDetect() {
 		super();
 	}

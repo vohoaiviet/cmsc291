@@ -7,12 +7,15 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class MedianFilter extends ImageOperator {
+	
+	
 	public MedianFilter() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	int size=3;
+
+	
 	
 	public MedianFilter(RGBImage source){
 		super(source);

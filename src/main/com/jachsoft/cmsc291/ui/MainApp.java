@@ -440,17 +440,7 @@ public class MainApp implements ActionListener {
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			ContrastStretching operator= new ContrastStretching(rgb);
 			operator.setRegion(selection);
-			/*
-			JPanel p=new JPanel(new GridLayout(1,2));
-			JSlider slider=new JSlider(0,255,127);
-			slider.setLabelTable(slider.createStandardLabels(50));
-			slider.setPaintLabels(true);
-			p.add(new JLabel("Intensity"));
-			p.add(slider);
-			JOptionPane.showMessageDialog(frame, p);
-			int t=slider.getValue();
 			
-			*/
 			String val=JOptionPane.showInputDialog("Threshold Value:");
 			
 			int t=Integer.parseInt(val);

@@ -62,7 +62,5 @@ public class ImageOperator implements IImageOperator {
 	
 	public float scale(float value){
 		return scale * value + offset;
-	}
-	
-	
+	}	
 }

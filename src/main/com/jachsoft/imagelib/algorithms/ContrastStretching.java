@@ -12,6 +12,7 @@ public class ContrastStretching extends ImageOperator{
 	float m1,m2,m3;
 	float b1,b2,b3;
 	
+	
 	public ContrastStretching() {
 		super();
 	}

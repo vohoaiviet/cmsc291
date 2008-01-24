@@ -13,6 +13,7 @@ import com.jachsoft.imagelib.RGBImage;
  */
 
 public class Convolution extends ImageOperator{
+	
 	public Convolution() {
 		super();
 	}
