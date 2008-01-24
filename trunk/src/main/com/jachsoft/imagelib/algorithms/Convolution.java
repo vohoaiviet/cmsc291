@@ -2,8 +2,6 @@ package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.DataArray;
-import com.jachsoft.imagelib.ImageRegion;
-import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
@@ -48,7 +46,6 @@ public class Convolution extends ImageOperator{
 				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
 					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
 						RGBColor rgb = source.getRGBColor(j, i);
-						//value+=rgb.getBlue()*kernel.getValue(j-x+offset, i-y+offset);						
 						value+=rgb.getBlue()*kernel.getValue(l, k);
 					}			
 				}
@@ -77,11 +74,10 @@ public class Convolution extends ImageOperator{
 						gvalue+=rgb.getGreen()*weight;
 						bvalue+=rgb.getBlue()*weight;						
 					}			
-				}				
+				}
 				int red=(int)rvalue;
 				int green=(int)gvalue;
 				int blue=(int)bvalue;				
-				
 				retval.setRGB(x, y, red, green, blue);					
 			}
 		}		

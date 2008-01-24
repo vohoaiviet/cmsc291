@@ -1,16 +1,12 @@
 package com.jachsoft.cmsc291.exercises;
 
-import java.io.File;
-import java.util.Iterator;
 
-import javax.imageio.ImageIO;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.ImageOperator;
-import com.jachsoft.imagelib.algorithms.LaplacianEdgeDetect;
 import com.jachsoft.imagelib.algorithms.SerialProcessor;
 import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 
