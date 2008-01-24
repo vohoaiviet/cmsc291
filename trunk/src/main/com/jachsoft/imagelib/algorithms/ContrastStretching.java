@@ -14,7 +14,6 @@ public class ContrastStretching extends ImageOperator{
 	
 	public ContrastStretching() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ContrastStretching(RGBImage source){

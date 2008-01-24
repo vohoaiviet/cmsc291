@@ -13,7 +13,6 @@ public class Equalization extends ImageOperator {
 		super();
 	}
 
-
 	public Equalization(RGBImage source) {
 		super(source);
 		hist = new Histogram(source);

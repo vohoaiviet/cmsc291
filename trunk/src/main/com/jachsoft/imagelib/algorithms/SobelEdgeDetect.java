@@ -7,33 +7,26 @@ import com.jachsoft.imagelib.RGBImage;
 public class SobelEdgeDetect extends ImageOperator {
 	public SobelEdgeDetect() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SobelEdgeDetect(RGBImage source){
 		super(source);
 	}
-	
-	
 
-	public RGBImage apply() {
-				
+	public RGBImage apply() {				
 		RGBImage gray=source.getGrayScaleImage();		
-		
 		Neighbor nbor=new Neighbor(3);
-		int startX=0;
-		int startY=0;
-		int endX=source.getWidth();
-		int endY=source.getHeight();
+		
+		int w=source.getWidth();
+		int h=source.getHeight();		
 		int offset=nbor.getOffset();
 		
-		startX=startX+offset;
-		startY=startY+offset;
-		endX=endX-offset;
-		endY=endY-offset;
 		
-		for (int y=startY; y<endY;y++){
-			for (int x=startX; x<endX;x++){
+		/**
+		 * TODO: can be improved by removing the call to getNeighbor()
+		 */
+		for (int y=offset; y<(h-offset);y++){
+			for (int x=offset; x<(w-offset);x++){
 				nbor=source.getNeighbor(x, y, RGBColor.RED_CHANNEL, 3);
 				for (int i=0;i<nbor.getHeight();i++){
 					for (int j=0;j<nbor.getWidth();j++){
