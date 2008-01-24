@@ -3,16 +3,18 @@ package com.jachsoft.imagelib.algorithms;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
+
+
+
 public class ImageArithmetic extends ImageOperator {	
+
 	public ImageArithmetic() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
 	public ImageArithmetic(RGBImage image) {
 		super(image);
-		// TODO Auto-generated constructor stub
 	}
 
 	RGBImage source;

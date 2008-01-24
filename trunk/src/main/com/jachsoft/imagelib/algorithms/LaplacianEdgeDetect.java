@@ -8,6 +8,8 @@ import com.jachsoft.imagelib.RGBImage;
 public class LaplacianEdgeDetect extends ImageOperator {
 	int threshold=3;
 
+	
+
 	public LaplacianEdgeDetect() {
 	}
 

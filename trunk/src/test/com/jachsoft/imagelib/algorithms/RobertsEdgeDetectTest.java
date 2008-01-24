@@ -12,7 +12,7 @@ public class RobertsEdgeDetectTest extends TestCase {
 
 	public void testApply(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample3.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/cln1.gif")));
 			ImageOperator operator = new RobertsEdgeDetect(img);		
 			ImageIO.write(operator.apply().getBufferedImage(),"jpg",new File("tests/roberts.jpg"));			
 		}catch(Exception e){

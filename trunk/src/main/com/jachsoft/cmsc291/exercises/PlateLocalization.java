@@ -39,11 +39,7 @@ public class PlateLocalization extends ImageOperator {
 		LaplacianEdgeDetect sobel = new LaplacianEdgeDetect();
 		sobel.setThreshold(6);
 		p.addOperator(sobel);
-		*/
-		
-		ContrastStretching threshold = new ContrastStretching();		
-		threshold.threshold(150);
-		p.addOperator(threshold);		
+		*/			
 		
 		retval=p.apply();
 		
