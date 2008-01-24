@@ -13,7 +13,8 @@ public class LaplacianEdgeDetectTest extends TestCase {
 	public void testApply(){
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/sample3.jpg")));
-			ImageOperator operator = new LaplacianEdgeDetect(img);		
+			LaplacianEdgeDetect operator = new LaplacianEdgeDetect(img);
+			operator.setParameters(20);
 			ImageIO.write(operator.apply().getBufferedImage(),"jpg",new File("tests/laplacian.jpg"));			
 		}catch(Exception e){
 			fail("Caught an exception");

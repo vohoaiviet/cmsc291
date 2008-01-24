@@ -235,7 +235,9 @@ public class MainApp implements ActionListener {
 		}
 		if (ae.getSource().equals(laplacianEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			LaplacianEdgeDetect operator=new LaplacianEdgeDetect(rgb);			
+			LaplacianEdgeDetect operator=new LaplacianEdgeDetect(rgb);
+			String s=JOptionPane.showInputDialog("Enter threshold:","3");
+			operator.setParameters(Integer.parseInt(s));						
 			applyOperator(operator);
 		}
 		if (ae.getSource().equals(gaussianFilterAction)){
