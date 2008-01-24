@@ -44,7 +44,7 @@ public class ConvolutionKernel extends DataArray {
 				int center = size / 2;
 				int i = x - center;
 				int j = y - center;				
-				value=(Math.exp(-(((i*i)+(j*j))/(2*sd*sd))))/Math.sqrt((2*Math.PI*sd*sd));
+				value=(Math.exp(-(((i*i)+(j*j))/(2*sd*sd))))/(2*Math.PI*(sd*sd));
 				if (x == 0 && y == 0){
 					min = value;
 				}
