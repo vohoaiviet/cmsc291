@@ -14,9 +14,8 @@ public class MedianFilterTest extends TestCase {
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
 			MedianFilter filter = new MedianFilter(img);
-			filter.setSize(7);
-			
-			ImageIO.write(filter.apply().getBufferedImage(),"jpg",new File("data/median.jpg"));
+			filter.setSize(3);			
+			ImageIO.write(filter.apply().getBufferedImage(),"jpg",new File("test/median_filter_3x3.jpg"));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
