@@ -59,55 +59,120 @@ public class PlateLocalization extends ImageOperator {
 		laplacian.setParameters(7);
 		p.addOperator(laplacian);					
 		
-		
-		
-		median = new MedianFilter();
-		median.setSize(3);
-		p.addOperator(laplacian);
-		
-		
 		//Apply the operators
 		retval=p.apply();
 		
-		//Step 4. Derive the vertical and horizontal projections
+		//Step 4. Count the number of transitions
 		horizontal = new double[w];
 		vertical = new double[h];		
-		double maxX=-999;
-		double maxY=-999;
+		double maxY=-999;		
+		int prevY=0;
+		int currY;		
+		int ybm=0;		
 		for (int y=0;y<h;y++){
-			for (int x=0;x<w;x++){
+			for (int x=0;x<w;x++){				
 				RGBColor rgb = retval.getRGBColor(x, y);
-				vertical[y]=vertical[y]+rgb.getBlue();
-				horizontal[x]=horizontal[x]+rgb.getBlue();
 				
-				
-				
-				if (maxX < horizontal[x]){
-					maxX = horizontal[x];
-				}				
-				
+				currY = rgb.getBlue();
+				if (currY != prevY){
+					vertical[y]++;
+					prevY=currY;
+				}
 				if (maxY < vertical[y]){
 					maxY = vertical[y];
+					ybm=y;
 				}				
 			}
 		}
 		
 		//Step 5. Normalize projections, generate visualization of projections
 		RGBImage vp = new RGBImage(101,h);
-		RGBImage hp = new RGBImage(w,101);
-		for (int x=0;x<w;x++){
-			horizontal[x]=horizontal[x]/maxX;
-			int i=(int)(horizontal[x]*100);
-			for (int y=0;y<i;y++){
-				retval.setRGB(x, y, 255, 255, 0);
-			}
-		}		
 		for (int y=0;y<h;y++){
 			vertical[y]=vertical[y]/maxY;
 			int i=(int)(vertical[y]*100);
 			for (int x=0;x<i;x++){
 				retval.setRGB(x, y, 255, 0, 255);
 			}
+		}
+		
+		//Step 6. Band Detection				
+		double cy=0.55;
+		int yb0=0;
+		int yb1=0;
+		for (int y=0;y<ybm;y++){
+			if (vertical[y] <= (vertical[ybm]*cy)){
+				yb0=y;
+			}			
+		}		
+		for (int y=h-1;y>ybm;y--){
+			if (vertical[y] <= (vertical[ybm]*cy)){
+				yb1=y;
+			}			
+		}		
+		for (int x=0;x<w;x++){
+			retval.setRGB(x, yb0, 0, 255, 255);
+			retval.setRGB(x, yb1, 0, 255, 255);
+			retval.setRGB(x, ybm, 255, 255, 0);
+		}
+		
+		//7. Plate Detection
+		int prevX=0;
+		int xbm=0;
+		int currX;
+		double maxX=-999;
+		for (int y=yb0;y<=yb1;y++){
+			for (int x=0;x<w;x++){
+								
+				RGBColor rgb = retval.getRGBColor(x, y);
+				
+				currX = rgb.getBlue();
+				
+				if (currX != prevX){
+					horizontal[x]++;
+					prevX=currX;
+				}
+				
+				if (maxX < horizontal[x]){
+					maxX = horizontal[x];
+					xbm=x;
+				}	
+			}
+		}
+		int m=0;
+		xbm=0;
+		for (int x=0;x<w;x++){
+			horizontal[x]=horizontal[x]/maxX;
+			int i=(int)(horizontal[x]*100);
+			if (m < i){
+				xbm=x;
+				m=i;
+			}			
+			for (int y=0;y<i;y++){
+				retval.setRGB(x, y, 255, 255, 0);
+			}
+		}
+		
+		System.out.println(xbm);
+		
+		
+		
+		double cx=0.86;
+		int xb0=0;
+		int xb1=0;
+		for (int x=0;x<xbm;x++){
+			if (horizontal[x] <= (horizontal[xbm]*cx)){
+				xb0=x;
+			}			
+		}		
+		for (int x=w-1;x>xbm;x--){
+			if (horizontal[x] <= (horizontal[xbm]*cx)){
+				xb1=x;
+			}			
+		}		
+		for (int y=yb0;y<yb1;y++){
+			retval.setRGB(xb0, y, 0, 255, 255);
+			retval.setRGB(xb1, y, 0, 255, 255);
+			retval.setRGB(xbm, y, 255, 255, 0);
 		}
 		
 		
