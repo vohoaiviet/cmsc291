@@ -1,0 +1,12 @@
+#summary Exercise 6_7: Color and Content-Based Image Retrieval
+
+= Introduction =
+
+Content-based Image Retrieval
+
+= Details =
+
+* Collect 200 color images and combine your collections (1800 toal)
+
+* Write a program that accepts a query image and creates a web page that
+  displays the k most similar pictures 
