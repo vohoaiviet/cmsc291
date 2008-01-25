@@ -6,7 +6,6 @@ Content-based Image Retrieval
 
 = Details =
 
-* Collect 200 color images and combine your collections (1800 toal)
-
-* Write a program that accepts a query image and creates a web page that
+1. Collect 200 color images and combine your collections (1800 toal)
+2. Write a program that accepts a query image and creates a web page that
   displays the k most similar pictures 
