@@ -1,7 +1,6 @@
 package com.jachsoft.cmsc291.exercises;
 
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -32,11 +31,10 @@ public class PlateLocalization extends ImageOperator {
 	}
 
 	public RGBImage apply() {
-		RGBImage retval=null;
+		RGBImage retval=new RGBImage(source);
 		
 		int w=source.getWidth();
 		int h=source.getHeight();
-		
 		
 		SerialProcessor p = new SerialProcessor(source);
 		
@@ -60,21 +58,26 @@ public class PlateLocalization extends ImageOperator {
 		p.addOperator(laplacian);					
 		
 		//Apply the operators
-		retval=p.apply();
+		RGBImage edges=p.apply();
+		
+		RGBImage scratch = new RGBImage(edges);
 		
 		//Step 4. Count the number of transitions 
 		int x0=0;
 		int y0=0;
-		int x1=w;
-		int y1=h;
+		int x1=w-1;
+		int y1=h-1;
 		
-		y0 = (h/2)*1;
-		y1 = y0 + (h/2);
+		/*
+		y0 = (h/3)*1;
+		y1 = y0 + (h/3);
+		x0 = (w/3)*1;
+		x1 = x0 + (w/3);
 		
+		*/
 		
 		horizontal = new double[w];
 		vertical = new double[h];		
-		
 		
 		double maxY=-999;		
 		int prevY=0;
@@ -82,7 +85,7 @@ public class PlateLocalization extends ImageOperator {
 		int ybm=0;		
 		for (int y=y0;y<y1;y++){
 			for (int x=x0;x<x1;x++){				
-				RGBColor rgb = retval.getRGBColor(x, y);
+				RGBColor rgb = edges.getRGBColor(x, y);
 				
 				currY = rgb.getBlue();
 				if (currY != prevY){
@@ -98,11 +101,11 @@ public class PlateLocalization extends ImageOperator {
 		
 		//Step 5. Normalize projections, generate visualization of projections
 		RGBImage vp = new RGBImage(101,h);
-		for (int y=0;y<h;y++){
+		for (int y=y0;y<y1;y++){
 			vertical[y]=vertical[y]/maxY;
 			int i=(int)(vertical[y]*100);
 			for (int x=0;x<i;x++){
-				retval.setRGB(x, y, 255, 0, 255);
+				scratch.setRGB(x, y, 255, 0, 255);
 			}
 		}
 		
@@ -110,78 +113,101 @@ public class PlateLocalization extends ImageOperator {
 		double cy=0.55;
 		int yb0=0;
 		int yb1=0;
-		for (int y=0;y<ybm;y++){
+		for (int y=y0;y<ybm;y++){
 			if (vertical[y] <= (vertical[ybm]*cy)){
 				yb0=y;
 			}			
 		}		
-		for (int y=h-1;y>ybm;y--){
+		for (int y=y1;y>ybm;y--){
 			if (vertical[y] <= (vertical[ybm]*cy)){
 				yb1=y;
 			}			
 		}		
-		for (int x=0;x<w;x++){
-			retval.setRGB(x, yb0, 0, 255, 255);
-			retval.setRGB(x, yb1, 0, 255, 255);
-			retval.setRGB(x, ybm, 255, 255, 0);
+		for (int x=x0;x<x1;x++){
+			scratch.setRGB(x, yb0, 0, 255, 255);
+			scratch.setRGB(x, yb1, 0, 255, 255);
+			scratch.setRGB(x, ybm, 255, 255, 0);
 		}
 		
 		//7. Plate Detection
-		int prevX=0;
+		int prevX;
 		int xbm=0;
 		int currX=0;
-		double maxX=-999;
-		for (int y=yb0;y<=yb1;y++){
-			for (int x=0;x<w;x++){
-				RGBColor rgb = retval.getRGBColor(x, y);				
-				currX = rgb.getBlue();				
+		
+		for (int x=x0;x<x1;x++){
+			prevX=retval.getRGBColor(x, yb0).getBlue();
+			for (int y=(yb0+1);y<=yb1;y++){
+				currX = edges.getRGBColor(x, y).getBlue();				
 				if (currX != prevX){
 					horizontal[x]++;
 					prevX=currX;
-				}				
-				if (maxX < horizontal[x]){
-					maxX = horizontal[x];
-					xbm=x;
-				}	
-			}
-		}
-		int max=0;
-		xbm=0;
-		for (int x=0;x<w;x++){
-			horizontal[x]=horizontal[x]/maxX;			
-			int i=(int)(horizontal[x]*100);
-			System.out.println(i);			
-			if (max < i){
-				System.out.println("Max:"+i+","+x);
-				xbm=x;
-				max=i;
-			}			
-			for (int y=0;y<i;y++){
-				retval.setRGB(x, y, 255, 255, 0);
+				}
 			}
 		}
 		
-		//System.out.println(xbm);		
+		//find the peak
+		xbm = 0;
+		for (int x=x0;x<x1;x++){
+			//System.out.println(x+","+horizontal[x]);
+			if (horizontal[xbm] < horizontal[x]){
+				xbm = x;
+			}
+		}
+			
+		
+		
+		double maxX=horizontal[xbm];
+		for (int x=x0;x<x1;x++){
+			double normalized=horizontal[x]/maxX;
+			horizontal[x]=normalized;
+			int i=(int)(horizontal[x]*100);
+			for (int y=0;y<i;y++){
+				scratch.setRGB(x, y, 255, 255, 0);
+			}
+		}
+		
+		System.out.println(xbm+","+horizontal[xbm]);		
 		
 		double cx=0.86;
 		int xb0=0;
 		int xb1=0;
-		for (int x=0;x<xbm;x++){
+		for (int x=x0;x<xbm;x++){
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb0=x;
 			}			
 		}		
-		for (int x=w-1;x>xbm;x--){
+		for (int x=x1;x>xbm;x--){
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb1=x;
 			}			
 		}
 		
 		for (int y=yb0;y<yb1;y++){
-			retval.setRGB(xb0, y, 0, 255, 255);
-			retval.setRGB(xb1, y, 0, 255, 255);
-			retval.setRGB(xbm, y, 255, 255, 0);
+			scratch.setRGB(xb0, y, 0, 255, 255);
+			scratch.setRGB(xb1, y, 0, 255, 255);
+			scratch.setRGB(xbm, y, 255, 255, 0);
 		}
+				
+		
+		
+		xb0 = xbm-100;
+		xb1 = xbm+100;
+		for (int y=yb0;y<=yb1;y++){
+			for (int x=xb0;x<=xb1;x++){
+				if ((x==xb0 || x== xb1)){
+					retval.setRGB(x, y, 0, 0, 255);
+				}
+				if ((y==yb0 || y== yb1)){
+					retval.setRGB(x, y, 0, 0, 255);
+				}
+
+			}
+			
+		}
+		
+		
+		
+		
 		
 		
 		try{
