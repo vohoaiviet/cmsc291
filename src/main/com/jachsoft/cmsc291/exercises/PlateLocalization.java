@@ -135,13 +135,16 @@ public class PlateLocalization extends ImageOperator {
 		int currX=0;
 		
 		for (int x=x0;x<x1;x++){
-			prevX=retval.getRGBColor(x, yb0).getBlue();
+			//prevX=retval.getRGBColor(x, yb0).getBlue();
 			for (int y=(yb0+1);y<=yb1;y++){
 				currX = edges.getRGBColor(x, y).getBlue();				
+				/*
 				if (currX != prevX){
 					horizontal[x]++;
 					prevX=currX;
 				}
+				*/
+				horizontal[x]+=currX;
 			}
 		}
 		
@@ -154,8 +157,6 @@ public class PlateLocalization extends ImageOperator {
 			}
 		}
 			
-		
-		
 		double maxX=horizontal[xbm];
 		for (int x=x0;x<x1;x++){
 			double normalized=horizontal[x]/maxX;
@@ -166,17 +167,20 @@ public class PlateLocalization extends ImageOperator {
 			}
 		}
 		
-		System.out.println(xbm+","+horizontal[xbm]);		
+		//System.out.println(xbm+","+horizontal[xbm]);		
 		
 		double cx=0.86;
 		int xb0=0;
 		int xb1=0;
-		for (int x=x0;x<xbm;x++){
+		int offset=50;
+		for (int x=(xbm-offset);x<xbm;x++){
+			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb0=x;
 			}			
 		}		
-		for (int x=x1;x>xbm;x--){
+		System.out.println(xb0);
+		for (int x=(xbm+offset);x>xbm;x--){
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb1=x;
 			}			
@@ -190,8 +194,8 @@ public class PlateLocalization extends ImageOperator {
 				
 		
 		
-		xb0 = xbm-100;
-		xb1 = xbm+100;
+		xb0 = x0;//xbm-100;
+		xb1 = x1;//xbm+100;
 		for (int y=yb0;y<=yb1;y++){
 			for (int x=xb0;x<=xb1;x++){
 				if ((x==xb0 || x== xb1)){
@@ -207,7 +211,7 @@ public class PlateLocalization extends ImageOperator {
 		
 		
 		
-		
+		//retval = scratch;
 		
 		
 		try{
