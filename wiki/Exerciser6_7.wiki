@@ -8,4 +8,4 @@ Content-based Image Retrieval
 
 1. Collect 200 color images and combine your collections (1800 total)
 
-2. Write a program that accepts a query image and creates a web page that displays the k lost similar pictures 
+2. Write a program that accepts a query image and creates a web page that displays the k most similar pictures 
