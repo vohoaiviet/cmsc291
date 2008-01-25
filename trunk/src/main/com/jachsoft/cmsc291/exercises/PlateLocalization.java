@@ -62,15 +62,26 @@ public class PlateLocalization extends ImageOperator {
 		//Apply the operators
 		retval=p.apply();
 		
-		//Step 4. Count the number of transitions
+		//Step 4. Count the number of transitions 
+		int x0=0;
+		int y0=0;
+		int x1=w;
+		int y1=h;
+		
+		y0 = (h/2)*1;
+		y1 = y0 + (h/2);
+		
+		
 		horizontal = new double[w];
 		vertical = new double[h];		
+		
+		
 		double maxY=-999;		
 		int prevY=0;
 		int currY;		
 		int ybm=0;		
-		for (int y=0;y<h;y++){
-			for (int x=0;x<w;x++){				
+		for (int y=y0;y<y1;y++){
+			for (int x=x0;x<x1;x++){				
 				RGBColor rgb = retval.getRGBColor(x, y);
 				
 				currY = rgb.getBlue();
@@ -118,43 +129,39 @@ public class PlateLocalization extends ImageOperator {
 		//7. Plate Detection
 		int prevX=0;
 		int xbm=0;
-		int currX;
+		int currX=0;
 		double maxX=-999;
 		for (int y=yb0;y<=yb1;y++){
 			for (int x=0;x<w;x++){
-								
-				RGBColor rgb = retval.getRGBColor(x, y);
-				
-				currX = rgb.getBlue();
-				
+				RGBColor rgb = retval.getRGBColor(x, y);				
+				currX = rgb.getBlue();				
 				if (currX != prevX){
 					horizontal[x]++;
 					prevX=currX;
-				}
-				
+				}				
 				if (maxX < horizontal[x]){
 					maxX = horizontal[x];
 					xbm=x;
 				}	
 			}
 		}
-		int m=0;
+		int max=0;
 		xbm=0;
 		for (int x=0;x<w;x++){
-			horizontal[x]=horizontal[x]/maxX;
+			horizontal[x]=horizontal[x]/maxX;			
 			int i=(int)(horizontal[x]*100);
-			if (m < i){
+			System.out.println(i);			
+			if (max < i){
+				System.out.println("Max:"+i+","+x);
 				xbm=x;
-				m=i;
+				max=i;
 			}			
 			for (int y=0;y<i;y++){
 				retval.setRGB(x, y, 255, 255, 0);
 			}
 		}
 		
-		System.out.println(xbm);
-		
-		
+		//System.out.println(xbm);		
 		
 		double cx=0.86;
 		int xb0=0;
@@ -168,7 +175,8 @@ public class PlateLocalization extends ImageOperator {
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb1=x;
 			}			
-		}		
+		}
+		
 		for (int y=yb0;y<yb1;y++){
 			retval.setRGB(xb0, y, 0, 255, 255);
 			retval.setRGB(xb1, y, 0, 255, 255);
