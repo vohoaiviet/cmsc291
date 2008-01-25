@@ -162,12 +162,12 @@ public class PlateLocalization extends ImageOperator {
 			double normalized=horizontal[x]/maxX;
 			horizontal[x]=normalized;
 			int i=(int)(horizontal[x]*100);
+
 			for (int y=0;y<i;y++){
 				scratch.setRGB(x, y, 255, 255, 0);
 			}
 		}
-		
-		//System.out.println(xbm+","+horizontal[xbm]);		
+
 		
 		double cx=0.86;
 		int xb0=0;
