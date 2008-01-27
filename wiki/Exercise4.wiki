@@ -1,1 +1,18 @@
 #summary Exercise 4: Edge Detection
+
+=Introduction=
+In this exercise, we need to implement different edge detection algorithms and evaluate
+the results given a sample image.
+
+=Results=
+The following edge detection algorithms were implemented:
+
+* Roberts
+
+* Prewitt
+
+* Sobel
+
+* Laplacian
+
+
