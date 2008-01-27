@@ -14,11 +14,11 @@ public class ImageRegion {
 	}
 	
 	
-	public int getH() {
+	public int getHeight() {
 		return h;
 	}
 
-	public void setH(int h) {
+	public void setHeight(int h) {
 		this.h = h;
 	}
 
@@ -38,11 +38,11 @@ public class ImageRegion {
 		this.uly = uly;
 	}
 
-	public int getW() {
+	public int getWidth() {
 		return w;
 	}
 
-	public void setW(int w) {
+	public void setWidth(int w) {
 		this.w = w;
 	}
 	

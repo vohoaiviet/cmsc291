@@ -39,8 +39,8 @@ public class ContrastStretching extends ImageOperator{
 	
 		int ulx=region.getUlx();
 		int uly=region.getUly();
-		int w=region.getW();
-		int h=region.getH();
+		int w=region.getWidth();
+		int h=region.getHeight();
 		
 		
 		m1=(float)s1/r1;

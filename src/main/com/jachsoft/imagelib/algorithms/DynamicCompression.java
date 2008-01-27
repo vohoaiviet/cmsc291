@@ -24,8 +24,8 @@ public class DynamicCompression extends ImageOperator{
 	public RGBImage apply(){
 		int ulx=region.getUlx();
 		int uly=region.getUly();
-		int w=region.getW();
-		int h=region.getH();
+		int w=region.getWidth();
+		int h=region.getHeight();
 		
 		w = ulx+w;
 		h = uly+h;

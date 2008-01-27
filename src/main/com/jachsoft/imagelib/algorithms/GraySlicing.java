@@ -48,8 +48,8 @@ public class GraySlicing extends ImageOperator {
 	public void setRegion(ImageRegion r){
 		this.ulx=r.getUlx();
 		this.uly=r.getUly();
-		this.w=r.getW();
-		this.h=r.getH();
+		this.w=r.getWidth();
+		this.h=r.getHeight();
 	}
 	
 	public RGBImage apply(){
