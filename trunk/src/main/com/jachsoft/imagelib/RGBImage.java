@@ -168,4 +168,23 @@ public class RGBImage{
 		return retval;
 	}
 	
+	public RGBImage getRegion(ImageRegion region){
+		int ulx=region.getUlx();
+		int uly=region.getUly();
+		
+		int rw=region.getWidth();
+		int rh=region.getHeight();
+		
+		RGBImage retval=new RGBImage(rw,rh);
+		
+		for (int y=uly,i=0;y<(uly+rh);y++,i++){
+			for (int x=ulx,j=0;x<(ulx+rw);x++,j++){
+				RGBColor c=this.getRGBColor(x, y);
+				retval.setRGB(j, i, c.getRed() , c.getGreen(), c.getBlue());
+			}			
+		}		
+		
+		return retval;
+	}
+	
 }

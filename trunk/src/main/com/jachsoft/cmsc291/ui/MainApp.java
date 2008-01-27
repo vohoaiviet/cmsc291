@@ -291,8 +291,8 @@ public class MainApp implements ActionListener {
 		if (ae.getSource().equals(selectAllSelection)){
 			selection.setUlx(0);
 			selection.setUly(0);
-			selection.setH(imagePanel.getImage().getHeight());
-			selection.setW(imagePanel.getImage().getWidth());
+			selection.setHeight(imagePanel.getImage().getHeight());
+			selection.setWidth(imagePanel.getImage().getWidth());
 			imagePanel.updateSelection(selection);
 		}
 		if (ae.getSource().equals(selectRegionSelection)){
@@ -309,11 +309,11 @@ public class MainApp implements ActionListener {
 			sliderS1.setLabelTable(sliderS1.createStandardLabels(h/4));
 			sliderS1.setPaintLabels(true);
 			sliderS1.setPaintTicks(true);
-			JSlider sliderR2=new JSlider(0,w,selection.getUlx()+selection.getW());
+			JSlider sliderR2=new JSlider(0,w,selection.getUlx()+selection.getWidth());
 			sliderR2.setLabelTable(sliderR2.createStandardLabels(w/4));			
 			sliderR2.setPaintLabels(true);
 			sliderR2.setPaintTicks(true);
-			JSlider sliderS2=new JSlider(0,h,selection.getUly()+selection.getH());
+			JSlider sliderS2=new JSlider(0,h,selection.getUly()+selection.getHeight());
 			sliderS2.setLabelTable(sliderS2.createStandardLabels(h/4));			
 			sliderS2.setPaintLabels(true);
 			sliderS2.setPaintTicks(true);
@@ -332,8 +332,8 @@ public class MainApp implements ActionListener {
 			
 			selection.setUlx(sliderR1.getValue());
 			selection.setUly(sliderS1.getValue());
-			selection.setW(sliderR2.getValue()-sliderR1.getValue());
-			selection.setH(sliderS2.getValue()-sliderS1.getValue());
+			selection.setWidth(sliderR2.getValue()-sliderR1.getValue());
+			selection.setHeight(sliderS2.getValue()-sliderS1.getValue());
 			imagePanel.updateSelection(selection);
 			
 		}		
@@ -525,7 +525,7 @@ public class MainApp implements ActionListener {
 		}
 		if (ae.getSource().equals(equalizeAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			Histogram hist=new Histogram(rgb,selection.getUlx(),selection.getUly(),selection.getW(),selection.getH());
+			Histogram hist=new Histogram(rgb,selection.getUlx(),selection.getUly(),selection.getWidth(),selection.getHeight());
 			//Histogram hist=new Histogram(rgb);
 			Equalization operator=new Equalization(hist);
 			//imagePanel.setImage(operator.apply().getBufferedImage());
@@ -533,7 +533,7 @@ public class MainApp implements ActionListener {
 		}
 		if (ae.getSource().equals(histogramAction)){			
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
-			Histogram hist= new Histogram(rgb,selection.getUlx(),selection.getUly(),selection.getW(),selection.getH());
+			Histogram hist= new Histogram(rgb,selection.getUlx(),selection.getUly(),selection.getWidth(),selection.getHeight());
 			JFrame fr=new JFrame("Histogram-red");
 			JLabel lr=new JLabel();
 			lr.setPreferredSize(new Dimension(hist.getHistogramAsImage(Histogram.RED).getWidth(),hist.getHistogramAsImage(Histogram.RED).getHeight()));

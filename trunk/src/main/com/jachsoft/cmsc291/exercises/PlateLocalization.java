@@ -8,6 +8,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
+import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
@@ -222,7 +223,8 @@ public class PlateLocalization extends ImageOperator {
 		
 		try{
 		
-		ImageIO.write(vp.getBufferedImage(),"jpg",new File("vertical_projection.jpg"));
+		//ImageIO.write(vp.getBufferedImage(),"jpg",new File("vertical_projection.jpg"));
+		ImageIO.write(retval.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0))).getBufferedImage(),"jpg",new File("plate_number.jpg"));
 		
 		//Save Intermediate results
 		/*

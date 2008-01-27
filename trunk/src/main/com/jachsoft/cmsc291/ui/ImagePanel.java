@@ -46,7 +46,7 @@ public class ImagePanel extends JPanel{
 		if (selection != null){
 			g2.setColor(Color.BLUE);
 			g2.drawRect(selection.getUlx(), selection.getUly(),
-					selection.getW(),selection.getH());
+					selection.getWidth(),selection.getHeight());
 		}
 	}
 	
