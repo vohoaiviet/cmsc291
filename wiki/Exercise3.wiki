@@ -16,7 +16,7 @@ The image containing only the edges was analyzed first vertically by counting th
 
 http://cmsc291.googlecode.com/svn/trunk/data/exer3/test_022.jpg
 
-* Figure 2. Scratch Image
+* Figure 2. Scratch Image containing results of vertical and horizontal analysis
 
 http://cmsc291.googlecode.com/svn/trunk/tests/plate_scratch.jpg
 
@@ -28,8 +28,6 @@ http://cmsc291.googlecode.com/svn/trunk/tests/plate_localization.jpg
 
 http://cmsc291.googlecode.com/svn/trunk/tests/plate_number.jpg
 
-
-
-
-
 ===References===
+
+http://javaanpr.sourceforge.net
