@@ -28,11 +28,10 @@ The image containing only the edges was analyzed first vertically by counting th
 
 ||http://cmsc291.googlecode.com/svn/trunk/tests/plate_number.jpg||http://cmsc291.googlecode.com/svn/trunk/tests/plate_number2.jpg||
 
+===Conclusion===
 
-
-
-
+Based on the results obtained, it is clear that the approach implemented in this exercise to localize the plate number in a given car image does not provide a high percentage of success. Other methods will be investigated later.
 
 ===References===
 
-http://javaanpr.sourceforge.net
+[1] http://javaanpr.sourceforge.net
