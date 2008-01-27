@@ -9,6 +9,7 @@ the results given a sample image.
 The following shows the results:
 
 * Original Image
+
 http://cmsc291.googlecode.com/svn/trunk/data/cln1.gif
 
 * Roberts
