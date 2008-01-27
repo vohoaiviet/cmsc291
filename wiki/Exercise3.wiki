@@ -14,19 +14,24 @@ The image containing only the edges was analyzed first vertically by counting th
 
 * Figure 1. Original Image
 
-http://cmsc291.googlecode.com/svn/trunk/data/exer3/test_022.jpg
+||http://cmsc291.googlecode.com/svn/trunk/data/exer3/test_022.jpg||http://cmsc291.googlecode.com/svn/trunk/data/exer3/lp0187.jpg||
 
 * Figure 2. Scratch Image containing results of vertical and horizontal analysis
 
-http://cmsc291.googlecode.com/svn/trunk/tests/plate_scratch.jpg
+||http://cmsc291.googlecode.com/svn/trunk/tests/plate_scratch.jpg||http://cmsc291.googlecode.com/svn/trunk/tests/plate_scratch2.jpg||
 
 * Figure 3. Plate number localized
 
-http://cmsc291.googlecode.com/svn/trunk/tests/plate_localization.jpg
+||http://cmsc291.googlecode.com/svn/trunk/tests/plate_localization.jpg||http://cmsc291.googlecode.com/svn/trunk/tests/plate_localization2.jpg||
 
 * Figure 4. Plate Number Extracted
 
-http://cmsc291.googlecode.com/svn/trunk/tests/plate_number.jpg
+||http://cmsc291.googlecode.com/svn/trunk/tests/plate_number.jpg||http://cmsc291.googlecode.com/svn/trunk/tests/plate_number2.jpg||
+
+
+
+
+
 
 ===References===
 
