@@ -28,7 +28,7 @@ http://cmsc291.googlecode.com/svn/trunk/tests/dynamic_compression.jpg
 http://cmsc291.googlecode.com/svn/trunk/tests/equalization.jpg
 
 
-===Details===
+===Note===
 
 A workbench with graphical user interface was developed for this exercise.
 Check out the [http://code.google.com/p/cmsc291/downloads/list downloads ] of the project .
