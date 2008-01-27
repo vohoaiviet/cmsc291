@@ -14,9 +14,10 @@ public class LaplacianEdgeDetectTest extends TestCase {
 	public void testApply(){
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/cln1.gif")));
-			Convolution gaussian = new Convolution(img);
-			ConvolutionKernel kernel = new ConvolutionKernel(5);
-			gaussian.setParameters(kernel.gaussianFilter(1));
+			
+			Convolution gaussian = new Convolution(img);			
+			ConvolutionKernel kernel = new ConvolutionKernel(3);
+			gaussian.setParameters(kernel.gaussianFilter(15));
 			
 			//Do a gaussian filter first			
 			img = gaussian.apply();
