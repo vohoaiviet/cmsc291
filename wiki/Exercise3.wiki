@@ -1,1 +1,11 @@
 #summary Exercise 3: Plate number localization
+
+
+===Introduction===
+In this exercise, our goal is to localize the plate number in a given car picture.
+
+===Results and Discussion===
+(work in progress...)
+
+
+===References===
