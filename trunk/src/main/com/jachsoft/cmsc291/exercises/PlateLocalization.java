@@ -178,7 +178,7 @@ public class PlateLocalization extends ImageOperator {
 		for (int x=x0;x<xbm;x++){
 			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
 			//System.out.println(x+","+xbm);
-			System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
+			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
 			if (horizontal[x] <= (horizontal[xbm]*cx)){				
 				xb0=x;
 			}else{
