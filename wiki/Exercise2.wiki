@@ -1,6 +1,6 @@
 #summary Exercise 2: Image Enhancement
 ===Introduction===
-Image enhancement operations were applied on a given image.
+Image enhancement operations are to be applied on a given image.
 
 ===Results and Discussion===
 
