@@ -5,7 +5,25 @@
 In this exercise, our goal is to localize the plate number in a given car picture.
 
 ===Results and Discussion===
-(work in progress...)
+
+* Original Image
+
+http://cmsc291.googlecode.com/svn/trunk/data/exer3/test_022.jpg
+
+* Scratch Image
+
+http://cmsc291.googlecode.com/svn/trunk/tests/plate_scratch.jpg
+
+* Plate number localized
+
+http://cmsc291.googlecode.com/svn/trunk/tests/plate_localization.jpg
+
+* Plate Number Extracted
+
+http://cmsc291.googlecode.com/svn/trunk/tests/plate_number.jpg
+
+
+
 
 
 ===References===
