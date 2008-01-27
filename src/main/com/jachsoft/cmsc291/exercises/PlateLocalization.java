@@ -68,13 +68,12 @@ public class PlateLocalization extends ImageOperator {
 		int x1=w-1;
 		int y1=h-1;
 		
-		/*
-		y0 = (h/3)*1;
-		y1 = y0 + (h/3);
-		x0 = (w/3)*1;
-		x1 = x0 + (w/3);
 		
-		*/
+		y0 = (h/4)*1;
+		y1 = y0 + 2*(h/4);
+		//x0 = (w/4)*1;
+		//x1 = x0 + 2*(w/4);
+				
 		
 		horizontal = new double[w];
 		vertical = new double[h];		
@@ -149,7 +148,7 @@ public class PlateLocalization extends ImageOperator {
 		}
 		
 		//find the peak
-		xbm = 0;
+		xbm = x0;
 		for (int x=x0;x<x1;x++){
 			//System.out.println(x+","+horizontal[x]);
 			if (horizontal[xbm] < horizontal[x]){
@@ -157,6 +156,7 @@ public class PlateLocalization extends ImageOperator {
 			}
 		}
 			
+		//normalize and plot
 		double maxX=horizontal[xbm];
 		for (int x=x0;x<x1;x++){
 			double normalized=horizontal[x]/maxX;
@@ -170,32 +170,42 @@ public class PlateLocalization extends ImageOperator {
 
 		
 		double cx=0.86;
-		int xb0=0;
-		int xb1=0;
-		int offset=50;
-		for (int x=(xbm-offset);x<xbm;x++){
+		int xb0=x0;
+		int xb1=x1;
+		int offset=0;
+		
+		//find xb0
+		for (int x=x0;x<xbm;x++){
 			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
-			if (horizontal[x] <= (horizontal[xbm]*cx)){
+			//System.out.println(x+","+xbm);
+			System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
+			if (horizontal[x] <= (horizontal[xbm]*cx)){				
 				xb0=x;
-			}			
-		}		
-		System.out.println(xb0);
-		for (int x=(xbm+offset);x>xbm;x--){
+			}else{
+				break;
+			}		
+		}
+
+		
+		//find xb1
+		for (int x=x1;x>xbm;x--){
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
 				xb1=x;
-			}			
+			}else{
+				break;
+			}	
 		}
 		
 		for (int y=yb0;y<yb1;y++){
-			scratch.setRGB(xb0, y, 0, 255, 255);
-			scratch.setRGB(xb1, y, 0, 255, 255);
+			scratch.setRGB(xb0, y, 0, 0, 255);
+			scratch.setRGB(xb1, y, 0, 0, 255);
 			scratch.setRGB(xbm, y, 255, 255, 0);
 		}
 				
 		
 		
-		xb0 = x0;//xbm-100;
-		xb1 = x1;//xbm+100;
+		//xb0 = x0;//xbm-100;
+		//xb1 = x1;//xbm+100;
 		for (int y=yb0;y<=yb1;y++){
 			for (int x=xb0;x<=xb1;x++){
 				if ((x==xb0 || x== xb1)){
@@ -204,15 +214,11 @@ public class PlateLocalization extends ImageOperator {
 				if ((y==yb0 || y== yb1)){
 					retval.setRGB(x, y, 0, 0, 255);
 				}
-
 			}
 			
 		}
 		
-		
-		
-		//retval = scratch;
-		
+		//retval = scratch;		
 		
 		try{
 		
