@@ -1,23 +1,15 @@
 package com.jachsoft.cmsc291.exercises;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-
-import javax.imageio.ImageIO;
-
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
-import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.ImageOperator;
 import com.jachsoft.imagelib.algorithms.LaplacianEdgeDetect;
 import com.jachsoft.imagelib.algorithms.MedianFilter;
 import com.jachsoft.imagelib.algorithms.SerialProcessor;
-import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 
 public class PlateLocalization extends ImageOperator {
 	double horizontal[];
@@ -50,6 +42,8 @@ public class PlateLocalization extends ImageOperator {
 	int yb1;
 	int ybm;
 	
+	RGBImage orig;
+	
 	
 	public PlateLocalization() {
 		super();
@@ -61,6 +55,7 @@ public class PlateLocalization extends ImageOperator {
 
 	public RGBImage apply() {
 		RGBImage retval=new RGBImage(source);
+		orig=new RGBImage(source);
 		
 		int w=source.getWidth();
 		int h=source.getHeight();
@@ -268,7 +263,7 @@ public class PlateLocalization extends ImageOperator {
 	}
 	
 	public RGBImage getPlateNumber(){
-		return source.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0)));
+		return orig.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0)));
 	}
 
 }
