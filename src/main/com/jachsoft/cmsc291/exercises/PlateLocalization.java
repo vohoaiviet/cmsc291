@@ -22,6 +22,34 @@ import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 public class PlateLocalization extends ImageOperator {
 	double horizontal[];
 	double vertical[];
+	RGBImage scratch;
+	
+	//Parameters
+	
+	//Dimension of search region
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+	
+	//Adjustment values for searching the plate
+	double cx;
+	double cy;
+	
+	//offset values for searching the plates	
+	int deltaX;
+	int deltaY;
+	
+	//band
+	int xbm;
+	int xb0;
+	int xb1;
+	
+	//plate
+	int yb0;
+	int yb1;
+	int ybm;
+	
 	
 	public PlateLocalization() {
 		super();
@@ -61,20 +89,19 @@ public class PlateLocalization extends ImageOperator {
 		//Apply the operators
 		RGBImage edges=p.apply();
 		
-		RGBImage scratch = new RGBImage(edges);
+		scratch = new RGBImage(edges);
 		
 		//Step 4. Count the number of transitions 
-		int x0=0;
-		int y0=0;
-		int x1=w-1;
-		int y1=h-1;
+		x0=0;
+		y0=0;
+		x1=w-1;
+		y1=h-1;
 		
 		
 		y0 = (h/4)*1;
 		y1 = y0 + 2*(h/4);
 		//x0 = (w/4)*1;
 		//x1 = x0 + 2*(w/4);
-				
 		
 		horizontal = new double[w];
 		vertical = new double[h];		
@@ -82,7 +109,7 @@ public class PlateLocalization extends ImageOperator {
 		double maxY=-999;		
 		int prevY=0;
 		int currY;		
-		int ybm=0;		
+		ybm=0;		
 		for (int y=y0;y<y1;y++){
 			for (int x=x0;x<x1;x++){				
 				RGBColor rgb = edges.getRGBColor(x, y);
@@ -100,7 +127,6 @@ public class PlateLocalization extends ImageOperator {
 		}
 		
 		//Step 5. Normalize projections, generate visualization of projections
-		RGBImage vp = new RGBImage(101,h);
 		for (int y=y0;y<y1;y++){
 			vertical[y]=vertical[y]/maxY;
 			int i=(int)(vertical[y]*100);
@@ -110,17 +136,22 @@ public class PlateLocalization extends ImageOperator {
 		}
 		
 		//Step 6. Band Detection				
-		double cy=0.55;
-		int yb0=0;
-		int yb1=0;
+		double cy=0.55;		
+		yb0=0;
+		yb1=0;
+		deltaY=10;
+		
 		for (int y=y0;y<ybm;y++){
 			if (vertical[y] <= (vertical[ybm]*cy)){
-				yb0=y;
+				if ((ybm-y) > deltaY) 
+					yb0=y;
 			}			
 		}		
+		
 		for (int y=y1;y>ybm;y--){
 			if (vertical[y] <= (vertical[ybm]*cy)){
-				yb1=y;
+				if ((y-ybm) > deltaY)
+					yb1=y;
 			}			
 		}		
 		for (int x=x0;x<x1;x++){
@@ -130,20 +161,11 @@ public class PlateLocalization extends ImageOperator {
 		}
 		
 		//7. Plate Detection
-		int prevX;
-		int xbm=0;
-		int currX=0;
-		
+		xbm=0;
+		int currX=0;		
 		for (int x=x0;x<x1;x++){
-			//prevX=retval.getRGBColor(x, yb0).getBlue();
 			for (int y=(yb0+1);y<=yb1;y++){
 				currX = edges.getRGBColor(x, y).getBlue();				
-				/*
-				if (currX != prevX){
-					horizontal[x]++;
-					prevX=currX;
-				}
-				*/
 				horizontal[x]+=currX;
 			}
 		}
@@ -170,18 +192,16 @@ public class PlateLocalization extends ImageOperator {
 		}
 
 		
-		double cx=0.86;
-		int xb0=x0;
-		int xb1=x1;
-		int offset=0;
+		cx=0.86;
+		xb0=x0;
+		xb1=x1;		
+		deltaX=20;
 		
 		//find xb0
 		for (int x=x0;x<xbm;x++){
-			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
-			//System.out.println(x+","+xbm);
-			//System.out.println(horizontal[x]+","+horizontal[xbm]*cx);
-			if (horizontal[x] <= (horizontal[xbm]*cx)){				
-				xb0=x;
+			if (horizontal[x] <= (horizontal[xbm]*cx)){
+				if ((xbm-x) >= deltaX)
+					xb0=x;
 			}else{
 				break;
 			}		
@@ -191,7 +211,8 @@ public class PlateLocalization extends ImageOperator {
 		//find xb1
 		for (int x=x1;x>xbm;x--){
 			if (horizontal[x] <= (horizontal[xbm]*cx)){
-				xb1=x;
+				if ((x-xbm) >= deltaX)
+					xb1=x;
 			}else{
 				break;
 			}	
@@ -203,10 +224,6 @@ public class PlateLocalization extends ImageOperator {
 			scratch.setRGB(xbm, y, 255, 255, 0);
 		}
 				
-		
-		
-		//xb0 = x0;//xbm-100;
-		//xb1 = x1;//xbm+100;
 		for (int y=yb0;y<=yb1;y++){
 			for (int x=xb0;x<=xb1;x++){
 				if ((x==xb0 || x== xb1)){
@@ -221,10 +238,10 @@ public class PlateLocalization extends ImageOperator {
 		
 		//retval = scratch;		
 		
-		try{
+		//try{
 		
 		//ImageIO.write(vp.getBufferedImage(),"jpg",new File("vertical_projection.jpg"));
-		ImageIO.write(retval.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0))).getBufferedImage(),"jpg",new File("plate_number.jpg"));
+		//ImageIO.write(retval.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0))).getBufferedImage(),"jpg",new File("plate_number.jpg"));
 		
 		//Save Intermediate results
 		/*
@@ -238,12 +255,20 @@ public class PlateLocalization extends ImageOperator {
 			}
 		*/
 		
-		}catch(IOException ioe){
-			ioe.printStackTrace();
-		}
-		
+		//}catch(IOException ioe){
+		//	ioe.printStackTrace();
+		//}		
 		
 		return retval;
+	}
+	
+	
+	public RGBImage getScratch(){
+		return scratch;
+	}
+	
+	public RGBImage getPlateNumber(){
+		return source.getRegion(new ImageRegion(xb0,yb0,(xb1-xb0),(yb1-yb0)));
 	}
 
 }
