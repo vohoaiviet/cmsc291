@@ -1,10 +1,10 @@
 #summary Exercise 4: Edge Detection
 
-=Introduction=
+===Introduction===
 In this exercise, we need to implement different edge detection algorithms and evaluate
 the results given a sample image.
 
-=Results and Discussion=
+===Results and Discussion===
 
 The following shows the results:
 
