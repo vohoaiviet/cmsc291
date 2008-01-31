@@ -166,20 +166,29 @@ public class Morphology extends ImageOperator {
 		int h=source.getHeight();	
 		retval=new RGBImage(w,h);		
 		//assumes kernel is a square!
-		int offset=kernel.getHeight()/2;		
+		int offset=kernel.getHeight()/2;
+		//For each pixel in the image
 		for (int y=offset; y<(h-offset);y++){
-			for (int x=offset; x<(w-offset);x++){				
+			for (int x=offset; x<(w-offset);x++){
+				//No matched yet
 				int matched=0;
 				RGBColor rgb=null;
+				//For each pixel under the kernel
 				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
 					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
+						//Get the color of the pixel underneath
 						rgb = source.getRGBColor(j, i);
+						//Make the value 0 or 1
 						int normalized = (int)rgb.getBlueN();
-						int kernelVal = (int)(kernel.getValue(l, k));						
+						//Get the value of the kernel
+						int kernelVal = (int)(kernel.getValue(l, k));
+						
+						//is the value don't care?
 						if ( kernelVal == DONTCARE){
 							matched++;
-						}else
-						if (kernelVal == FOREGROUND){							
+						}else //Is the value foreground?
+						if (kernelVal == FOREGROUND){	
+							//Is the normalized value foreground
 							if (normalized == FOREGROUND){
 								matched++;
 							}
@@ -191,9 +200,11 @@ public class Morphology extends ImageOperator {
 					}			
 				}
 				if (matched==9){
+					System.out.println(x+","+y);
 					retval.setRGB(x, y, 0, 0, 0);
 				}else{
-					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+					//retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+					retval.setRGB(x, y, 255, 255, 255);
 				}
 
 			}
