@@ -9,12 +9,14 @@ public class Morphology extends ImageOperator {
 	public static final int EROSION = 2;
 	public static final int OPENING = 3;
 	public static final int CLOSING = 4;
+	public static final int HITMISSED = 5;
+	public static final int THINNING = 6;
 	
 	
 	static final int BACKGROUND=0;
 	static final int FOREGROUND=1;
-	
-	
+	static final int DONTCARE=-1;
+		
 	StructuringElement kernel;
 	int operation;
 		
@@ -39,6 +41,8 @@ public class Morphology extends ImageOperator {
 		case EROSION: return eroded(source);
 		case OPENING: return opened(source);
 		case CLOSING: return closed(source);
+		case HITMISSED: return hitAndMissed(source);
+		case THINNING: return thinned(source);
 		}
 			
 		return null;
@@ -112,6 +116,89 @@ public class Morphology extends ImageOperator {
 	
 	public RGBImage closed(RGBImage source){
 		return eroded(dilated(source));
+	}
+	
+	public RGBImage hitAndMissed(RGBImage source){
+		RGBImage retval;	
+		int w=source.getWidth();
+		int h=source.getHeight();	
+		retval=new RGBImage(w,h);		
+		//assumes kernel is a square!
+		int offset=kernel.getHeight()/2;		
+		for (int y=offset; y<(h-offset);y++){
+			for (int x=offset; x<(w-offset);x++){				
+				int matched=0;				
+				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
+						RGBColor rgb = source.getRGBColor(j, i);
+						int normalized = (int)rgb.getBlueN();
+						int kernelVal = (int)(kernel.getValue(l, k));
+						//System.out.println(kernelVal+","+normalized);
+						
+						if ( kernelVal == -1){
+							matched++;
+						}else
+						if (kernelVal == 1){							
+							if (normalized == FOREGROUND){
+								matched++;
+							}
+						}else if (kernelVal == 0){							
+							if (normalized == BACKGROUND){
+								matched++;
+							}
+						}
+					}			
+				}
+				if (matched==9){
+					retval.setRGB(x, y, 255, 255, 255);
+				}else{
+					retval.setRGB(x, y, 0, 0, 0);
+				}
+
+			}
+		}
+		return retval;
+	}
+	
+	public RGBImage thinned(RGBImage source){
+		RGBImage retval;	
+		int w=source.getWidth();
+		int h=source.getHeight();	
+		retval=new RGBImage(w,h);		
+		//assumes kernel is a square!
+		int offset=kernel.getHeight()/2;		
+		for (int y=offset; y<(h-offset);y++){
+			for (int x=offset; x<(w-offset);x++){				
+				int matched=0;
+				RGBColor rgb=null;
+				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
+						rgb = source.getRGBColor(j, i);
+						int normalized = (int)rgb.getBlueN();
+						int kernelVal = (int)(kernel.getValue(l, k));						
+						if ( kernelVal == DONTCARE){
+							matched++;
+						}else
+						if (kernelVal == FOREGROUND){							
+							if (normalized == FOREGROUND){
+								matched++;
+							}
+						}else if (kernelVal == BACKGROUND){							
+							if (normalized == BACKGROUND){
+								matched++;
+							}
+						}
+					}			
+				}
+				if (matched==9){
+					retval.setRGB(x, y, 0, 0, 0);
+				}else{
+					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+				}
+
+			}
+		}
+		return retval;
 	}
 	
 }
