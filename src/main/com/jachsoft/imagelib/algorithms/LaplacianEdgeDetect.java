@@ -2,7 +2,6 @@ package com.jachsoft.imagelib.algorithms;
 
 import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.DataArray;
-import com.jachsoft.imagelib.Neighbor;
 import com.jachsoft.imagelib.RGBImage;
 
 public class LaplacianEdgeDetect extends ImageOperator {

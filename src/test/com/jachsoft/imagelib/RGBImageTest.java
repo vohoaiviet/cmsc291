@@ -16,7 +16,7 @@ public class RGBImageTest extends TestCase {
 		img.setRGB(2, 2, 9,9,9);
 		
 		try{
-			Neighbor nbor=img.getNeighbor(1, 1, RGBColor.ALL_CHANNELS, 3);
+			//Neighbor nbor=img.getNeighbor(1, 1, RGBColor.ALL_CHANNELS, 3);
 			//System.out.println(nbor);
 			//assertEquals(nbor.getValue(1, 1),5.0f);
 		}catch(Exception e){			
