@@ -317,6 +317,15 @@ public class MainApp implements ActionListener {
 			fr.add(lr);
 			fr.pack();
 			fr.setVisible(true);
+			fr=new JFrame("Plate Number");
+			lr=new JLabel();
+			RGBImage plateNum=operator.getPlateNumber();
+			lr.setPreferredSize(new Dimension(plateNum.getWidth(),plateNum.getHeight()));
+			lr.setIcon(new ImageIcon(plateNum.getBufferedImage()));
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.add(lr);
+			fr.pack();
+			fr.setVisible(true);
 		}
 		if (ae.getSource().equals(laplacianEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
