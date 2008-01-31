@@ -66,15 +66,64 @@ public class MorphologyTest extends TestCase {
 			fail("Caught an exception");
 		}	
 	}
-/*
 	
 	public void testOpening(){
-		fail("Not yet implemented");
+		try{
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			img = img.getGrayScaleImage();
+			ContrastStretching operator= new ContrastStretching(img);
+			int t=127;
+			operator.threshold(t);
+			img = operator.apply();			
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			Morphology morph = new Morphology(img);
+			StructuringElement kernel = new StructuringElement(3,3);
+			kernel.setValue(0, 1);
+			kernel.setValue(1, 1);
+			kernel.setValue(2, 1);
+			kernel.setValue(3, 1);
+			kernel.setValue(4, 1);
+			kernel.setValue(5, 1);
+			kernel.setValue(6, 1);
+			kernel.setValue(7, 1);
+			morph.setParameters(Morphology.OPENING, kernel);
+			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/opening.jpg"));
+			
+		}catch(Exception e){			
+			e.printStackTrace();
+			fail("Caught an exception");
+		}
 	}
 	
 	public void testClosing(){
-		fail("Not yet implemented");
+		try{
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			img = img.getGrayScaleImage();
+			ContrastStretching operator= new ContrastStretching(img);
+			int t=127;
+			operator.threshold(t);
+			img = operator.apply();			
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			Morphology morph = new Morphology(img);
+			StructuringElement kernel = new StructuringElement(3,3);
+			kernel.setValue(0, 1);
+			kernel.setValue(1, 1);
+			kernel.setValue(2, 1);
+			kernel.setValue(3, 1);
+			kernel.setValue(4, 1);
+			kernel.setValue(5, 1);
+			kernel.setValue(6, 1);
+			kernel.setValue(7, 1);
+			morph.setParameters(Morphology.CLOSING, kernel);
+			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/closing.jpg"));
+			
+		}catch(Exception e){			
+			e.printStackTrace();
+			fail("Caught an exception");
+		}
 	}
+
+/*
 	
 	public void testThinning(){
 		fail("Not yet implemented");
