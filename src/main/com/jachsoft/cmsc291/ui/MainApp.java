@@ -34,11 +34,13 @@ import com.jachsoft.imagelib.ConvolutionKernel;
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
+import com.jachsoft.imagelib.StructuringElement;
 import com.jachsoft.imagelib.algorithms.ContrastStretching;
 import com.jachsoft.imagelib.algorithms.Convolution;
 import com.jachsoft.imagelib.algorithms.DynamicCompression;
 import com.jachsoft.imagelib.algorithms.IImageOperator;
 import com.jachsoft.imagelib.algorithms.LaplacianEdgeDetect;
+import com.jachsoft.imagelib.algorithms.Morphology;
 import com.jachsoft.imagelib.algorithms.PrewittEdgeDetect;
 import com.jachsoft.imagelib.algorithms.RobertsEdgeDetect;
 import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
@@ -58,6 +60,7 @@ public class MainApp implements ActionListener {
 	JMenu actionMenu=new JMenu("Enhancements");
 	JMenu filterMenu=new JMenu("Filters");
 	JMenu edgeMenu=new JMenu("Edge Detection");
+	JMenu morphMenu=new JMenu("Morphology");
 	JMenu exerMenu=new JMenu("Exercises");
 	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
@@ -85,6 +88,14 @@ public class MainApp implements ActionListener {
 	
 	JMenuItem selectAllSelection = new JMenuItem("Select All");
 	JMenuItem selectRegionSelection = new JMenuItem("Select Region");
+	
+	JMenuItem dilationMorphAction = new JMenuItem("Dilation");
+	JMenuItem erosionMorphAction = new JMenuItem("Erosion");
+	JMenuItem openingMorphAction = new JMenuItem("Closing");
+	JMenuItem closingMorphAction = new JMenuItem("Opening");	
+	JMenuItem hitMorphAction = new JMenuItem("Hit and Miss");
+	JMenuItem thinningMorphAction = new JMenuItem("Thinning");
+	
 	
 	JToolBar statusBar=new JToolBar();
 	JLabel curr=new JLabel("");
@@ -116,10 +127,11 @@ public class MainApp implements ActionListener {
 		menubar.add(actionMenu);
 		menubar.add(filterMenu);
 		menubar.add(edgeMenu);
-		menubar.add(exerMenu);
+		menubar.add(morphMenu);
+		menubar.add(exerMenu);		
 		menubar.add(helpMenu);
 	
-		exerMenu.add(plateExerAction);
+		
 		
 		
 		fileMenu.add(openFile);
@@ -142,14 +154,27 @@ public class MainApp implements ActionListener {
 		filterMenu.add(meanFilterAction);
 		filterMenu.add(medianFilterAction);
 		filterMenu.add(gaussianFilterAction);
-		
-	
+			
 		edgeMenu.add(robertsEdgeAction);
 		edgeMenu.add(sobelEdgeAction);		
 		edgeMenu.add(prewittEdgeAction);
 		edgeMenu.add(laplacianEdgeAction);
+
+		morphMenu.add(dilationMorphAction);
+		morphMenu.add(erosionMorphAction);
+		morphMenu.add(openingMorphAction);
+		morphMenu.add(closingMorphAction);
+		morphMenu.add(hitMorphAction);
+		morphMenu.add(thinningMorphAction);		
+		
+		
+		exerMenu.add(plateExerAction);
 		
 		helpMenu.add(aboutHelp);
+			
+		
+		
+		
 		
 		
 		frame.setJMenuBar(menubar);
@@ -159,8 +184,7 @@ public class MainApp implements ActionListener {
 		
 		selectAllSelection.addActionListener(this);
 		selectRegionSelection.addActionListener(this);
-		
-		
+				
 		grayScaleAction.addActionListener(this);
 		equalizeAction.addActionListener(this);
 		histogramAction.addActionListener(this);
@@ -172,15 +196,26 @@ public class MainApp implements ActionListener {
 		sliceAction.addActionListener(this);
 		compressAction.addActionListener(this);
 		powerLawAction.addActionListener(this);
+		
 		meanFilterAction.addActionListener(this);
 		medianFilterAction.addActionListener(this);
 		gaussianFilterAction.addActionListener(this);
+		
 		laplacianEdgeAction.addActionListener(this);
 		sobelEdgeAction.addActionListener(this);
 		robertsEdgeAction.addActionListener(this);
 		prewittEdgeAction.addActionListener(this);
 		
+		dilationMorphAction.addActionListener(this);
+		erosionMorphAction.addActionListener(this);
+		openingMorphAction.addActionListener(this);
+		closingMorphAction.addActionListener(this);
+		hitMorphAction.addActionListener(this);
+		thinningMorphAction.addActionListener(this);
+		
+				
 		plateExerAction.addActionListener(this);
+		
 		//Display the window.
 		frame.pack();
 		frame.setVisible(true);
@@ -228,10 +263,60 @@ public class MainApp implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(thinningMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{0,0,0},{-1,1,-1},{1,1,1}});
+			operator.setParameters(Morphology.THINNING, kernel);
+			applyOperator(operator);
+		}
+		if (ae.getSource().equals(hitMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{-1,1,-1},{0,1,1},{0,0,-1}});
+			operator.setParameters(Morphology.HITMISSED, kernel);
+			applyOperator(operator);
+		}
+		if (ae.getSource().equals(closingMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{1,1,1},{1,1,1},{1,1,1}});
+			operator.setParameters(Morphology.CLOSING, kernel);
+			applyOperator(operator);
+		}
+		if (ae.getSource().equals(openingMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{1,1,1},{1,1,1},{1,1,1}});
+			operator.setParameters(Morphology.OPENING, kernel);
+			applyOperator(operator);
+		}
+		if (ae.getSource().equals(erosionMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{1,1,1},{1,1,1},{1,1,1}});
+			operator.setParameters(Morphology.EROSION, kernel);
+			applyOperator(operator);
+		}
+		if (ae.getSource().equals(dilationMorphAction)){
+			RGBImage rgb=new RGBImage(imagePanel.getImage());
+			Morphology operator = new Morphology(rgb);
+			StructuringElement kernel = new StructuringElement(new double[][]{{1,1,1},{1,1,1},{1,1,1}});
+			operator.setParameters(Morphology.DILATION, kernel);
+			applyOperator(operator);
+		}		
 		if (ae.getSource().equals(plateExerAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			PlateLocalization operator=new PlateLocalization(rgb);			
 			applyOperator(operator);
+			JFrame fr=new JFrame("Scratch");
+			JLabel lr=new JLabel();
+			lr.setPreferredSize(new Dimension(rgb.getWidth(),rgb.getHeight()));
+			lr.setIcon(new ImageIcon(operator.getScratch().getBufferedImage()));
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.add(lr);
+			fr.pack();
+			fr.setVisible(true);
 		}
 		if (ae.getSource().equals(laplacianEdgeAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());

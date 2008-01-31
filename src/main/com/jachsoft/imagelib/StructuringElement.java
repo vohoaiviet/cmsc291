@@ -10,4 +10,8 @@ public class StructuringElement extends DataArray {
 		super(width, height);
 	}
 
+	public StructuringElement(double[][] data) {
+		super(data);
+	}
+
 }

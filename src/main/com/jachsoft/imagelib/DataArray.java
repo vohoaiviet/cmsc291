@@ -7,6 +7,17 @@ public class DataArray {
 	
 	public DataArray(){}
 	
+	public DataArray(double data[][]){
+		this.width = data[0].length;
+		this.height = data.length;
+		this.data=new double[height][width];
+		for (int y=0;y<width;y++){
+			for (int x=0;x<width;x++){
+				this.data[y][x] = data[y][x];
+			}
+		}
+	}
+	
 	public DataArray(int width,int height){
 		this.width=width;
 		this.height=height;
