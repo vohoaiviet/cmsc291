@@ -10,4 +10,9 @@ public class ImagelibLogger {
 		return Logger.getLogger(name);
 	}
 	
+	public static Logger getLogger(Class name){
+		BasicConfigurator.configure();
+		return Logger.getLogger(name);
+	}
+	
 }
