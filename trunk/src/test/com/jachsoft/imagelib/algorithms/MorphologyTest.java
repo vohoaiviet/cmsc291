@@ -13,13 +13,13 @@ public class MorphologyTest extends TestCase {
 
 	public void testDilation() {
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
 			img = img.getGrayScaleImage();
 			ContrastStretching operator= new ContrastStretching(img);
 			int t=127;
 			operator.threshold(t);
 			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -30,6 +30,7 @@ public class MorphologyTest extends TestCase {
 			kernel.setValue(5, 1);
 			kernel.setValue(6, 1);
 			kernel.setValue(7, 1);
+			kernel.setValue(8, 1);
 			morph.setParameters(Morphology.DILATION, kernel);
 			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/dilation.jpg"));
 			
@@ -41,13 +42,13 @@ public class MorphologyTest extends TestCase {
 	
 	public void testErosion(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
 			img = img.getGrayScaleImage();
 			ContrastStretching operator= new ContrastStretching(img);
 			int t=127;
 			operator.threshold(t);
 			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -58,6 +59,7 @@ public class MorphologyTest extends TestCase {
 			kernel.setValue(5, 1);
 			kernel.setValue(6, 1);
 			kernel.setValue(7, 1);
+			kernel.setValue(8, 1);
 			morph.setParameters(Morphology.EROSION, kernel);
 			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/erosion.jpg"));
 			
@@ -69,13 +71,13 @@ public class MorphologyTest extends TestCase {
 	
 	public void testOpening(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
 			img = img.getGrayScaleImage();
 			ContrastStretching operator= new ContrastStretching(img);
 			int t=127;
 			operator.threshold(t);
 			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -86,6 +88,7 @@ public class MorphologyTest extends TestCase {
 			kernel.setValue(5, 1);
 			kernel.setValue(6, 1);
 			kernel.setValue(7, 1);
+			kernel.setValue(8, 1);
 			morph.setParameters(Morphology.OPENING, kernel);
 			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/opening.jpg"));
 			
@@ -97,13 +100,13 @@ public class MorphologyTest extends TestCase {
 	
 	public void testClosing(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
 			img = img.getGrayScaleImage();
 			ContrastStretching operator= new ContrastStretching(img);
 			int t=127;
 			operator.threshold(t);
 			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/jach-160-bw.jpg"));
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -114,6 +117,7 @@ public class MorphologyTest extends TestCase {
 			kernel.setValue(5, 1);
 			kernel.setValue(6, 1);
 			kernel.setValue(7, 1);
+			kernel.setValue(8, 1);
 			morph.setParameters(Morphology.CLOSING, kernel);
 			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/closing.jpg"));
 			
@@ -123,10 +127,64 @@ public class MorphologyTest extends TestCase {
 		}
 	}
 
-/*
+
+	
+	public void testHitAndMiss(){
+		try{
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
+			img = img.getGrayScaleImage();
+			ContrastStretching operator= new ContrastStretching(img);
+			int t=127;
+			operator.threshold(t);
+			img = operator.apply();			
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
+			Morphology morph = new Morphology(img);
+			StructuringElement kernel = new StructuringElement(3,3);
+			kernel.setValue(0, -1);
+			kernel.setValue(1, 1);
+			kernel.setValue(2, -1);
+			kernel.setValue(3, 0);
+			kernel.setValue(4, 1);
+			kernel.setValue(5, 1);
+			kernel.setValue(6, 0);
+			kernel.setValue(7, 0);
+			kernel.setValue(8, -1);
+			morph.setParameters(Morphology.HITMISSED, kernel);
+			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss.jpg"));
+			
+		}catch(Exception e){			
+			e.printStackTrace();
+			fail("Caught an exception");
+		}
+	}
 	
 	public void testThinning(){
-		fail("Not yet implemented");
+		try{
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
+			img = img.getGrayScaleImage();
+			ContrastStretching operator= new ContrastStretching(img);
+			int t=127;
+			operator.threshold(t);
+			img = operator.apply();			
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
+			Morphology morph = new Morphology(img);
+			StructuringElement kernel = new StructuringElement(3,3);
+			kernel.setValue(0, 0);
+			kernel.setValue(1, 0);
+			kernel.setValue(2, 0);
+			kernel.setValue(3, -1);
+			kernel.setValue(4, 1);
+			kernel.setValue(5, -1);
+			kernel.setValue(6, 1);
+			kernel.setValue(7, 1);
+			kernel.setValue(8, 1);
+			morph.setParameters(Morphology.THINNING, kernel);
+			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/thinned.jpg"));
+			
+		}catch(Exception e){			
+			e.printStackTrace();
+			fail("Caught an exception");
+		}
 	}
-*/
+
 }
