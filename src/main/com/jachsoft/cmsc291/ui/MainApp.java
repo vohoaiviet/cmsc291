@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JToolBar;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.jachsoft.cmsc291.exercises.PlateLocalization;
 import com.jachsoft.cmsc291.exercises.StudentEvaluation;
@@ -51,7 +54,7 @@ import com.jachsoft.imagelib.algorithms.MedianFilter;
 import com.jachsoft.imagelib.algorithms.PowerLawTransformation;
 
 
-public class MainApp implements ActionListener {
+public class MainApp implements ActionListener, ChangeListener {
 	String title="CMSC 291-Digital Image Processing Workbench";
 	JFrame frame=new JFrame(title);
 	JMenuBar menubar=new JMenuBar();
@@ -111,6 +114,8 @@ public class MainApp implements ActionListener {
 	
 	
 	String currentPixel="";
+
+
 	
 	public MainApp(){
 	
@@ -215,6 +220,10 @@ public class MainApp implements ActionListener {
 		
 				
 		plateExerAction.addActionListener(this);
+
+		
+
+		
 		
 		//Display the window.
 		frame.pack();
@@ -533,14 +542,11 @@ public class MainApp implements ActionListener {
 		if (ae.getSource().equals(thresholdAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			ContrastStretching operator= new ContrastStretching(rgb);
-			operator.setRegion(selection);
-			
-			String val=JOptionPane.showInputDialog("Threshold Value:");
-			
+			operator.setRegion(selection);	
+			String val = JOptionPane.showInputDialog("Threshold");
 			int t=Integer.parseInt(val);
-			operator.setParameters(t, 0, t, 255);
-			//imagePanel.setImage(operator.apply().getBufferedImage());
-			applyOperator(operator);			
+            operator.setParameters(t, 0, t, 255);
+            applyOperator(operator);                       		
 		}
 		if (ae.getSource().equals(contrastAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
@@ -670,5 +676,11 @@ public class MainApp implements ActionListener {
 		    	}
 		    }		    			
 		}		
+	}
+	
+	
+	public void stateChanged(ChangeEvent ce){
+		
+		
 	}
 }
