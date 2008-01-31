@@ -160,13 +160,13 @@ public class MorphologyTest extends TestCase {
 	
 	public void testThinning(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("tests/sobel.jpg")));
 			img = img.getGrayScaleImage();
 			ContrastStretching operator= new ContrastStretching(img);
 			int t=127;
 			operator.threshold(t);
 			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
+			//ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 0);
