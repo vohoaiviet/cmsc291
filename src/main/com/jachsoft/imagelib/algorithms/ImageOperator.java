@@ -12,6 +12,9 @@ import com.jachsoft.imagelib.RGBImage;
 
 public class ImageOperator implements IImageOperator {
 	
+	
+	
+	
 	/** The source image */
 	protected RGBImage source;
 	

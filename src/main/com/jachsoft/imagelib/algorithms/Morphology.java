@@ -1,8 +1,11 @@
 package com.jachsoft.imagelib.algorithms;
 
+import org.apache.log4j.Logger;
+
 import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 import com.jachsoft.imagelib.StructuringElement;
+import com.jachsoft.imagelib.util.ImagelibLogger;
 
 public class Morphology extends ImageOperator {	
 	public static final int DILATION = 1;
@@ -20,6 +23,7 @@ public class Morphology extends ImageOperator {
 	StructuringElement kernel;
 	int operation;
 		
+	static Logger logger = ImagelibLogger.getLogger(Morphology.class.getName());
 
 	public Morphology() {
 		super();
@@ -200,7 +204,7 @@ public class Morphology extends ImageOperator {
 					}			
 				}
 				if (matched==9){
-					System.out.println(x+","+y);
+					logger.info(x+","+y);
 					retval.setRGB(x, y, 0, 0, 0);
 				}else{
 					//retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
