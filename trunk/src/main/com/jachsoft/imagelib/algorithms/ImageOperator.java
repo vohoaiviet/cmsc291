@@ -1,7 +1,10 @@
 package com.jachsoft.imagelib.algorithms;
 
+import org.apache.log4j.Logger;
+
 import com.jachsoft.imagelib.ImageRegion;
 import com.jachsoft.imagelib.RGBImage;
+import com.jachsoft.imagelib.util.ImagelibLogger;
 
 /**
  * Superclass of all image operators
@@ -11,9 +14,6 @@ import com.jachsoft.imagelib.RGBImage;
  */
 
 public class ImageOperator implements IImageOperator {
-	
-	
-	
 	
 	/** The source image */
 	protected RGBImage source;

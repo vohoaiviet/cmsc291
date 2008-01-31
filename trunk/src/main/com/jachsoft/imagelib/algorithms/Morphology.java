@@ -23,7 +23,7 @@ public class Morphology extends ImageOperator {
 	StructuringElement kernel;
 	int operation;
 		
-	static Logger logger = ImagelibLogger.getLogger(Morphology.class.getName());
+	static Logger logger = ImagelibLogger.getLogger(Morphology.class);
 
 	public Morphology() {
 		super();
@@ -40,6 +40,7 @@ public class Morphology extends ImageOperator {
 	
 	
 	public RGBImage apply(){
+		logger.info("Applying operator...");
 		switch(operation){
 		case DILATION: return dilated(source);
 		case EROSION: return eroded(source);
@@ -137,8 +138,6 @@ public class Morphology extends ImageOperator {
 						RGBColor rgb = source.getRGBColor(j, i);
 						int normalized = (int)rgb.getBlueN();
 						int kernelVal = (int)(kernel.getValue(l, k));
-						//System.out.println(kernelVal+","+normalized);
-						
 						if ( kernelVal == -1){
 							matched++;
 						}else
@@ -171,21 +170,22 @@ public class Morphology extends ImageOperator {
 		retval=new RGBImage(w,h);		
 		//assumes kernel is a square!
 		int offset=kernel.getHeight()/2;
-		//For each pixel in the image
 		for (int y=offset; y<(h-offset);y++){
 			for (int x=offset; x<(w-offset);x++){
 				//No matched yet
 				int matched=0;
 				RGBColor rgb=null;
-				//For each pixel under the kernel
+				logger.debug("Examining pixels under kernel...");
 				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
 					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
 						//Get the color of the pixel underneath
 						rgb = source.getRGBColor(j, i);
+						
 						//Make the value 0 or 1
 						int normalized = (int)rgb.getBlueN();
 						//Get the value of the kernel
 						int kernelVal = (int)(kernel.getValue(l, k));
+						logger.debug(normalized+","+kernelVal);
 						
 						//is the value don't care?
 						if ( kernelVal == DONTCARE){
@@ -203,12 +203,10 @@ public class Morphology extends ImageOperator {
 						}
 					}			
 				}
-				if (matched==9){
-					logger.info(x+","+y);
+				if (matched==9){					
 					retval.setRGB(x, y, 0, 0, 0);
 				}else{
-					//retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
-					retval.setRGB(x, y, 255, 255, 255);
+					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());					
 				}
 
 			}
