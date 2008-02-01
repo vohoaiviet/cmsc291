@@ -13,13 +13,7 @@ public class MorphologyTest extends TestCase {
 
 	public void testDilation() {
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -42,13 +36,7 @@ public class MorphologyTest extends TestCase {
 	
 	public void testErosion(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));		
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -71,13 +59,7 @@ public class MorphologyTest extends TestCase {
 	
 	public void testOpening(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -100,13 +82,7 @@ public class MorphologyTest extends TestCase {
 	
 	public void testClosing(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-binary.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 1);
@@ -131,13 +107,7 @@ public class MorphologyTest extends TestCase {
 	
 	public void testHitAndMiss(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1.gif")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, -1);
@@ -160,13 +130,7 @@ public class MorphologyTest extends TestCase {
 	
 	public void testThinning(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("tests/sobel.jpg")));
-			img = img.getGrayScaleImage();
-			ContrastStretching operator= new ContrastStretching(img);
-			int t=127;
-			operator.threshold(t);
-			img = operator.apply();			
-			//ImageIO.write(img.getBufferedImage(),"jpg",new File("tests/scr1-bin.jpg"));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			Morphology morph = new Morphology(img);
 			StructuringElement kernel = new StructuringElement(3,3);
 			kernel.setValue(0, 0);
