@@ -1,1 +1,11 @@
-#summary Exercise 5: Document Image Analysis
+#summary Exercise 5: Morphological Operators for Document Image Analysis
+
+=== Introduction ===
+In this exercise, we are supposed to apply morphological operators for
+document image analyis.
+
+
+=== Results and Discussion ===
+
+
+
