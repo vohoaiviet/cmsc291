@@ -2,6 +2,7 @@ package com.jachsoft.threed;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -18,7 +22,7 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 
-class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener {
+public class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener {
 	
 	    Model3D md;
 	    boolean painted = true;
@@ -32,7 +36,7 @@ class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListene
 	    
 	    public static void main(String args[]){
 	    	try{
-	    	RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+	    	RGBImage img=new RGBImage(ImageIO.read(new File("data/windows_logo.jpg")));
 	    	RGBColorDistributionPanel p= new RGBColorDistributionPanel(img);
 	    	JFrame f = new JFrame();
 	    	f.getContentPane().add(p,BorderLayout.CENTER);
@@ -57,6 +61,10 @@ class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListene
 		    new Thread(this).start();
 	    }
 
+	    public void setImage(RGBImage image){
+	    	this.image =image;
+	    }
+	    
 	    public void run() {
 		try {
 		    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
@@ -127,7 +135,8 @@ class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListene
 	    }
 
 	    public void paintComponent(Graphics g) {
-	    	super.paintComponent(g); //paint background
+	    	super.paintComponent(g); //paint background\
+	    	this.setBackground(Color.BLACK);
 		    
 		    if (md != null) {
 		    	md.mat.unit();
@@ -151,32 +160,32 @@ class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListene
 	    public Model3D createModel(){
 	    	Model3D model=new Model3D();
 	    	
-	    	model.addVert(0, 0, 0);
-	    	model.addVert(255, 0, 0);
-	    	model.addVert(255, 255, 0);
-	    	model.addVert(0, 255, 0);
+	    	model.addVert(0, 0, 0);			//0 black
+	    	model.addVert(255, 0, 0);		//1 red corner
+	    	model.addVert(0, 255, 0);		//2 green corner
 	    	model.addVert(0, 0, 255);
-	    	model.addVert(255, 0, 255);
-	    	model.addVert(255, 255, 255);
-	    	model.addVert(0, 255, 255);
-	    	
-	    	model.add(0,1);
-	    	model.add(1,2);
-	    	model.add(2,3);
-	    	model.add(3,0);
-	    	
-	    	
+	    	/*
+	    	model.addVert(255, 255, 0);	    			
+	    	model.addVert(255, 0, 255);		 
+	    	model.addVert(255, 255, 255);		
+	    	model.addVert(0, 255, 255);		
+	    	*/
+	    	model.add(0,1);					//red axis (x)
+	    	model.add(0,2);
+	    	model.add(0,3);
+	    	/*
+	    	model.add(3,0);	    	
 	    	model.add(4,5);
 	    	model.add(5,6);
 	    	model.add(6,7);
 	    	model.add(7,4);
 	    	
-	    	model.add(0,4);
+	    	model.add(4,0);					//blue axis (z)
 	    	model.add(1,5);
 	    	model.add(2,6);
 	    	model.add(3,7);
-	    	
-	    	int lastPoint=8;
+	    	*/
+	    	int lastPoint=4;
 	    	
 	    	
 	    	
@@ -186,14 +195,21 @@ class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListene
 	    	int h=image.getHeight();
 	    	int w=image.getWidth();
 	    	
+	    	Hashtable<RGBColor, RGBColor> plotted = new Hashtable<RGBColor, RGBColor>();
+	    	
 	    	for (int y=0;y<h;y++){
 	    		for (int x=0; x< w;x++){
 	    			RGBColor c = image.getRGBColor(x, y);
-	    			model.addVert(c.getRed(),c.getGreen(),c.getBlue());
-	    	    	model.add(lastPoint,lastPoint);
-	    	    	lastPoint++;
+	    			if (!plotted.containsKey(c)){
+	    				model.addVert(c.getRed(),c.getGreen(),c.getBlue());	    				
+	    				lastPoint++;
+	    				plotted.put(c, c);
+	    			}else{
+	    				//System.out.println(c+" already plotted!");
+	    			}
 	    		}
 	    	}
+	    	
 	    	
 	    	return model;	    	
 	    }

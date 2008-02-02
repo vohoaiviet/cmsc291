@@ -52,6 +52,7 @@ import com.jachsoft.imagelib.algorithms.GraySlicing;
 import com.jachsoft.imagelib.algorithms.Histogram;
 import com.jachsoft.imagelib.algorithms.MedianFilter;
 import com.jachsoft.imagelib.algorithms.PowerLawTransformation;
+import com.jachsoft.threed.RGBColorDistributionPanel;
 
 
 public class MainApp implements ActionListener, ChangeListener {
@@ -64,6 +65,7 @@ public class MainApp implements ActionListener, ChangeListener {
 	JMenu filterMenu=new JMenu("Filters");
 	JMenu edgeMenu=new JMenu("Edge Detection");
 	JMenu morphMenu=new JMenu("Morphology");
+	JMenu colorMenu=new JMenu("Color");
 	JMenu exerMenu=new JMenu("Exercises");
 	JMenu helpMenu=new JMenu("Help");
 	JMenuItem openFile = new JMenuItem("Open");
@@ -99,6 +101,8 @@ public class MainApp implements ActionListener, ChangeListener {
 	JMenuItem hitMorphAction = new JMenuItem("Hit and Miss");
 	JMenuItem thinningMorphAction = new JMenuItem("Thinning");
 	
+	JMenuItem distColorAction = new JMenuItem("Color Distribution");
+	
 	
 	JToolBar statusBar=new JToolBar();
 	JLabel curr=new JLabel("");
@@ -133,6 +137,7 @@ public class MainApp implements ActionListener, ChangeListener {
 		menubar.add(filterMenu);
 		menubar.add(edgeMenu);
 		menubar.add(morphMenu);
+		menubar.add(colorMenu);
 		menubar.add(exerMenu);		
 		menubar.add(helpMenu);
 	
@@ -171,6 +176,8 @@ public class MainApp implements ActionListener, ChangeListener {
 		morphMenu.add(closingMorphAction);
 		morphMenu.add(hitMorphAction);
 		morphMenu.add(thinningMorphAction);		
+		
+		colorMenu.add(distColorAction);
 		
 		
 		exerMenu.add(plateExerAction);
@@ -217,6 +224,8 @@ public class MainApp implements ActionListener, ChangeListener {
 		closingMorphAction.addActionListener(this);
 		hitMorphAction.addActionListener(this);
 		thinningMorphAction.addActionListener(this);
+		
+		distColorAction.addActionListener(this);
 		
 				
 		plateExerAction.addActionListener(this);
@@ -272,6 +281,15 @@ public class MainApp implements ActionListener, ChangeListener {
 	}
 	
 	public void actionPerformed(ActionEvent ae){
+		if (ae.getSource().equals(distColorAction)){
+			RGBImage img=new RGBImage(imagePanel.getImage());
+	    	RGBColorDistributionPanel p= new RGBColorDistributionPanel(img);
+	    	JFrame f = new JFrame();
+	    	f.getContentPane().add(p,BorderLayout.CENTER);
+	    	f.setSize(new Dimension(640,480));
+	    	f.setVisible(true);	    	
+	    	f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
 		if (ae.getSource().equals(thinningMorphAction)){
 			RGBImage rgb=new RGBImage(imagePanel.getImage());
 			Morphology operator = new Morphology(rgb);
