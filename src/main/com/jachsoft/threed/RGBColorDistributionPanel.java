@@ -8,7 +8,9 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,7 +18,7 @@ import com.jachsoft.imagelib.RGBColor;
 import com.jachsoft.imagelib.RGBImage;
 
 
-class RGBColorDistribution extends JPanel implements Runnable, MouseListener, MouseMotionListener {
+class RGBColorDistributionPanel extends JPanel implements Runnable, MouseListener, MouseMotionListener {
 	
 	    Model3D md;
 	    boolean painted = true;
@@ -25,20 +27,27 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 	    float xtheta, ytheta;
 	    float scalefudge = 1;
 	    Matrix3D amat = new Matrix3D(), tmat = new Matrix3D();
+	    RGBImage image;
 
 	    
 	    public static void main(String args[]){
-	    	RGBColorDistribution p= new RGBColorDistribution();
+	    	try{
+	    	RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
+	    	RGBColorDistributionPanel p= new RGBColorDistributionPanel(img);
 	    	JFrame f = new JFrame();
 	    	f.getContentPane().add(p,BorderLayout.CENTER);
 	    	f.setSize(new Dimension(640,480));
 	    	f.setVisible(true);	    	
 	    	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    	}catch(Exception ioe){
+	    		ioe.printStackTrace();
+	    	}
 	    }
 	    
 	    
 	    
-	    public RGBColorDistribution() {
+	    public RGBColorDistributionPanel(RGBImage image) {
+	    	this.image = image;
 	    	amat.yrot(20);
 	    	amat.xrot(20);		
 	    	this.setSize(new Dimension(640,480));
@@ -54,7 +63,7 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 
 		    System.out.println("Thread started");
 		    
-		    Model3D m = this.loadModel(null);
+		    Model3D m = this.createModel();
 		    
 		    md = m;
 		    m.findBB();
@@ -96,7 +105,6 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 	    }
 
 	    public  void mouseDragged(MouseEvent e) {
-	    	System.out.println("Dragging Mouse");
 	        int x = e.getX();
 	        int y = e.getY();
 
@@ -120,8 +128,6 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 
 	    public void paintComponent(Graphics g) {
 	    	super.paintComponent(g); //paint background
-			
-		    g.drawString("Hoi!", 10, 40);
 		    
 		    if (md != null) {
 		    	md.mat.unit();
@@ -142,7 +148,7 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 	    	notifyAll();
 	    }
 	    
-	    public Model3D loadModel(RGBImage image){
+	    public Model3D createModel(){
 	    	Model3D model=new Model3D();
 	    	
 	    	model.addVert(0, 0, 0);
@@ -173,7 +179,7 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 	    	int lastPoint=8;
 	    	
 	    	
-	    	/*
+	    	
 	    	if (image==null)
 	    		return null;
 	    	
@@ -188,7 +194,7 @@ class RGBColorDistribution extends JPanel implements Runnable, MouseListener, Mo
 	    	    	lastPoint++;
 	    		}
 	    	}
-	    	*/
+	    	
 	    	return model;	    	
 	    }
 	    
