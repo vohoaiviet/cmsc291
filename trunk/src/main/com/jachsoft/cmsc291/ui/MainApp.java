@@ -284,7 +284,7 @@ public class MainApp implements ActionListener, ChangeListener {
 		if (ae.getSource().equals(distColorAction)){
 			RGBImage img=new RGBImage(imagePanel.getImage());
 	    	RGBColorDistributionPanel p= new RGBColorDistributionPanel(img);
-	    	JFrame f = new JFrame();
+	    	JFrame f = new JFrame("Color Distribution");
 	    	f.getContentPane().add(p,BorderLayout.CENTER);
 	    	f.setSize(new Dimension(640,480));
 	    	f.setVisible(true);	    	
