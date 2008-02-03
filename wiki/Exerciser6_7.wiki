@@ -1,11 +1,16 @@
 #summary Exercise 6_7: Color and Content-Based Image Retrieval
 
-= Introduction =
+=== Introduction ===
 
 Content-based Image Retrieval
 
-= Details =
+=== Details ===
 
 1. Collect 200 color images and combine your collections (1800 total)
 
 2. Write a program that accepts a query image and creates a web page that displays the k most similar pictures 
+
+
+=== References ===
+
+1. http://old.hki.uni-koeln.de/teach/ws0708/VIP/tag9/ch01_Long_v40-proof.pdf
