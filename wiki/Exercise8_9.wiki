@@ -1,0 +1,32 @@
+#summary Image Sequence Processing
+
+= Introduction =
+
+
+= Details =
+
+
+
+= Notes =
+
+* Frame is an image in the sequence
+
+* Fi, ith frame in the image sequence
+
+* Video, view image sequence (25 fps, 30 fps)
+
+* Motion
+
+- find areas in the image that have significantly changed from frame to frame
+
+- change in position
+
+- computed using frame differencing (|Ft+1 - Ft|)
+
+- 
+
+* Background Subtraction
+
+- 
+
+* Tracking
