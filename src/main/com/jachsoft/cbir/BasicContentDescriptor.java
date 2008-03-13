@@ -18,4 +18,13 @@ public class BasicContentDescriptor implements ImageContentDescriptor {
         public double getBinValue(int i){
                 return bins[i];
         }
+        
+        public String toString(){
+        	String retval="{";
+        	for (int i = 0; i < bins.length; i++){
+        		retval += " " + bins[i];
+        	}
+        	retval += " } ";
+        	return retval;        	
+        }
 }
