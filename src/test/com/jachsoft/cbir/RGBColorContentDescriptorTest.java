@@ -16,7 +16,12 @@ public class RGBColorContentDescriptorTest extends TestCase {
 		try{
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/jach-160.jpg")));
 			RGBColorContentDescriptor iccd = new RGBColorContentDescriptor(img);
-			System.out.println(iccd.getRedDescriptor());
+			double features[] = iccd.getBins();
+			
+			for (int i=0; i < features.length;i++){
+				System.out.println(features[i]);
+			}
+			
 		}catch(Exception e){
 			fail("Caught an exception");
 			e.printStackTrace();
