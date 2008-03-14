@@ -34,6 +34,8 @@ public class ImageSearchEngineTest extends TestCase {
 		
 		db.initialize();
 		
+		db.add("http://orlandonest.files.wordpress.com/2007/09/dog.jpg");
+		
 		engine.setImageDatabase(db);
 		
 		List results = engine.search(inputDescriptor);
