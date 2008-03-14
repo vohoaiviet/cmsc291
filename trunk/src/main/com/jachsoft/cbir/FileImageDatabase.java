@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import com.jachsoft.imagelib.RGBImage;
@@ -68,24 +69,25 @@ public class FileImageDatabase implements ImageDatabase {
 	
 	private ImageDatabaseEntry createEntry(String url){
 		ImageDatabaseEntry entry= new ImageDatabaseEntry();
-		ImageIcon icon = null;
+		BufferedImage bImage= null;
 		entry.setUrl(url);
-		try{
-		 icon = new ImageIcon(new URL(url));
+		
+		try{			
+			URL ul = new URL(url);
+	        bImage = ImageIO.read(ul);		
 		}catch(MalformedURLException e){
 			System.out.println("Error in URL!");
+		}catch(IOException ioe){
+			System.out.println("Error reading image!");
 		}
-		Image image = icon.getImage();
-		BufferedImage bImage = new BufferedImage(
-				image.getWidth(null),
-				image.getHeight(null),
-				BufferedImage.TYPE_INT_RGB);
+		
+		
 		RGBImage rgb = new RGBImage(bImage);
 		entry.setDescriptor(new RGBColorContentDescriptor(rgb));
 		return entry;		
 	}
 	
-	public List getAllImages() {
+	public List getAll() {
 		ArrayList retval = new ArrayList();
 		Iterator ite = images.keySet().iterator();
 		while (ite.hasNext()){
@@ -93,6 +95,10 @@ public class FileImageDatabase implements ImageDatabase {
 			retval.add(images.get(key));			
 		}
 		return retval;		
+	}
+	
+	public ImageDatabaseEntry get(String url){
+		return (ImageDatabaseEntry)images.get(url);
 	}
 	
 	public int getCount() {
