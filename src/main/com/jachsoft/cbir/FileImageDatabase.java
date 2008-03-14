@@ -32,12 +32,18 @@ public class FileImageDatabase implements ImageDatabase {
 	PrintWriter writer;
 	
 	
-	public void shutdown(){
-				
+	public void shutdown(){				
+	}
+
+	public FileImageDatabase(){
+		
+	}
+	
+	public FileImageDatabase(String fileName){
+		this.fileName = fileName;
 	}
 	
 	public void initialize(){
-		
 		try{
 		
 		File f= new File(fileName);			
@@ -101,8 +107,7 @@ public class FileImageDatabase implements ImageDatabase {
 	
 	public void save(){
 		try{
-			writer = new PrintWriter(new FileWriter(fileName));
-		
+			writer = new PrintWriter(new FileWriter(fileName));		
 		
 		ArrayList retval = new ArrayList();
 		Iterator ite = images.keySet().iterator();
