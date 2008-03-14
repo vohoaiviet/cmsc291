@@ -30,7 +30,14 @@ public class ImageSearchEngine {
 				public int compare(Object a, Object b){
 					SearchResult c = (SearchResult)a;
 					SearchResult d = (SearchResult)b;
-					return (c.getDistanceFromInput(),d.getDistanceFromInput());					
+					
+					if (c.getDistanceFromInput() < d.getDistanceFromInput())
+						return -1;
+					
+					if (c.getDistanceFromInput() > d.getDistanceFromInput())
+						return 1;
+					
+					return 0;
 				}
 			});
 			
