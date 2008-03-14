@@ -17,11 +17,10 @@ public class FileImageDatabaseTest extends TestCase {
 		
 		db.initialize();
 				
-		//db.add(img1);
-		//db.add(img2);
-		//db.add(img3);
-		
-		//db.save();
+		db.add(img1);
+		db.add(img2);
+		db.add(img3);
+				
 		
 		System.out.println(db.getCount());
 		
