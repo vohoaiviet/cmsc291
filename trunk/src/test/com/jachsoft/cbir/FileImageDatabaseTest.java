@@ -24,8 +24,7 @@ public class FileImageDatabaseTest extends TestCase {
 		
 		System.out.println(db.getCount());
 		
-		List images = db.getAll();
-		
+		List images = db.getAll();		
 		for (int i=0; i < images.size();i++){
 			ImageDatabaseEntry entry = (ImageDatabaseEntry)images.get(i);
 			System.out.println(entry.getUrl());
