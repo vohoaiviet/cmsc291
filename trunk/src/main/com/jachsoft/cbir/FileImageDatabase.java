@@ -82,12 +82,17 @@ public class FileImageDatabase implements ImageDatabase {
 				BufferedImage.TYPE_INT_RGB);
 		RGBImage rgb = new RGBImage(bImage);
 		entry.setDescriptor(new RGBColorContentDescriptor(rgb));
-		return entry;	
-		
+		return entry;		
 	}
 	
-	public Collection getAllImages() {
-		return images.values();
+	public List getAllImages() {
+		ArrayList retval = new ArrayList();
+		Iterator ite = images.keySet().iterator();
+		while (ite.hasNext()){
+			String key = (String)ite.next();
+			retval.add(images.get(key));			
+		}
+		return retval;		
 	}
 	
 	public int getCount() {
