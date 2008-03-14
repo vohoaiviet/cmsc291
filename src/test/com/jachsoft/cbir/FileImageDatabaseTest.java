@@ -14,10 +14,14 @@ public class FileImageDatabaseTest extends TestCase {
 		String img2 = "http://jachermocilla.googlepages.com/jach.jpg";
 		String img3 = "http://jachermocilla.googlepages.com/jach-cartoon.jpg";
 		
+		
+		db.initialize();
 				
-		db.add(img1);
-		db.add(img2);
-		db.add(img3);
+		//db.add(img1);
+		//db.add(img2);
+		//db.add(img3);
+		
+		//db.save();
 		
 		System.out.println(db.getCount());
 		

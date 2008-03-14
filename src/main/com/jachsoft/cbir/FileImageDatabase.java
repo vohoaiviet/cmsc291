@@ -28,6 +28,8 @@ import com.jachsoft.imagelib.RGBImage;
 public class FileImageDatabase implements ImageDatabase {
 	String fileName = "cbir.dat";
 	Map	images = new HashMap();
+	BufferedReader reader;
+	PrintWriter writer;
 	
 	
 	public void shutdown(){
@@ -38,29 +40,39 @@ public class FileImageDatabase implements ImageDatabase {
 		
 		try{
 		
-		File f= new File(fileName);
+		File f= new File(fileName);			
 		
-		if (!f.exists()){
-			PrintWriter writer = new PrintWriter(new FileWriter(fileName));
+		if (!f.exists()){			
+			add("http://jachermocilla.googlepages.com/jach-160.jpg");						
+			save();			
 		}
-		
-		BufferedReader reader= new BufferedReader(new FileReader(fileName));
-		
+				
+		reader= new BufferedReader(new FileReader(fileName));		
 		String line;
 		while ((line=reader.readLine()) != null){
-			System.out.println(line);
+			ImageDatabaseEntry entry = new ImageDatabaseEntry();
+			String[] tokens = line.split(","); 
+			entry.setUrl(tokens[0]);
+			//System.out.println(tokens.length);
+			BasicContentDescriptor descriptor = new BasicContentDescriptor(tokens.length - 1);
+			for (int i = 1; i < tokens.length;i++){
+				descriptor.setBinValue(i-1, Double.parseDouble(tokens[i]));
+			}			
+			entry.setDescriptor(descriptor);
+			this.add(entry);
+			//System.out.println(line);
 		}
 		
 		}catch(FileNotFoundException fnfe){
-			
+			System.out.println("File not found");
 		}catch(IOException ioe){
-			
+			System.out.println("I/O Error");
 		}
 		
 	}
 	
 	public void add(ImageDatabaseEntry entry){
-		
+		images.put(entry.getUrl(), entry);
 	}
 	
 	public void add(String url){
@@ -87,6 +99,38 @@ public class FileImageDatabase implements ImageDatabase {
 		return entry;		
 	}
 	
+	public void save(){
+		try{
+			writer = new PrintWriter(new FileWriter(fileName));
+		
+		
+		ArrayList retval = new ArrayList();
+		Iterator ite = images.keySet().iterator();
+		while (ite.hasNext()){
+			String key = (String)ite.next();
+			ImageDatabaseEntry entry = (ImageDatabaseEntry)images.get(key);
+			saveEntry(entry);
+		}
+		writer.close();
+		
+		}catch(IOException ioe){
+			System.out.println("I/O Error");
+		}
+	}
+	
+	private void saveEntry(ImageDatabaseEntry entry){
+		String line = "";
+		line += entry.getUrl();
+		double[] bins = entry.getDescriptor().getBins(); 
+		int n = bins.length;
+		for (int i = 0; i < n; i++){
+			line += ","+ bins[i];
+		}		
+		//System.out.println(line);
+		writer.println(line);
+	}
+	
+	
 	public List getAll() {
 		ArrayList retval = new ArrayList();
 		Iterator ite = images.keySet().iterator();
@@ -104,4 +148,7 @@ public class FileImageDatabase implements ImageDatabase {
 	public int getCount() {
 		return images.size();
 	}
+	
+	
+	
 }
