@@ -5,5 +5,6 @@ public interface ImageDatabase {
 	public void initialize();
 	public ImageDatabaseEntry get(int i);
 	public void add(ImageDatabaseEntry entry);
+	public void add(String url);
 	public void shutdown();
 }

@@ -10,8 +10,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -20,7 +23,7 @@ import com.jachsoft.imagelib.RGBImage;
 
 public class FileImageDatabase implements ImageDatabase {
 	String fileName = "cbir.dat";
-	List images = new ArrayList();
+	Map	images = new HashMap();
 	
 	
 	public void shutdown(){
@@ -34,17 +37,7 @@ public class FileImageDatabase implements ImageDatabase {
 		File f= new File(fileName);
 		
 		if (!f.exists()){
-			ImageDatabaseEntry initial= new ImageDatabaseEntry();
-			initial.setUrl("http://www.google.com/intl/en_ALL/images/logo.gif");
-			ImageIcon icon = new ImageIcon(new URL("http://www.google.com/intl/en_ALL/images/logo.gif"));
-			Image image = icon.getImage();
-			BufferedImage bImage = new BufferedImage(
-					image.getWidth(null),
-					image.getHeight(null),
-					BufferedImage.TYPE_INT_RGB);
-			RGBImage rgb = new RGBImage(bImage);
 			
-			RGBColorContentDescriptor desc = new RGBColorContentDescriptor(rgb);
 			
 			
 			PrintWriter writer = new PrintWriter(new FileWriter(fileName)); 
@@ -72,14 +65,37 @@ public class FileImageDatabase implements ImageDatabase {
 		
 	}
 	
-
+	public void add(String url){
+		images.put(url,createEntry(url));
+	}
+	
+	private ImageDatabaseEntry createEntry(String url){
+		ImageDatabaseEntry entry= new ImageDatabaseEntry();
+		ImageIcon icon = null;
+		entry.setUrl(url);
+		try{
+		 icon = new ImageIcon(new URL(url));
+		}catch(MalformedURLException e){
+			System.out.println("Error in URL!");
+		}
+		Image image = icon.getImage();
+		BufferedImage bImage = new BufferedImage(
+				image.getWidth(null),
+				image.getHeight(null),
+				BufferedImage.TYPE_INT_RGB);
+		RGBImage rgb = new RGBImage(bImage);
+		entry.setDescriptor(new RGBColorContentDescriptor(rgb));
+		return entry;	
+		
+	}
+	
+	
 	public ImageDatabaseEntry get(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
