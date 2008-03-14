@@ -94,12 +94,10 @@ public class FileImageDatabase implements ImageDatabase {
 			URL ul = new URL(url);
 	        bImage = ImageIO.read(ul);		
 		}catch(MalformedURLException e){
-			System.out.println("Error in URL!");
+			e.printStackTrace();
 		}catch(IOException ioe){
-			System.out.println("Error reading image!");
+			ioe.printStackTrace();
 		}
-		
-		
 		RGBImage rgb = new RGBImage(bImage);
 		entry.setDescriptor(new RGBColorContentDescriptor(rgb));
 		return entry;		

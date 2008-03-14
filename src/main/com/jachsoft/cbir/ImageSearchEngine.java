@@ -11,11 +11,11 @@ public class ImageSearchEngine {
 	Minkowsky similarity = new Minkowsky(2);
 	
 	public void setImageDatabase(ImageDatabase db){
-		this.db = db;
-		images = db.getAll();
+		this.db = db;		
 	}
 	
 	public List search(ImageContentDescriptor descriptor){
+		images = db.getAll();
 		List results = new ArrayList();		
 		
 		for (int i=0; i < images.size();i++){
