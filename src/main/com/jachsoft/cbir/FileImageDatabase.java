@@ -10,9 +10,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,14 +40,8 @@ public class FileImageDatabase implements ImageDatabase {
 		File f= new File(fileName);
 		
 		if (!f.exists()){
-			
-			
-			
-			PrintWriter writer = new PrintWriter(new FileWriter(fileName)); 
-			
+			PrintWriter writer = new PrintWriter(new FileWriter(fileName));
 		}
-		
-		
 		
 		BufferedReader reader= new BufferedReader(new FileReader(fileName));
 		
@@ -89,14 +86,11 @@ public class FileImageDatabase implements ImageDatabase {
 		
 	}
 	
-	
-	public ImageDatabaseEntry get(int i) {
-		return null;
+	public Collection getAllImages() {
+		return images.values();
 	}
 	
-
 	public int getCount() {
-		return 0;
+		return images.size();
 	}
-
 }
