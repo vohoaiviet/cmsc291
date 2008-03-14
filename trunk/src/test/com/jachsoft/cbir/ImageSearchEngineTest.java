@@ -17,7 +17,7 @@ public class ImageSearchEngineTest extends TestCase {
 	public void testSearch(){
 		ImageSearchEngine engine = new ImageSearchEngine();
 		FileImageDatabase db = new FileImageDatabase();
-		String inputURL = "http://jachermocilla.googlepages.com/jach-160.jpg";
+		String inputURL = "http://jachermocilla.googlepages.com/jach-cartoon.jpg";
 		RGBImage input= null;
 		RGBColorContentDescriptor inputDescriptor;
 		
