@@ -2,7 +2,27 @@
 
 === Introduction ===
 
-Content-based Image Retrieval
+One application of image processing is image retrieval. Given an
+input image, return a set of the most similar images from a given 
+collection. One challenge in image retrieval is defining similarity
+among images. However, before similarity can be defined, there must 
+be a way to specify the features that can be used for comparison. 
+One way to describe an image is by its color composition, specifically
+color histogram. In this exercise, an image retrieval system is 
+implemented using color histogram as basis for similarity comparison.
+
+=== Results and Discussion ===
+
+The implemented system, COBAIR, is a web application that allows the
+user to specify an image URL as input. The system will return the most
+similar images to the input image after the user clicks the search button.
+The system also allows the user to add images to the collection. 
+When adding an image to the collection, the system does not store the 
+image itself but only the location (URL) and the computed image descriptor
+(color histogram).
+
+
+
 
 === Details ===
 
