@@ -8,7 +8,7 @@ collection. One challenge in image retrieval is defining similarity
 among images. However, before similarity can be defined, there must 
 be a way to specify the features that can be used for comparison. 
 One way to describe an image is by its color composition, specifically
-color histogram. In this exercise, an image retrieval system is 
+color histogram. In this exercise, a prototype image retrieval system is 
 implemented using color histogram as basis for similarity comparison.
 
 === Results and Discussion ===
@@ -19,7 +19,16 @@ similar images to the input image after the user clicks the search button.
 The system also allows the user to add images to the collection. 
 When adding an image to the collection, the system does not store the 
 image itself but only the location (URL) and the computed image descriptor
-(color histogram).
+(color histogram). 
+
+The prototype system is not optimized. Since the feature used to describe
+each image in the collection is the image color histogram, the feature 
+vector has a dimension of 768 since the RGB colorspace was used. Also, the
+retrieval itself is slow because the entire image collection is searched
+sequentially.
+
+
+
 
 
 
