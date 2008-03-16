@@ -8,7 +8,7 @@ import java.util.List;
 public class ImageSearchEngine {
 	ImageDatabase db;
 	List images;
-	Minkowsky similarity = new Minkowsky(2);
+	SimilarityMeasure similarity = new Minkowsky(2);
 	
 	public void setImageDatabase(ImageDatabase db){
 		this.db = db;		
@@ -24,25 +24,25 @@ public class ImageSearchEngine {
 			SearchResult result = new SearchResult();
 			result.setUrl(entry.getUrl());
 			result.setDistanceFromInput(similarity.computeDistance(descriptor, entry.getDescriptor()));
-			results.add(result);
-			
-			Collections.sort(results, new Comparator(){
-				public int compare(Object a, Object b){
-					SearchResult c = (SearchResult)a;
-					SearchResult d = (SearchResult)b;
-					
-					if (c.getDistanceFromInput() < d.getDistanceFromInput())
-						return -1;
-					
-					if (c.getDistanceFromInput() > d.getDistanceFromInput())
-						return 1;
-					
-					return 0;
-				}
-			});
-			
+			results.add(result);						
 			//System.out.println(entry.getUrl());
 		}
+
+		Collections.sort(results, new Comparator(){
+			public int compare(Object a, Object b){
+				SearchResult c = (SearchResult)a;
+				SearchResult d = (SearchResult)b;
+				
+				if (c.getDistanceFromInput() < d.getDistanceFromInput())
+					return -1;
+				
+				if (c.getDistanceFromInput() > d.getDistanceFromInput())
+					return 1;
+				
+				return 0;
+			}
+		});
+
 		return results;
 	}
 	
