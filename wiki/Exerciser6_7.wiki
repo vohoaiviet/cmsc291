@@ -29,6 +29,8 @@ Java Server Pages.
 
 http://cmsc291.googlecode.com/svn/cobair/
 
+http://cmsc291.googlecode.com/svn/cobair/cobair.png
+
 
 === References ===
 
