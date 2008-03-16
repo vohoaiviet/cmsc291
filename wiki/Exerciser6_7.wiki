@@ -21,12 +21,11 @@ When adding an image to the collection, the system does not store the
 image itself but only the location (URL) and the computed image descriptor
 (color histogram). 
 
-The prototype system is not optimized. Since the feature used to describe
-each image in the collection is the image color histogram, the feature 
-vector has a dimension of 768 since the RGB colorspace was used. Also, the
-retrieval itself is slow because the entire image collection is searched
-sequentially and no attempt was made to use a DBMS. The prototype system
-was developed using Java Server Pages.
+The prototype system is not optimized. The feature vector has a dimension 
+of 768 since the RGB colorspace was used. Also, the retrieval itself is slow
+because the entire image collection is searched sequentially and no attempt
+was made to use a DBMS. The prototype system was developed using 
+Java Server Pages.
 
 http://cmsc291.googlecode.com/svn/cobair/
 
