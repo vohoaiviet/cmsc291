@@ -12,7 +12,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="com.jachsoft.cbir.SearchResult"%>
-<%@page import="com.jachsoft.cbir.ImageDatabase"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -67,11 +66,15 @@ Enter image URL: <input type="text" name="url" size="20">
 		List results = engine.search(inputDescriptor);
 		Iterator ite = results.iterator();
 		
+		double percentSimilar = 0.20;
+		
 		int total = results.size();
-		int relevantCount = (int)(0.80*total);
+		int relevantCount = (int)(percentSimilar*total);
 		
 		int j = 0;
-		out.println("<h4>Search Results:</h4>");		
+		out.println("<h4>Search Results: " + relevantCount + " of " + total + "</h4>");
+		out.println();
+		
 		while(ite.hasNext() && (j != relevantCount)){
 			SearchResult result = (SearchResult)ite.next();
 			j++;

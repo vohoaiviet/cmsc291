@@ -12,8 +12,6 @@
 <body>
 <%
 
-	
-
 	ImageSearchEngine engine = (ImageSearchEngine)session.getAttribute("engine");
 	FileImageDatabase db = (FileImageDatabase)session.getAttribute("db");
 	
