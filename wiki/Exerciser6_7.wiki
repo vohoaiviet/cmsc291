@@ -10,7 +10,7 @@ be a way to specify the features that can be used for comparison.
 One way to describe an image is by its color composition, specifically
 color histogram. In this exercise, a prototype image retrieval system is 
 implemented using color histogram as basis for similarity comparison. 
-Euclidean distance is used to compute the similarity of value.
+Euclidean distance is used to compute the similarity value.
 
 === Results and Discussion ===
 
