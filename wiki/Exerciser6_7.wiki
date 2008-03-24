@@ -1,4 +1,5 @@
 #summary Exercise 6_7: Color and Content-Based Image Retrieval
+#labels Featured
 
 === Introduction ===
 
