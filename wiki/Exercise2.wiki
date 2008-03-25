@@ -1,4 +1,5 @@
 #summary Exercise 2: Image Enhancement
+#labels Featured
 ===Introduction===
 Image enhancement operations are to be applied on a given image.
 
