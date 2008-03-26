@@ -86,7 +86,7 @@ public class FileImageDatabase implements ImageDatabase {
 		images.put(url,createEntry(url));
 	}
 	
-	private ImageDatabaseEntry createEntry(String url){
+	public ImageDatabaseEntry createEntry(String url){
 		ImageDatabaseEntry entry= new ImageDatabaseEntry();
 		BufferedImage bImage= null;
 		entry.setUrl(url);
