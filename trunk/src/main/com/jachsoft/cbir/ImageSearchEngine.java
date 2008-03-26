@@ -23,6 +23,10 @@ public class ImageSearchEngine {
 			
 			SearchResult result = new SearchResult();
 			result.setUrl(entry.getUrl());
+			
+			descriptor.normalize();
+			entry.getDescriptor().normalize();
+			
 			result.setDistanceFromInput(similarity.computeDistance(descriptor, entry.getDescriptor()));
 			results.add(result);						
 			//System.out.println(entry.getUrl());
