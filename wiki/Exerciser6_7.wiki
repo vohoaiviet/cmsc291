@@ -19,7 +19,7 @@ The implemented system, COBAIR, is a web application that allows the
 user to specify an image URL as input. The system will return the most
 similar images to the input image from the collection after the user clicks the Search button. The system also allows the user to add the target image to the collection
 by clicking the Add button. When adding an image to the collection, 
-the system does not store the image itself but only the location (URL) and the computed image descriptor, in this case color histogram. The architecture of the system, however,
+the system does not store the image itself but only the location (URL) and the computed normalized image descriptor, in this case color histogram. The architecture of the system, however,
 makes it easy to add other types of image content descriptor such as texture and shape.
 
 The prototype system is not optimized. The feature vector has a dimension 
