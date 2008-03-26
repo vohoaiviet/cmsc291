@@ -1,8 +1,7 @@
 package com.jachsoft.cbir;
 
 public class BasicContentDescriptor implements ImageContentDescriptor {
-        protected double bins[];
-        protected double normalized[];
+        protected double bins[];        
         protected int size;
                     
         public BasicContentDescriptor(){
@@ -18,31 +17,26 @@ public class BasicContentDescriptor implements ImageContentDescriptor {
                 return bins;
         }
         
-        public double[] getNormalizedBins(){
-        	if (normalized == null){
-        		normalized = new double[size];
-              	double max = findMax();
-        		for (int i=0; i < size; i++){
-        			if (max > 0){
-        				normalized[i] = bins[i]/max;
-        			}else{
-        				normalized[i] = 0;
-        			}
-            	}	
+        public void normalize(){
+        	double max = findMax();
+        	for (int i=0; i < size; i++){
+        		if (max > 0){
+        			bins[i] = bins[i]/max;
+        		}else{
+        			bins[i] = 0;
+        		}
         	}
-        	return normalized;        	
         }
         
         private double findMax(){
-        	double max=-1;
-        	
+        	double max=-1;        	
         	for (int i=0; i < size; i++){
         		if (bins[i] > max)
         			max = bins[i];
         	}
         	return max;
         }
-        
+      
         
         public void setBinValue(int i, double value){
                 bins[i] = value; 
