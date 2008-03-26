@@ -24,7 +24,6 @@ Enter image URL: <input type="text" name="url" size="20">
 <input type="submit" name="op" value="Search">
 <input type="submit" name="op" value="Add">
 </form>
-</body>
 
 <% 
 	
@@ -44,13 +43,12 @@ Enter image URL: <input type="text" name="url" size="20">
 <p>
 <h4>Input Image: </h4>
 <img src="<% out.print(inputURL); %>"></img>
-</p>
+
 <hr/>
 <p>
 
 
-<%	
-	
+<%		
 	try{			
 		URL ul = new URL(inputURL);
     	input = new RGBImage(ImageIO.read(ul));		
