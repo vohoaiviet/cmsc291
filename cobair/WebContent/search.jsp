@@ -12,6 +12,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="com.jachsoft.cbir.SearchResult"%>
+<%@page import="com.jachsoft.cbir.ImageDatabaseEntry"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -80,9 +81,11 @@ Enter image URL: <input type="text" name="url" size="20">
 		<img src="<% out.println(result.getUrl()); %>" width="200" height="200"></img>
 <%	
 		}
-	}else if (action.equals("Add")){		
-		db.add(inputURL);
+	}else if (action.equals("Add")){
+		ImageDatabaseEntry entry = db.createEntry(inputURL);
+		db.add(entry);
 		db.save();
+		entry.getDescriptor().normalize();
 		out.println("Image succesfully added.");
 	}
 
