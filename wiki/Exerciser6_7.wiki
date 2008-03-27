@@ -31,8 +31,6 @@ http://cmsc291.googlecode.com/svn/trunk/src/main/com/jachsoft/cbir/
 http://cmsc291.googlecode.com/svn/cobair/
 
 
-
-
 http://cmsc291.googlecode.com/svn/cobair/cobair.png
 
 
