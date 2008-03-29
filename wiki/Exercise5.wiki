@@ -32,8 +32,7 @@ http://cmsc291.googlecode.com/svn/trunk/data/scr1-bin-sobel-thr40.jpg
 
 *  Figure 6. Closing
 
-|| http://cmsc291.googlecode.com/svn/trunk/data/scr1-bin-sobel-thr40.jpg || 
-http://cmsc291.googlecode.com/svn/trunk/tests/closing.jpg ||
+|| http://cmsc291.googlecode.com/svn/trunk/data/scr1-bin-sobel-thr40.jpg || http://cmsc291.googlecode.com/svn/trunk/tests/closing.jpg ||
 
 *  Figure 7. Hit and miss
 
