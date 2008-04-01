@@ -12,9 +12,10 @@ import com.jachsoft.imagelib.algorithms.ImageArithmetic;
 import com.jachsoft.imagelib.algorithms.Morphology;
 
 public class MotionDetector {
-
+	
 	public RGBImage diff(RGBImage frame1, RGBImage frame2){
 		RGBImage retval;
+
 		
 		RGBImage gray1 = frame1.getGrayScaleImage();
 		RGBImage gray2 = frame2.getGrayScaleImage();
@@ -64,7 +65,10 @@ public class MotionDetector {
 					}					
 					for (int z=0;z < w;z++,x++){
 						RGBColor c = img2.getRGBColor(z, y);
-						result.setRGB(x, y, c.getRed(), c.getGreen(), c.getBlue());
+						if (c.getRed() == 255){
+							c = img.getRGBColor(z, y);
+							result.setRGB(x, y, c.getRed(), c.getGreen(), c.getBlue());
+						}
 					}
 				}
 				ImageIO.write(result.getBufferedImage(),"jpg",new File("tests/video/frame000"+i+".jpg"));			
