@@ -64,7 +64,7 @@ public class FileImageDatabase implements ImageDatabase {
 			for (int i = 1; i < tokens.length;i++){
 				descriptor.setBinValue(i-1, Double.parseDouble(tokens[i]));
 			}
-			descriptor.normalize();
+			//descriptor.normalize();
 			entry.setDescriptor(descriptor);
 			this.add(entry);
 			//System.out.println(line);
