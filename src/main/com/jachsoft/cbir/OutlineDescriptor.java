@@ -1,6 +1,15 @@
 package com.jachsoft.cbir;
 
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 import com.jachsoft.imagelib.*;
+import com.jachsoft.imagelib.algorithms.ContrastStretching;
+import com.jachsoft.imagelib.algorithms.ImageOperator;
+import com.jachsoft.imagelib.algorithms.Morphology;
+import com.jachsoft.imagelib.algorithms.SobelEdgeDetect;
 
 
 /**
@@ -102,6 +111,35 @@ public class OutlineDescriptor implements ImageContentDescriptor {
 	 */
 	public double[] trace(RGBImage img, int c_x, int c_y){
 		if (img==null) return null;
+		
+		ImageOperator operator = new SobelEdgeDetect(img);	
+		img = operator.apply();
+		
+		ContrastStretching operator2= new ContrastStretching(img);
+        operator2.setParameters(180, 0, 180, 255);
+        img = operator2.apply();    
+        
+        /*
+        Morphology morph = new Morphology(img);
+		StructuringElement kernel = new StructuringElement(3,3);
+		kernel.setValue(0, 1);
+		kernel.setValue(1, 1);
+		kernel.setValue(2, 1);
+		kernel.setValue(3, 1);
+		kernel.setValue(4, 1);
+		kernel.setValue(5, 1);
+		kernel.setValue(6, 1);
+		kernel.setValue(7, 1);
+		kernel.setValue(8, 1);
+		morph.setParameters(Morphology.EROSION, kernel);
+		img = morph.apply();
+		*/
+        try{
+			ImageIO.write(img.getBufferedImage(),"jpg",new File("leaf.jpg"));			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		int width=img.getWidth();
 		int height = img.getHeight();
 		double[] feature_array = new double[360*2];
