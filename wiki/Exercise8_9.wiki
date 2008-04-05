@@ -20,6 +20,6 @@ Image difference is performed on the frames to compute the motion image. The mot
 
 = Results =
 
-Watch the resulting video in [http://www.youtube.com/watch?v=sZrFU3ecC7Y YouTube]
+Watch the resulting video in [http://www.youtube.com/watch?v=sZrFU3ecC7Y YouTube], or
 
-[http://cmsc291.googlecode.com/svn/trunk/data/motion.avi Download] the video.
+[http://cmsc291.googlecode.com/svn/trunk/data/motion.avi download] the video.
