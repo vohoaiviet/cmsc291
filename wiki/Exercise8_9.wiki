@@ -4,31 +4,16 @@
 
 Exercise 8: Given an image sequence, compute the motion image. Render the result as an image sequence.
 
+= Theoretical Framework = 
 
-= Details =
+* Image difference
 
 
+= Methodology = 
 
-= Notes =
+In this exercise, a video is selected and the individual frames are extracted.
+Image difference is performed on the frames to compute the motion image. 
 
-* Frame is an image in the sequence
+= Results =
 
-* Fi, ith frame in the image sequence
-
-* Video, view image sequence (25 fps, 30 fps)
-
-* Motion
-
-- find areas in the image that have significantly changed from frame to frame
-
-- change in position
-
-- computed using frame differencing (|Ft+1 - Ft|)
-
-- Can be used in grayscale or RGB (vector subtraction)
-
-* Background Subtraction
-
-- 
-
-* Tracking
+http://www.youtube.com/watch?v=sZrFU3ecC7Y
