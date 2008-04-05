@@ -40,7 +40,7 @@ public class Morphology extends ImageOperator {
 	
 	
 	public RGBImage apply(){
-		logger.info("Applying operator...");
+		//logger.info("Applying operator...");
 		switch(operation){
 		case DILATION: return dilated(source);
 		case EROSION: return eroded(source);
@@ -175,7 +175,7 @@ public class Morphology extends ImageOperator {
 				//No matched yet
 				int matched=0;
 				RGBColor rgb=null;
-				logger.debug("Examining pixels under kernel...");
+				//logger.debug("Examining pixels under kernel...");
 				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
 					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
 						//Get the color of the pixel underneath
@@ -185,7 +185,7 @@ public class Morphology extends ImageOperator {
 						int normalized = (int)rgb.getBlueN();
 						//Get the value of the kernel
 						int kernelVal = (int)(kernel.getValue(l, k));
-						logger.debug(normalized+","+kernelVal);
+						//logger.debug(normalized+","+kernelVal);
 						
 						//is the value don't care?
 						if ( kernelVal == DONTCARE){
