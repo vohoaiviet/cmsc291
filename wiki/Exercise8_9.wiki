@@ -1,4 +1,5 @@
 #summary Image Sequence Processing
+#labels Featured
 
 = Introduction =
 
