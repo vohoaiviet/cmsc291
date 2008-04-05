@@ -8,7 +8,7 @@ Exercise 8: Given an image sequence, compute the motion image. Render the result
 
 * Image difference
 
-  Given two images F(x,y) and G(x,y), the image difference F-G = F(x,y)-G(x,y), for all pixels at (x,y) in F and G.
+  Given two images F(x,y) and G(x,y), the image difference H(x,y) = F(x,y) - G(x,y), for all pixels at (x,y) in F and G.
 
 
 = Methodology = 
