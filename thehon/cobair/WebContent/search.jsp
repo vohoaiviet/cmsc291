@@ -5,6 +5,7 @@
 <%@page import="com.jachsoft.cbir.FileImageDatabase"%>
 <%@page import="com.jachsoft.imagelib.RGBImage"%>
 <%@page import="com.jachsoft.cbir.RGBColorContentDescriptor"%>
+<%@page import="com.jachsoft.cbir.OutlineDescriptor"%>
 <%@page import="java.net.URL"%>
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="java.net.MalformedURLException"%>
@@ -16,10 +17,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>COntent-BAsed Image Retrieval</title>
+<title>Leaf Image Retrieval System</title>
 </head>
 <body>
-<h2>COntent-BAsed Image Retrieval</h2>
+<h2>Leaf Image Retrieval System</h2>
 <form method="post" action="search.jsp">
 Enter image URL: <input type="text" name="url" size="20">
 <input type="submit" name="op" value="Search">
@@ -31,12 +32,12 @@ Enter image URL: <input type="text" name="url" size="20">
 	ImageSearchEngine engine = (ImageSearchEngine)session.getAttribute("engine");
 	FileImageDatabase db = (FileImageDatabase)session.getAttribute("db");
 	RGBImage input= null;
-	RGBColorContentDescriptor inputDescriptor;
+	OutlineDescriptor inputDescriptor;
 	String inputURL = request.getParameter("url");
 	String action = request.getParameter("op");
 
 	if (inputURL.length() == 0){
-		inputURL = "http://i229.photobucket.com/albums/ee69/diwata87/pout.jpg";
+		inputURL = "http://localhost/leaf/banaba1779";
 	}
 
 %>
@@ -59,13 +60,13 @@ Enter image URL: <input type="text" name="url" size="20">
 		out.println("Error reading image!");
 	}
 
-	inputDescriptor = new RGBColorContentDescriptor(input);
+	inputDescriptor = new OutlineDescriptor(input);
 
 	if (action.equals("Search")){
 		List results = engine.search(inputDescriptor);
 		Iterator ite = results.iterator();
 		
-		double percentSimilar = 0.20;
+		double percentSimilar = 1.0;//0.20;
 		
 		int total = results.size();
 		int relevantCount = (int)(percentSimilar*total);
@@ -77,15 +78,16 @@ Enter image URL: <input type="text" name="url" size="20">
 		while(ite.hasNext() && (j != relevantCount)){
 			SearchResult result = (SearchResult)ite.next();
 			j++;
+			out.println("<p>"+result.getDistanceFromInput()+"</p>");
 %>
-		<img src="<% out.println(result.getUrl()); %>" width="200" height="200"></img>
+		<img src="<% out.println(result.getUrl()); %>" width="200" height="200"></img>		
 <%	
 		}
 	}else if (action.equals("Add")){
 		ImageDatabaseEntry entry = db.createEntry(inputURL);
 		db.add(entry);
 		db.save();
-		entry.getDescriptor().normalize();
+		//entry.getDescriptor().normalize();
 		out.println("Image succesfully added.");
 	}
 

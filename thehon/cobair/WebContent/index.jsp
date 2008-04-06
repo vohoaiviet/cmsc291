@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>COntent-BAsed Image Retrieval</title>
+<title>Leaf Image Retrieval System</title>
 </head>
 <body>
 <%
@@ -17,7 +17,7 @@
 	
 	if (engine == null || db == null){
 		engine = new ImageSearchEngine();
-		db = new FileImageDatabase(this.getServletContext().getRealPath("cbir.dat"));	
+		db = new FileImageDatabase(this.getServletContext().getRealPath("dahon.dat"));	
 		db.initialize();				
 		engine.setImageDatabase(db);	
 		session.setAttribute("engine",engine);
@@ -26,7 +26,7 @@
 %>
 
 
-<h2>COntent-BAsed Image Retrieval</h2>
+<h2>Leaf Image Retrieval System</h2>
 <form method="post" action="search.jsp">
 Enter image URL: <input type="text" name="url" size="20">
 <input type="submit" name="op" value="Search">
