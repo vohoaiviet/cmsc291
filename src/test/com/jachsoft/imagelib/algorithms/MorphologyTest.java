@@ -107,20 +107,50 @@ public class MorphologyTest extends TestCase {
 	
 	public void testHitAndMiss(){
 		try{
-			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
+			RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));			
+			//RGBImage img=new RGBImage(ImageIO.read(new File("data/wdg2thr3.gif")));
+			RGBImage retval,tmp;
+			ImageArithmetic ar;
+			ImageOperator sobel = new SobelEdgeDetect(img);
+			
+			//img = sobel.apply();
+			
 			Morphology morph = new Morphology(img);
-			StructuringElement kernel = new StructuringElement(3,3);
-			kernel.setValue(0, -1);
-			kernel.setValue(1, 1);
-			kernel.setValue(2, -1);
-			kernel.setValue(3, 0);
-			kernel.setValue(4, 1);
-			kernel.setValue(5, 1);
-			kernel.setValue(6, 0);
-			kernel.setValue(7, 0);
-			kernel.setValue(8, -1);
+			StructuringElement kernel = new StructuringElement(new double[][]{{-1,1,-1},{0,1,1},{0,0,-1}});			
 			morph.setParameters(Morphology.HITMISSED, kernel);
-			ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss.jpg"));
+			retval = morph.apply();
+			
+			
+			//ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss.jpg"));
+			morph = new Morphology(img);
+			kernel = new StructuringElement(new double[][]{{-1,1,-1},{1,1,0},{-1,0,0}});			
+			morph.setParameters(Morphology.HITMISSED, kernel);
+			tmp = morph.apply();
+			ar = new ImageArithmetic(retval,tmp);
+			ar.setOperation(ImageArithmetic.OR);
+			retval = ar.apply();
+			
+			//ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss2.jpg"));
+			
+			morph = new Morphology(img);
+			kernel = new StructuringElement(new double[][]{{-1,0,0},{1,1,0},{-1,1,-1}});			
+			morph.setParameters(Morphology.HITMISSED, kernel);
+			tmp = morph.apply();
+			ar = new ImageArithmetic(retval,tmp);
+			ar.setOperation(ImageArithmetic.OR);
+			retval = ar.apply();
+			//ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss3.jpg"));
+			
+			morph = new Morphology(img);
+			kernel = new StructuringElement(new double[][]{{0,0,-1},{0,1,1},{-1,1,-1}});			
+			morph.setParameters(Morphology.HITMISSED, kernel);
+			tmp = morph.apply();
+			ar = new ImageArithmetic(retval,tmp);
+			ar.setOperation(ImageArithmetic.OR);
+			retval = ar.apply();
+			//ImageIO.write(morph.apply().getBufferedImage(),"jpg",new File("tests/hit-miss4.jpg"));
+			ImageIO.write(retval.getBufferedImage(),"jpg",new File("tests/hit-miss.jpg"));
+			
 			
 		}catch(Exception e){			
 			e.printStackTrace();
