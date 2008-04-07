@@ -54,6 +54,7 @@ public class ImageArithmetic extends ImageOperator {
 		case MUL: return mul();
 		case DIV: return div();
 		case BLEND: return blend();
+		case OR: return or();
 		default: return source;		
 		}
 	}
@@ -121,6 +122,7 @@ public class ImageArithmetic extends ImageOperator {
 		return retval;
 	}
 	
+		
 	private RGBImage sub(){
 		int w = source.getWidth();
 		int h = source.getHeight();
@@ -156,6 +158,27 @@ public class ImageArithmetic extends ImageOperator {
 						color.getBlue()		*	color2.getBlue()						
 				);				
 				retval.setRGB(x, y, Math.abs(newColor.getRed()), Math.abs(newColor.getGreen()),Math.abs( newColor.getBlue()));
+			}			
+		}		
+		return retval;
+	}
+	
+	
+	private RGBImage or(){
+		int w = source.getWidth();
+		int h = source.getHeight();
+		RGBImage retval = new RGBImage(w,h);
+		
+		for (int y = 0; y < h; y++){
+			for (int x = 0; x < w; x++){
+				RGBColor color = source.getRGBColor(x, y);
+				RGBColor color2 = source2.getRGBColor(x, y);
+				RGBColor newColor = new RGBColor(
+						color.getRed()		|	color2.getRed(),
+						color.getGreen()	|	color2.getGreen(),
+						color.getBlue()		|	color2.getBlue()						
+				);
+				retval.setRGB(x, y, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
 			}			
 		}		
 		return retval;
