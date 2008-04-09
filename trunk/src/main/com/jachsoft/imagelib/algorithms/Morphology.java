@@ -166,52 +166,83 @@ public class Morphology extends ImageOperator {
 	public RGBImage thinned(RGBImage source){
 		RGBImage retval;	
 		int w=source.getWidth();
-		int h=source.getHeight();	
-		retval=new RGBImage(w,h);		
-		//assumes kernel is a square!
-		int offset=kernel.getHeight()/2;
-		for (int y=offset; y<(h-offset);y++){
-			for (int x=offset; x<(w-offset);x++){
-				//No matched yet
-				int matched=0;
-				RGBColor rgb=null;
-				//logger.debug("Examining pixels under kernel...");
-				for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
-					for (int j=(x-offset),l=0; j <= x+offset;j++,l++){
-						//Get the color of the pixel underneath
-						rgb = source.getRGBColor(j, i);
-						
-						//Make the value 0 or 1
-						int normalized = (int)rgb.getBlueN();
-						//Get the value of the kernel
-						int kernelVal = (int)(kernel.getValue(l, k));
-						//logger.debug(normalized+","+kernelVal);
-						
-						//is the value don't care?
-						if ( kernelVal == DONTCARE){
-							matched++;
-						}else //Is the value foreground?
-						if (kernelVal == FOREGROUND){	
-							//Is the normalized value foreground
-							if (normalized == FOREGROUND){
-								matched++;
-							}
-						}else if (kernelVal == BACKGROUND){							
-							if (normalized == BACKGROUND){
-								matched++;
-							}
+		int h=source.getHeight();
+		
+		int nk=8;
+		
+		StructuringElement kernels[] = new StructuringElement[8]; 		
+		kernels[0] = new StructuringElement(new double[][]{{0,0,0},{-1,1,-1},{1,1,1}});
+		kernels[1] = new StructuringElement(new double[][]{{-1,0,0},{1,1,0},{-1,1,-1}});
+		kernels[2] = new StructuringElement(new double[][]{{1,-1,0},{1,1,0},{1,-1,0}});
+		kernels[3] = new StructuringElement(new double[][]{{-1,1,-1},{1,1,0},{-1,0,0}});
+		kernels[4] = new StructuringElement(new double[][]{{1,1,1},{-1,1,-1},{0,0,0}});
+		kernels[5] = new StructuringElement(new double[][]{{-1,1,-1},{0,1,1},{0,0,-1}});
+		kernels[6] = new StructuringElement(new double[][]{{0,-1,1},{0,1,1},{0,-1,1}});
+		kernels[7] = new StructuringElement(new double[][]{{0,0,-1},{0,1,1},{-1,1,-1}});
+		
+		retval=source;//new RGBImage(w,h);	
+		
+		int count=0;
+		RGBColor rgb=null;
+		//assumes kernel is a square!		
+		int offset=kernels[0].getHeight()/2;
+		int z,y,x;
+		boolean matched= false;
+		
+for (int f=1;f<100;f++){		
+		matched=false;
+		logger.info("iteration: "+f);
+		
+		for (z = 0; z < nk ;z++)
+	{
+		
+		for (y=offset; y<(h-offset);y++){
+			for (x=offset; x<(w-offset);x++){
+				//logger.info("current pixel: "+x+","+y);
+				//matched=false;
+				
+					//logger.info("kernel: "+z);
+					kernel = kernels[z];
+					offset=kernel.getHeight()/2;
+					count=0;			
+					
+					for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+						for (int j=(x-offset),l=0; j <= x+offset;j++,l++){							
+							rgb = retval.getRGBColor(j, i);
+							int normalized = (int)rgb.getBlueN();							
+							int kernelVal = (int)(kernel.getValue(l, k));
+							//if (x==1 && y==1)
+							//	logger.info("image pixel under kernel: "+j+","+i+":"+normalized+",kernel="+kernelVal);
+							if (kernelVal == DONTCARE){
+								count++;
+							}else if ((kernelVal == FOREGROUND) && (normalized == FOREGROUND)){	
+										count++;
+							}else if ((kernelVal == BACKGROUND) && (normalized == BACKGROUND)){							
+										count++;
+							}			
 						}
-					}			
-				}
-				if (matched==9){					
-					retval.setRGB(x, y, 0, 0, 0);
-				}else{
-					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());					
-				}
+					}
+					//if (x==1 && y==1)
+						//logger.info("count: "+count);
 
+					if (count==9){
+						matched = true;
+						//logger.info("Matched: "+x+","+y);
+						retval.setRGB(x, y, 0, 0, 0);
+						//break;
+					}
+				}
+				if (z==nk){
+					rgb = source.getRGBColor(x, y);
+					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+				}
 			}
 		}
+		
+		if (!matched)
+			break;
+		
+}
 		return retval;
 	}
-	
 }
