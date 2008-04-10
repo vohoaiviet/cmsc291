@@ -166,9 +166,7 @@ public class Morphology extends ImageOperator {
 	public RGBImage thinned(RGBImage source){
 		RGBImage retval;	
 		int w=source.getWidth();
-		int h=source.getHeight();
-		
-		int nk=8;
+		int h=source.getHeight();		
 		
 		StructuringElement kernels[] = new StructuringElement[8]; 		
 		kernels[0] = new StructuringElement(new double[][]{{0,0,0},{-1,1,-1},{1,1,1}});
@@ -188,61 +186,45 @@ public class Morphology extends ImageOperator {
 		int offset=kernels[0].getHeight()/2;
 		int z,y,x;
 		boolean matched= false;
+		int nk=8;	//number of kernels
 		
-for (int f=1;f<100;f++){		
-		matched=false;
-		logger.info("iteration: "+f);
-		
-		for (z = 0; z < nk ;z++)
-	{
-		
-		for (y=offset; y<(h-offset);y++){
-			for (x=offset; x<(w-offset);x++){
-				//logger.info("current pixel: "+x+","+y);
-				//matched=false;
-				
-					//logger.info("kernel: "+z);
-					kernel = kernels[z];
-					offset=kernel.getHeight()/2;
-					count=0;			
-					
-					for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
-						for (int j=(x-offset),l=0; j <= x+offset;j++,l++){							
-							rgb = retval.getRGBColor(j, i);
-							int normalized = (int)rgb.getBlueN();							
-							int kernelVal = (int)(kernel.getValue(l, k));
-							//if (x==1 && y==1)
-							//	logger.info("image pixel under kernel: "+j+","+i+":"+normalized+",kernel="+kernelVal);
-							if (kernelVal == DONTCARE){
-								count++;
-							}else if ((kernelVal == FOREGROUND) && (normalized == FOREGROUND)){	
+		for (int f=1;f<100;f++){		
+			matched=false;
+			logger.info("Pass: "+f);
+			for (z = 0; z < nk ;z++){
+				for (y=offset; y<(h-offset);y++){
+					for (x=offset; x<(w-offset);x++){
+						kernel = kernels[z];
+						offset=kernel.getHeight()/2;
+						count=0;			
+						for (int i=(y-offset),k=0; i <= y+offset; i++,k++){
+							for (int j=(x-offset),l=0; j <= x+offset;j++,l++){							
+								rgb = retval.getRGBColor(j, i);
+								int normalized = (int)rgb.getBlueN();							
+								int kernelVal = (int)(kernel.getValue(l, k));
+								if (kernelVal == DONTCARE){
+									count++;
+								}else if ((kernelVal == FOREGROUND) && (normalized == FOREGROUND)){	
 										count++;
-							}else if ((kernelVal == BACKGROUND) && (normalized == BACKGROUND)){							
+								}else if ((kernelVal == BACKGROUND) && (normalized == BACKGROUND)){							
 										count++;
-							}			
+								}			
+							}
+						}
+						if (count==9){
+							matched = true;
+							retval.setRGB(x, y, 0, 0, 0);
 						}
 					}
-					//if (x==1 && y==1)
-						//logger.info("count: "+count);
-
-					if (count==9){
-						matched = true;
-						//logger.info("Matched: "+x+","+y);
-						retval.setRGB(x, y, 0, 0, 0);
-						//break;
-					}
-				}
-				if (z==nk){
-					rgb = source.getRGBColor(x, y);
-					retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+					if (z==nk){
+						rgb = source.getRGBColor(x, y);
+						retval.setRGB(x, y, rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+						}
 				}
 			}
+			if (!matched)
+				break;
 		}
-		
-		if (!matched)
-			break;
-		
-}
 		return retval;
 	}
 }
