@@ -160,41 +160,15 @@ public class MorphologyTest extends TestCase {
 	
 	public void testThinning(){
 		try{
-			//RGBImage img=new RGBImage(ImageIO.read(new File("data/scr1-bin-sobel-thr40.jpg")));
 			RGBImage img=new RGBImage(ImageIO.read(new File("data/pham.jpg")));
 			RGBImage result=img;
+			ContrastStretching contrast=new ContrastStretching(result);
+			contrast.threshold(20);
+			result = contrast.apply();
+			
 			Morphology morph = new Morphology(result);
 			morph.setParameters(Morphology.THINNING, null);
-			
-			/*
-			StructuringElement kernels[] = new StructuringElement[8]; 
-			
-			kernels[0] = new StructuringElement(new double[][]{{0,0,0},{-1,1,-1},{1,1,1}});
-			kernels[1] = new StructuringElement(new double[][]{{-1,0,0},{1,1,0},{-1,1,-1}});
-			kernels[2] = new StructuringElement(new double[][]{{1,-1,0},{1,1,0},{1,-1,0}});
-			kernels[3] = new StructuringElement(new double[][]{{-1,1,-1},{1,1,0},{-1,0,0}});
-			kernels[4] = new StructuringElement(new double[][]{{1,1,1},{-1,1,-1},{0,0,0}});
-			kernels[5] = new StructuringElement(new double[][]{{-1,1,-1},{0,1,1},{0,0,-1}});
-			kernels[6] = new StructuringElement(new double[][]{{0,-1,1},{0,1,1},{0,-1,1}});
-			kernels[7] = new StructuringElement(new double[][]{{0,0,-1},{0,1,1},{-1,1,-1}});
-			
-			RGBImage result=img;
-			for (int iter=0;iter < 20;iter++){
-				for (int k=0;k<8;k++){			
-					Morphology morph = new Morphology(result);					
-					morph.setParameters(Morphology.THINNING, kernels[k]);
-					result = morph.apply();
-				}
-				ImageIO.write(result.getBufferedImage(),"jpg",new File("tests/thinned.jpg"));
-			}
-			*/
-			
-			for (int i=0;i < 1;i++){
-				morph = new Morphology(result);
-				morph.setParameters(Morphology.THINNING, null);
-				result = morph.apply();
-			}
-			
+			result = morph.apply();			
 			ImageIO.write(result.getBufferedImage(),"jpg",new File("tests/thinned.jpg"));
 			
 		}catch(Exception e){			
