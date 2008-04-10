@@ -1,0 +1,10 @@
+To do's
+
+1. Redesign architecture for performance and extensibility
+2. Improve documentation through javadoc
+3. Increase test coverage
+4. Write some tutorials
+5. Add additional features like the following
+   a. Colorspace conversions (RGB to HSI, etc)
+   b. Connected component analysis
+
