@@ -40,4 +40,4 @@ http://cmsc291.googlecode.com/svn/trunk/data/scr1-bin-sobel-thr40.jpg
 
 *  Figure 8. Thinning
 
-|| http://cmsc291.googlecode.com/svn/trunk/data/scr1-bin-sobel-thr40.jpg || http://cmsc291.googlecode.com/svn/trunk/tests/thinned.jpg ||
+|| http://cmsc291.googlecode.com/svn/trunk/data/pham.jpg || http://cmsc291.googlecode.com/svn/trunk/tests/thinned.jpg ||
